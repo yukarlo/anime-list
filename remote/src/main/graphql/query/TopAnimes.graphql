@@ -1,0 +1,37 @@
+query TopAnimes(
+    $page: Int
+) {
+    Page(page: $page, perPage: 20) {
+        pageInfo {
+            total
+            perPage
+            currentPage
+            lastPage
+            hasNextPage
+        }
+        media(format: TV, type: ANIME, sort: SCORE_DESC) {
+            id
+            title {
+                english
+                native
+                userPreferred
+            }
+            coverImage {
+                large
+            }
+            bannerImage
+            startDate {
+                year
+                month
+                day
+            }
+            endDate {
+                year
+                month
+                day
+            }
+            status(version: 2)
+            genres
+        }
+    }
+}

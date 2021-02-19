@@ -1,0 +1,92 @@
+query AnimeDetails(
+    $id: Int
+) {
+    Media(id: $id) {
+        id
+        title {
+            userPreferred
+            english
+            native
+        }
+        coverImage {
+            large
+        }
+        bannerImage
+        startDate {
+            year
+            month
+            day
+        }
+        endDate {
+            year
+            month
+            day
+        }
+        averageScore
+        genres
+        description(asHtml: true)
+        status(version: 2)
+        episodes
+        nextAiringEpisode {
+            airingAt
+            timeUntilAiring
+            episode
+        }
+        relations {
+            edges {
+                id
+                relationType(version: 2)
+                node {
+                    id
+                    title {
+                        userPreferred
+                    }
+                    format
+                    type
+                    status(version: 2)
+                    bannerImage
+                    coverImage {
+                        large
+                    }
+                }
+            }
+        }
+        characterPreview: characters(perPage: 6, sort: [ROLE, ID]) {
+            edges {
+                id
+                role
+                voiceActors(language: JAPANESE) {
+                    id
+                    name {
+                        full
+                    }
+                    language
+                    image {
+                        large
+                    }
+                }
+                node {
+                    id
+                    name {
+                        full
+                    }
+                    image {
+                        large
+                    }
+                }
+            }
+        }
+        studios (isMain:true) {
+            edges {
+                id
+                node {
+                    name
+                }
+            }
+        }
+        trailer {
+            id
+            site
+        }
+    }
+}

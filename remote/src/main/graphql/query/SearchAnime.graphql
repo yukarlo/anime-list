@@ -1,0 +1,28 @@
+query SearchAnimes(
+    $id: Int
+) {
+    Media(id: $id, format: TV) {
+        id
+        title {
+            english
+            native
+            userPreferred
+        }
+        coverImage {
+            large
+        }
+        bannerImage
+        startDate {
+            year
+            month
+            day
+        }
+        endDate {
+            year
+            month
+            day
+        }
+        status(version: 2)
+        genres
+    }
+}
