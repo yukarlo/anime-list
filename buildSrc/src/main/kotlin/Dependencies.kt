@@ -75,6 +75,6 @@ object Dependencies {
 
         const val GRADLE = "com.apollographql.apollo:apollo-gradle-plugin:$VERSION"
         const val RUNTIME = "com.apollographql.apollo:apollo-runtime:$VERSION"
-
+        const val APOLLO_COROUTINES = "com.apollographql.apollo:apollo-coroutines-support:$VERSION"
     }
 }
