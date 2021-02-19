@@ -1,7 +1,9 @@
 plugins {
     id("com.android.library")
     id("com.apollographql.apollo")
+    id("dagger.hilt.android.plugin")
     kotlin(module = "android")
+    kotlin(module = "kapt")
 }
 
 apollo {
@@ -15,6 +17,7 @@ dependencies {
     implementation(Dependencies.Coroutines.CORE)
 
     addComposeDependencies()
+    addDaggerDependencies()
 
     testImplementation(Dependencies.JUnit.JUNIT)
 }

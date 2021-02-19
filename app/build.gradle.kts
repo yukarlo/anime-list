@@ -24,11 +24,13 @@ android {
 
 dependencies {
     implementation(project(":feature-anime-home"))
+    implementation(project(":remote"))
 
     implementation(Dependencies.AndroidX.CORE_KTX)
     implementation(Dependencies.AndroidX.APP_COMPAT)
     implementation(Dependencies.Google.MATERIAL)
     implementation(Dependencies.AndroidX.RUNTIME_KTX)
+    implementation(Dependencies.Apollo.RUNTIME)
 
     addComposeDependencies()
     implementation(Dependencies.AndroidX.COMPOSE_ACTIVITY)
