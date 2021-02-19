@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 rootProject.name = "Anime"
 include ':app'
 include ':feature-anime-home'
+include ':remote'
