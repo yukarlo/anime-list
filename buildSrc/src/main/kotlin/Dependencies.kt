@@ -19,8 +19,8 @@ object Dependencies {
 
     object AndroidX {
         const val ANDROID_NAVIGATION_VERSION = "2.3.3"
+        const val ANDROID_COMPOSE_VERSION = "1.0.0-alpha12"
         private const val ANDROID_LIFECYCLE_VERSION = "2.3.0"
-        private const val ANDROID_COMPOSE_VERSION = "1.0.0-alpha12"
 
         const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.0-beta01"
         const val CORE_KTX = "androidx.core:core-ktx:1.5.0-beta01"
@@ -40,6 +40,7 @@ object Dependencies {
             "androidx.lifecycle:lifecycle-runtime-ktx:$ANDROID_LIFECYCLE_VERSION"
         const val VIEWMODEL_KTX =
             "androidx.lifecycle:lifecycle-viewmodel-ktx:$ANDROID_LIFECYCLE_VERSION"
+        const val COMPOSE_ACTIVITY = "androidx.activity:activity-compose:1.3.0-alpha02"
         const val COMPOSE_UI = "androidx.compose.ui:ui:$ANDROID_COMPOSE_VERSION"
         const val COMPOSE_MATERIAL = "androidx.compose.material:material:$ANDROID_COMPOSE_VERSION"
         const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling:$ANDROID_COMPOSE_VERSION"
