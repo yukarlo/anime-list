@@ -22,6 +22,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature-anime-home"))
+
     implementation(Dependencies.AndroidX.CORE_KTX)
     implementation(Dependencies.AndroidX.APP_COMPAT)
     implementation(Dependencies.Google.MATERIAL)
