@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath(dependencyNotation = "com.android.tools.build:gradle:7.0.0-alpha07")
         classpath(dependencyNotation = Dependencies.Dagger.DAGGER_HILT_ANDROID_GRADLE_PLUGIN)
+        classpath(dependencyNotation = Dependencies.Apollo.GRADLE)
         classpath(kotlin(module = "gradle-plugin", version = Dependencies.Kotlin.VERSION))
     }
 }
