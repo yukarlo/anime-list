@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("dagger.hilt.android.plugin")
     kotlin(module = "android")
     kotlin(module = "kapt")
 }
@@ -31,6 +32,8 @@ dependencies {
 
     addComposeDependencies()
     implementation(Dependencies.AndroidX.COMPOSE_ACTIVITY)
+
+    addDaggerDependencies()
 
     testImplementation(Dependencies.JUnit.JUNIT)
 }
