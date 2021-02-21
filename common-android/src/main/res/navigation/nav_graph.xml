@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigationGraph"
+    app:startDestination="@+id/destinationHome">
+
+    <fragment
+        android:id="@+id/destinationHome"
+        android:name="com.yukarlo.feature.anime.home.HomeFragment"
+        android:label="Home" />
+
+</navigation>
