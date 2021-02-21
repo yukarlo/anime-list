@@ -66,7 +66,10 @@ fun BaseExtension.applyBaseCommons() = apply {
         targetSdkVersion(Android.Sdk.TARGET)
     }
 
-    buildFeatures.compose = true
+    buildFeatures.apply {
+        viewBinding = true
+        compose = true
+    }
 
     composeOptions {
         kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
