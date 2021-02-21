@@ -77,4 +77,8 @@ object Dependencies {
         const val RUNTIME = "com.apollographql.apollo:apollo-runtime:$VERSION"
         const val APOLLO_COROUTINES = "com.apollographql.apollo:apollo-coroutines-support:$VERSION"
     }
+
+    object Accompanist {
+        const val ACCOMPANIST_COIL = "dev.chrisbanes.accompanist:accompanist-coil:0.5.1"
+    }
 }
