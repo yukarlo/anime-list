@@ -1,34 +1,29 @@
 package com.yukarlo.anime
 
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import com.yukarlo.anime.ui.theme.AnimeTheme
-import com.yukarlo.feature.anime.home.Greeting
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.yukarlo.anime.databinding.MainActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var navHostFragment: NavHostFragment
+    private lateinit var navController: NavController
+    private lateinit var binding: MainActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            AnimeTheme {
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
-        }
+        binding = MainActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setUpNavigation()
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AnimeTheme {
-        Greeting("Android")
+    private fun setUpNavigation() {
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.mainActivityFragment) as NavHostFragment
+        navController = navHostFragment.navController
     }
 }
