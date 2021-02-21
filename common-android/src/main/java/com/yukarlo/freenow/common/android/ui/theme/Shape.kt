@@ -1,4 +1,4 @@
-package com.yukarlo.anime.ui.theme
+package com.yukarlo.freenow.common.android.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
