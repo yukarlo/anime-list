@@ -7,5 +7,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Anime"
 include ':app'
+include ':common-android'
 include ':feature-anime-home'
 include ':remote'

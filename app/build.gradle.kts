@@ -24,6 +24,7 @@ android {
 
 dependencies {
     implementation(project(":feature-anime-home"))
+    implementation(project(":common-android"))
     implementation(project(":remote"))
 
     implementation(Dependencies.AndroidX.CORE_KTX)
