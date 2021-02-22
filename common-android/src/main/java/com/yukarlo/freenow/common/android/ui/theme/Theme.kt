@@ -7,24 +7,27 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColors(
-        primary = purple200,
-        primaryVariant = purple700,
-        secondary = teal200
+    primary = grey900,
+    primaryVariant = grey900,
+    secondary = teal200,
+    background = grey900,
+    surface = grey900,
+    onPrimary = grey50,
+    onSecondary = grey50,
+    onBackground = grey50,
+    onSurface = grey50
 )
 
 private val LightColorPalette = lightColors(
-        primary = purple500,
-        primaryVariant = purple700,
-        secondary = teal200
-
-        /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    primary = grey200,
+    primaryVariant = grey700,
+    secondary = teal200,
+    background = grey50,
+    surface = grey200,
+    onPrimary = grey200,
+    onSecondary = grey200,
+    onBackground = grey900,
+    onSurface = grey900
 )
 
 @Composable
@@ -36,9 +39,9 @@ fun AnimeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable(
     }
 
     MaterialTheme(
-            colors = colors,
-            typography = typography,
-            shapes = shapes,
-            content = content
+        colors = colors,
+        typography = typography,
+        shapes = shapes,
+        content = content
     )
 }
