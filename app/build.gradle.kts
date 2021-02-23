@@ -20,6 +20,13 @@ android {
             proguardFiles("proguard-rules.pro")
         }
     }
+
+    buildFeatures.compose = true
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
+        kotlinCompilerVersion = Dependencies.Kotlin.VERSION
+    }
 }
 
 dependencies {

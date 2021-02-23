@@ -66,15 +66,7 @@ fun BaseExtension.applyBaseCommons() = apply {
         targetSdkVersion(Android.Sdk.TARGET)
     }
 
-    buildFeatures.apply {
-        viewBinding = true
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
-        kotlinCompilerVersion = Dependencies.Kotlin.VERSION
-    }
+    buildFeatures.viewBinding = true
 
     compileOptions.apply {
         sourceCompatibility = JavaVersion.VERSION_1_8

@@ -6,6 +6,15 @@ plugins {
     kotlin(module = "android.extensions")
 }
 
+android {
+    buildFeatures.compose = true
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
+        kotlinCompilerVersion = Dependencies.Kotlin.VERSION
+    }
+}
+
 dependencies {
     implementation(Dependencies.Kotlin.STDLIB)
     implementation(Dependencies.AndroidX.CORE_KTX)

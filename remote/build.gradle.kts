@@ -16,7 +16,6 @@ dependencies {
     implementation(Dependencies.Apollo.APOLLO_COROUTINES)
     implementation(Dependencies.Coroutines.CORE)
 
-    addComposeDependencies()
     addDaggerDependencies()
 
     testImplementation(Dependencies.JUnit.JUNIT)
