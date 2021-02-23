@@ -16,7 +16,7 @@ class AnimeMapper @Inject constructor() {
                     userPreferred = it?.title?.userPreferred.orEmpty()
                 ),
                 coverImage = it?.coverImage?.large.orEmpty(),
-                status = ""
+                status = it?.status?.name.orEmpty()
             )
         }
     }
