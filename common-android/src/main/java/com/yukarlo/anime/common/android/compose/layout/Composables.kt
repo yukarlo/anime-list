@@ -1,4 +1,4 @@
-package com.yukarlo.freenow.common.android.compose.layout
+package com.yukarlo.anime.common.android.compose.layout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

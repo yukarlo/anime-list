@@ -1,4 +1,4 @@
-package com.yukarlo.freenow.common.android.ui.theme
+package com.yukarlo.anime.common.android.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
