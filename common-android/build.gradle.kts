@@ -16,6 +16,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core-model"))
+
     implementation(Dependencies.Kotlin.STDLIB)
     implementation(Dependencies.AndroidX.CORE_KTX)
     implementation(Dependencies.AndroidX.APP_COMPAT)
@@ -23,6 +25,7 @@ dependencies {
     implementation(Dependencies.AndroidX.NAVIGATION_UI_KTX)
     implementation(Dependencies.AndroidX.LIFECYCLE_COMMON_JAVA8)
     implementation(Dependencies.Google.MATERIAL)
+    implementation(Dependencies.Accompanist.ACCOMPANIST_COIL)
 
     addComposeDependencies()
     addDaggerDependencies()
