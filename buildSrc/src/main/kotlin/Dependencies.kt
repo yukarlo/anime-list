@@ -33,7 +33,7 @@ object Dependencies {
             "androidx.navigation:navigation-ui-ktx:$ANDROID_NAVIGATION_VERSION"
         const val NAVIGATION_COMPOSE =
             "androidx.navigation:navigation-compose:1.0.0-alpha07"
-        const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.2.5"
+        const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.3.0"
         const val LIFECYCLE_COMMON_JAVA8 =
             "androidx.lifecycle:lifecycle-common-java8:$ANDROID_LIFECYCLE_VERSION"
         const val RUNTIME_KTX =
