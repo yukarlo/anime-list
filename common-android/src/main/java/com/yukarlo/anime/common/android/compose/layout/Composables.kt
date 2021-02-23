@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,6 +18,9 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.yukarlo.anime.common.android.base.Result
+import com.yukarlo.anime.common.android.base.Result.LOADING
+import com.yukarlo.anime.common.android.ui.theme.teal200
 import com.yukarlo.anime.core.model.Anime
 import dev.chrisbanes.accompanist.coil.CoilImage
 
@@ -163,5 +164,62 @@ fun AnimeCardWithTextOverlay(anime: Anime) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ScreenState(
+    result: Result,
+    renderView: @Composable () -> Unit
+) {
+    when (result) {
+        Result.ERROR -> {
+            ErrorView()
+        }
+        Result.SUCCESS -> {
+            renderView()
+        }
+        LOADING -> {
+            LoadingView()
+        }
+    }
+
+}
+
+@Composable
+fun ToolBar(title: String) {
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.h6
+            )
+        },
+        backgroundColor = MaterialTheme.colors.primaryVariant
+    )
+}
+
+@Composable
+fun ErrorView(message: String = "Oops! Something went wrong!") {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = message, color = MaterialTheme.colors.error)
+    }
+}
+
+@Composable
+fun LoadingView() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(
+            color = teal200,
+            modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally),
+        )
     }
 }
