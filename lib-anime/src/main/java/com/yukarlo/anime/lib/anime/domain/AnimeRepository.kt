@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface AnimeRepository {
 
-    suspend fun fetchTopAnime(param: AnimeParam): Flow<List<Anime>?>
+    suspend fun fetchAnime(param: AnimeParam): Flow<List<Anime>?>
 }
