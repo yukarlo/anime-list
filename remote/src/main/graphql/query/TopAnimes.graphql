@@ -1,7 +1,8 @@
 query TopAnimes(
-    $page: Int
+    $page: Int,
+    $itemsPerPage: Int
 ) {
-    Page(page: $page, perPage: 20) {
+    Page(page: $page, perPage: $itemsPerPage) {
         pageInfo {
             total
             perPage
