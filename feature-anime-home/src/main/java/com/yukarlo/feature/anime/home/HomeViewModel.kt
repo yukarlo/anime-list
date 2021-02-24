@@ -18,33 +18,45 @@ internal class HomeViewModel @Inject constructor(
     private val updateHome: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
     val onUpdateHome: StateFlow<HomeUiState> = updateHome
 
+    private var page = 1
+
     init {
-        fetTopAnime()
+        fetchTopAnime()
     }
 
-    private fun fetTopAnime() {
+    private fun fetchTopAnime() {
         viewModelScope.launch {
             getTopAnimeUseCase.execute(
-                param = TopAnimeParam(page = 1)
+                param = TopAnimeParam(page = page)
             )
                 .onStart {
-                    updateHome.value = HomeUiState(
-                        result = LOADING,
-                        homeItems = listOf()
-                    )
+                    if (page == 1) {
+                        updateHome.value = HomeUiState(
+                            result = LOADING,
+                            homeItems = listOf()
+                        )
+                    }
                 }
                 .catch {
+                    page = 1
                     updateHome.value = HomeUiState(
                         result = ERROR,
                         homeItems = listOf()
                     )
                 }
-                .collect {
+                .collect { newAnime ->
+                    page++
                     updateHome.value = HomeUiState(
                         result = SUCCESS,
-                        homeItems = it ?: listOf()
+                        homeItems = newAnime?.let {
+                            updateHome.value.homeItems + it
+                        } ?: emptyList()
                     )
                 }
         }
+    }
+
+    fun requestNextPage() {
+        fetchTopAnime()
     }
 }

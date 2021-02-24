@@ -2,6 +2,7 @@ package com.yukarlo.feature.anime.home
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.viewModels
@@ -36,7 +37,15 @@ internal class HomeFragment : BaseFragment() {
 
     @Composable
     fun AnimeList(animeList: List<Anime>) {
-        LazyGrid(items = animeList, rows = 2, headerText = "Top Anime") { it: Anime, index: Int ->
+        LazyGrid(items = animeList, rows = 3, headerText = "Top Anime") { it: Anime, index: Int ->
+            DisposableEffect(Unit) {
+                if (index == animeList.lastIndex) {
+                    viewModel.requestNextPage()
+                }
+                onDispose {
+                    viewModel
+                }
+            }
             AnimeCard(anime = it)
         }
     }
