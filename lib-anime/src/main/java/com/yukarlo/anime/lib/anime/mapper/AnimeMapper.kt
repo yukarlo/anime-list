@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 class AnimeMapper @Inject constructor() {
 
-    fun mapToDomain(result: List<TopAnimesQuery.Medium?>?): List<Anime>? {
-        return result?.map {
+    fun mapTopAnimeToDomain(result: List<TopAnimesQuery.Medium?>?): List<Anime>? =
+        result?.map {
             Anime(
                 title = Title(
                     english = it?.title?.english.orEmpty(),
@@ -19,5 +19,4 @@ class AnimeMapper @Inject constructor() {
                 status = it?.status?.name.orEmpty()
             )
         }
-    }
 }
