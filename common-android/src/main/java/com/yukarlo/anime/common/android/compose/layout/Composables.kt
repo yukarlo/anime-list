@@ -4,6 +4,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
@@ -19,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.yukarlo.anime.common.android.base.Result
@@ -34,26 +36,48 @@ fun <T> LazyGrid(
     rows: Int = 2,
     padding: Int = 4,
     headerText: String? = null,
+    viewAll: () -> Unit,
+    banner: @Composable LazyItemScope.() -> Unit,
     itemContent: @Composable LazyItemScope.(T, Int) -> Unit
 ) {
     val animatedSet = remember { mutableSetOf<Int>() }
     val chunkedList = items.chunked(size = rows)
-    LazyColumn(
-        modifier = Modifier.padding(horizontal = padding.dp)
-    ) {
+    LazyColumn {
+        item {
+            banner()
+        }
         headerText?.let {
             item {
-                Text(
-                    text = it,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(
-                        start = 8.dp,
-                        end = 8.dp,
-                        top = 16.dp,
-                        bottom = 16.dp
-                    ),
-                    style = MaterialTheme.typography.h3
-                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = it,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .align(alignment = Alignment.CenterStart)
+                            .padding(
+                                start = (padding + 8).dp,
+                                end = (padding + 2).dp,
+                                top = padding.dp
+                            ),
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.caption
+                    )
+                    Text(
+                        text = "view all",
+                        modifier = Modifier
+                            .align(alignment = Alignment.CenterEnd)
+                            .padding(
+                                start = (padding + 2).dp,
+                                end = (padding + 8).dp,
+                                top = padding.dp
+                            )
+                            .clickable {
+                                viewAll()
+                            },
+                        textAlign = TextAlign.End,
+                        style = MaterialTheme.typography.caption
+                    )
+                }
             }
         }
         itemsIndexed(items = chunkedList) { index, it ->
@@ -107,22 +131,23 @@ fun <T> LazyGrid(
                 }
             }
 
-            if (index == 0) {
-                Spacer(
-                    modifier = Modifier.size(size = padding.dp)
-                )
-            }
-
-            Row(modifier = Modifier
-                .offset(y = offsetValue.value.toInt().dp)
-                .alpha(alpha = alphaValue.value)
-                .wrapContentWidth()) {
+            Row(
+                modifier = Modifier
+                    .padding(
+                        top = padding.dp,
+                        start = (padding + 4).dp,
+                        end = (padding + 4).dp,
+                        bottom = (padding + 8).dp
+                    )
+                    .offset(y = offsetValue.value.toInt().dp)
+                    .alpha(alpha = alphaValue.value)
+                    .wrapContentWidth()
+            ) {
                 it.forEachIndexed { rowIndex, item ->
                     Box(
                         modifier = Modifier
                             .weight(weight = 1F)
-                            .align(alignment = Alignment.Top)
-                            .padding(vertical = padding.dp),
+                            .align(alignment = Alignment.Top),
                         contentAlignment = Alignment.Center
                     ) {
                         itemContent(item, index * rows + rowIndex)
@@ -142,7 +167,7 @@ fun AnimeCard(anime: Anime) {
             modifier = Modifier.padding(horizontal = 4.dp)
         ) {
             CoilImage(
-                data = anime.coverImage,
+                data = anime.coverImage.large,
                 modifier = Modifier
                     .aspectRatio(3 / 4F),
                 contentScale = ContentScale.Crop,
@@ -169,64 +194,60 @@ fun AnimeCard(anime: Anime) {
 }
 
 @Composable
-fun AnimeCardWithTextOverlay(anime: Anime) {
+fun AnimeWithTextOverlay(anime: Anime) {
     val density = LocalDensity.current.density
     val width = remember { mutableStateOf(value = 0f) }
     val height = remember { mutableStateOf(value = 0f) }
 
     Box {
-        Card(
-            elevation = 0.dp,
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier.padding(horizontal = 4.dp)
-        ) {
-            Box {
-                CoilImage(
-                    data = anime.coverImage,
-                    modifier = Modifier
-                        .aspectRatio(3 / 4F)
-                        .onGloballyPositioned {
-                            width.value = it.size.width / density
-                            height.value = it.size.height / density
-                        },
-                    contentScale = ContentScale.Crop,
-                    contentDescription = anime.title.english
+        CoilImage(
+            data = anime.coverImage.extraLarge,
+            modifier = Modifier
+                .preferredHeight(350.dp)
+                .onGloballyPositioned {
+                    width.value = it.size.width / density
+                    height.value = it.size.height / density
+                },
+            contentScale = ContentScale.Crop,
+            contentDescription = anime.title.english
+        )
+        Column(
+            modifier = Modifier
+                .size(width.value.dp, height.value.dp)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(Color.Transparent, MaterialTheme.colors.background),
+                        startY = 150F,
+                        endY = 1000F
+                    )
                 )
-                Column(
-                    modifier = Modifier
-                        .size(width.value.dp, height.value.dp)
-                        .background(
-                            Brush.verticalGradient(
-                                colors = listOf(Color.Transparent, MaterialTheme.colors.surface),
-                                startY = 588F,
-                                endY = 888F
-                            )
-                        )
-                        .align(alignment = Alignment.BottomStart)
-                ) { }
-                Column(
-                    modifier = Modifier
-                        .align(alignment = Alignment.BottomStart)
-                        .padding(start = 4.dp, end = 4.dp)
-                ) {
-                    Text(
-                        text = anime.title.english,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        color = MaterialTheme.colors.onSurface,
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.body1,
-                        modifier = Modifier.padding(bottom = 0.dp)
-                    )
-                    Text(
-                        text = anime.status,
-                        maxLines = 1,
-                        color = MaterialTheme.colors.onSurface,
-                        style = MaterialTheme.typography.caption,
-                        modifier = Modifier.padding(top = 0.dp, bottom = 4.dp)
-                    )
-                }
-            }
+                .align(alignment = Alignment.BottomStart)
+        ) { }
+        Column(
+            modifier = Modifier
+                .align(alignment = Alignment.BottomStart)
+                .padding(start = 4.dp, end = 4.dp, bottom = 16.dp)
+        ) {
+            Text(
+                text = anime.title.english,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colors.onSurface,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.h2,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = anime.status,
+                maxLines = 1,
+                color = MaterialTheme.colors.onSurface,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier
+                    .padding(bottom = 4.dp)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
