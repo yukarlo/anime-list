@@ -12,17 +12,28 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import query.TopAnimesQuery
+import type.MediaSeason
+import type.MediaSort
 import javax.inject.Inject
 
 internal class RemoteClientImpl @Inject constructor(
     private val apolloClient: ApolloClient
 ) : RemoteClient {
 
-    override fun getTopAnimeFlow(page: Int, itemsPerPage: Int): Flow<TopAnimesQuery.Page> =
+    override fun getTopAnimeFlow(
+        page: Int,
+        itemsPerPage: Int,
+        year: Int?,
+        season: MediaSeason?,
+        sort: List<MediaSort>?
+    ): Flow<TopAnimesQuery.Page> =
         flow {
             val topAnimeQuery = TopAnimesQuery(
                 page = Input.optional(value = page),
-                itemsPerPage = Input.optional(value = itemsPerPage)
+                itemsPerPage = Input.optional(value = itemsPerPage),
+                year = Input.optional(value = year),
+                season = Input.optional(value = season),
+                sort = Input.optional(value = sort)
             )
 
             val response = apolloClient.query(topAnimeQuery).await()
@@ -31,11 +42,20 @@ internal class RemoteClientImpl @Inject constructor(
             }
         }
 
-    override fun getTopAnimeCallbackFlow(page: Int, itemsPerPage: Int): Flow<TopAnimesQuery.Page> =
+    override fun getTopAnimeCallbackFlow(
+        page: Int,
+        itemsPerPage: Int,
+        year: Int?,
+        season: MediaSeason?,
+        sort: List<MediaSort>?
+    ): Flow<TopAnimesQuery.Page> =
         callbackFlow {
             val topAnimeQuery = TopAnimesQuery(
                 page = Input.optional(value = page),
-                itemsPerPage = Input.optional(value = itemsPerPage)
+                itemsPerPage = Input.optional(value = itemsPerPage),
+                year = Input.optional(value = year),
+                season = Input.optional(value = season),
+                sort = Input.optional(value = sort)
             )
             apolloClient.query(topAnimeQuery).enqueue(
                 object : ApolloCall.Callback<TopAnimesQuery.Data>() {
