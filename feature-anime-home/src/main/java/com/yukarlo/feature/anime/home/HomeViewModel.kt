@@ -3,7 +3,8 @@ package com.yukarlo.feature.anime.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result.*
-import com.yukarlo.anime.core.model.TopAnimeParam
+import com.yukarlo.anime.core.model.AnimeParam
+import com.yukarlo.anime.core.model.AnimeSort
 import com.yukarlo.anime.lib.anime.domain.GetTopAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -27,7 +28,10 @@ internal class HomeViewModel @Inject constructor(
     private fun fetchTopAnime() {
         viewModelScope.launch {
             getTopAnimeUseCase.execute(
-                param = TopAnimeParam(page = page)
+                param = AnimeParam(
+                    page = page,
+                    sort = listOf(AnimeSort.SCORE_DESC)
+                )
             )
                 .onStart {
                     if (page == 1) {
