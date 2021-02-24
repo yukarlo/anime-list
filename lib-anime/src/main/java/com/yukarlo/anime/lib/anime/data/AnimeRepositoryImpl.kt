@@ -1,7 +1,7 @@
 package com.yukarlo.anime.lib.anime.data
 
 import com.yukarlo.anime.core.model.Anime
-import com.yukarlo.anime.core.model.TopAnimeParam
+import com.yukarlo.anime.core.model.AnimeParam
 import com.yukarlo.anime.lib.anime.domain.AnimeRepository
 import com.yukarlo.anime.lib.anime.mapper.AnimeMapper
 import com.yukarlo.remote.RemoteClient
