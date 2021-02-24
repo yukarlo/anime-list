@@ -1,6 +1,9 @@
 query TopAnimes(
     $page: Int,
-    $itemsPerPage: Int
+    $itemsPerPage: Int,
+    $sort: [MediaSort],
+    $year: Int,
+    $season: MediaSeason
 ) {
     Page(page: $page, perPage: $itemsPerPage) {
         pageInfo {
@@ -10,7 +13,13 @@ query TopAnimes(
             lastPage
             hasNextPage
         }
-        media(format: TV, type: ANIME, sort: [SCORE_DESC]) {
+        media(
+            format: TV,
+            type: ANIME,
+            sort: $sort,
+            seasonYear: $year,
+            season: $season
+        ) {
             id
             title {
                 english
