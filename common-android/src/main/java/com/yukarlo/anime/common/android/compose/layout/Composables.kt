@@ -1,5 +1,8 @@
 package com.yukarlo.anime.common.android.compose.layout
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.yukarlo.anime.common.android.base.Result
 import com.yukarlo.anime.common.android.base.Result.LOADING
@@ -77,12 +81,12 @@ fun <T> LazyGrid(
 
 @Composable
 fun AnimeCard(anime: Anime) {
-    Card(
-        elevation = 0.dp,
-        shape = MaterialTheme.shapes.medium,
-        modifier = Modifier.padding(horizontal = 4.dp)
-    ) {
-        Column {
+    Column {
+        Card(
+            elevation = 0.dp,
+            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier.padding(horizontal = 4.dp)
+        ) {
             CoilImage(
                 data = anime.coverImage,
                 modifier = Modifier
@@ -90,20 +94,23 @@ fun AnimeCard(anime: Anime) {
                 contentScale = ContentScale.Crop,
                 contentDescription = anime.title.english
             )
-            Text(
-                text = anime.title.english,
-                color = MaterialTheme.colors.onSurface,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(bottom = 0.dp, start = 4.dp, end = 4.dp)
-            )
-            Text(
-                text = anime.status,
-                color = MaterialTheme.colors.onSurface,
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(top = 0.dp, bottom = 4.dp, start = 4.dp, end = 4.dp)
-            )
         }
+        Text(
+            text = anime.title.english,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            color = MaterialTheme.colors.onSurface,
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.body1,
+            modifier = Modifier.padding(start = 4.dp, end = 4.dp)
+        )
+        Text(
+            maxLines = 1,
+            text = anime.status,
+            color = MaterialTheme.colors.onSurface,
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier.padding(bottom = 4.dp, start = 4.dp, end = 4.dp)
+        )
     }
 }
 
@@ -150,6 +157,8 @@ fun AnimeCardWithTextOverlay(anime: Anime) {
                 ) {
                     Text(
                         text = anime.title.english,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
                         color = MaterialTheme.colors.onSurface,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.body1,
@@ -157,6 +166,7 @@ fun AnimeCardWithTextOverlay(anime: Anime) {
                     )
                     Text(
                         text = anime.status,
+                        maxLines = 1,
                         color = MaterialTheme.colors.onSurface,
                         style = MaterialTheme.typography.caption,
                         modifier = Modifier.padding(top = 0.dp, bottom = 4.dp)
