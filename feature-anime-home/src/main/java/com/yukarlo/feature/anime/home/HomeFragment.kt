@@ -1,5 +1,7 @@
 package com.yukarlo.feature.anime.home
 
+import android.widget.Toast
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -7,11 +9,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.viewModels
 import com.yukarlo.anime.common.android.base.BaseFragment
-import com.yukarlo.anime.common.android.compose.layout.AnimeCard
-import com.yukarlo.anime.common.android.compose.layout.LazyGrid
-import com.yukarlo.anime.common.android.compose.layout.ScreenState
-import com.yukarlo.anime.common.android.compose.layout.ToolBar
+import com.yukarlo.anime.common.android.compose.layout.*
 import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.Image
 import com.yukarlo.anime.core.model.Title
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,24 +29,42 @@ internal class HomeFragment : BaseFragment() {
                 }
             ) {
                 ScreenState(result = homeState.result) {
-                    AnimeList(animeList = homeState.homeItems)
+                    AnimeList(
+                        animeList = homeState.homeItems,
+                        animeBanner = homeState.homeAnimeBanner
+                    )
                 }
             }
         }
     }
 
     @Composable
-    fun AnimeList(animeList: List<Anime>) {
-        LazyGrid(items = animeList, rows = 3, headerText = "Top Anime") { it: Anime, index: Int ->
-            DisposableEffect(Unit) {
-                if (index == animeList.lastIndex) {
-                    viewModel.requestNextPage()
+    fun AnimeList(animeList: List<Anime>, animeBanner: Anime?) {
+        Column {
+            LazyGrid(
+                items = animeList,
+                rows = 3,
+                headerText = "ALL TIME TOP ANIME",
+                viewAll = {
+                    Toast.makeText(requireContext(), "view all", Toast.LENGTH_LONG).show()
+                },
+                itemContent = { it: Anime, index: Int ->
+                    DisposableEffect(Unit) {
+                        if (index == animeList.lastIndex) {
+                            viewModel.requestNextPage()
+                        }
+                        onDispose {
+                            viewModel
+                        }
+                    }
+                    AnimeCard(anime = it)
+                },
+                banner = {
+                    animeBanner?.let {
+                        AnimeWithTextOverlay(anime = it)
+                    }
                 }
-                onDispose {
-                    viewModel
-                }
-            }
-            AnimeCard(anime = it)
+            )
         }
     }
 
@@ -56,20 +74,27 @@ internal class HomeFragment : BaseFragment() {
         val animeList = listOf(
             Anime(
                 title = Title("Anime 1"),
-                coverImage = "",
+                coverImage = Image(extraLarge = "", large = ""),
                 status = "Ongoing"
             ),
             Anime(
                 title = Title("Anime 2"),
-                coverImage = "",
+                coverImage = Image(extraLarge = "", large = ""),
                 status = "Ongoing"
             ),
             Anime(
                 title = Title("Anime 3"),
-                coverImage = "",
+                coverImage = Image(extraLarge = "", large = ""),
                 status = "Ongoing"
             )
         )
-        AnimeList(animeList = animeList)
+        AnimeList(
+            animeList = animeList,
+            animeBanner = Anime(
+                title = Title("Anime 0"),
+                coverImage = Image(extraLarge = "", large = ""),
+                status = "Ongoing"
+            )
+        )
     }
 }
