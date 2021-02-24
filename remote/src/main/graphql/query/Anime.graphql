@@ -27,6 +27,7 @@ query TopAnimes(
                 userPreferred
             }
             coverImage {
+                extraLarge
                 large
             }
             bannerImage
