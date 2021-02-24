@@ -18,10 +18,11 @@ internal class RemoteClientImpl @Inject constructor(
     private val apolloClient: ApolloClient
 ) : RemoteClient {
 
-    override fun getTopAnimeFlow(page: Int): Flow<TopAnimesQuery.Page> =
+    override fun getTopAnimeFlow(page: Int, itemsPerPage: Int): Flow<TopAnimesQuery.Page> =
         flow {
             val topAnimeQuery = TopAnimesQuery(
-                page = Input.optional(value = page)
+                page = Input.optional(value = page),
+                itemsPerPage = Input.optional(value = itemsPerPage)
             )
 
             val response = apolloClient.query(topAnimeQuery).await()
@@ -30,30 +31,32 @@ internal class RemoteClientImpl @Inject constructor(
             }
         }
 
-    override fun getTopAnimeCallbackFlow(page: Int): Flow<TopAnimesQuery.Page> = callbackFlow {
-        val topAnimeQuery = TopAnimesQuery(
-            page = Input.optional(value = page)
-        )
-        apolloClient.query(topAnimeQuery).enqueue(
-            object : ApolloCall.Callback<TopAnimesQuery.Data>() {
-                override fun onResponse(response: Response<TopAnimesQuery.Data>) {
-                    response.data?.page?.let {
-                        offer(it)
+    override fun getTopAnimeCallbackFlow(page: Int, itemsPerPage: Int): Flow<TopAnimesQuery.Page> =
+        callbackFlow {
+            val topAnimeQuery = TopAnimesQuery(
+                page = Input.optional(value = page),
+                itemsPerPage = Input.optional(value = itemsPerPage)
+            )
+            apolloClient.query(topAnimeQuery).enqueue(
+                object : ApolloCall.Callback<TopAnimesQuery.Data>() {
+                    override fun onResponse(response: Response<TopAnimesQuery.Data>) {
+                        response.data?.page?.let {
+                            offer(it)
+                        }
                     }
-                }
 
-                override fun onFailure(e: ApolloException) {
-                    close(e)
-                }
-
-                override fun onStatusEvent(event: ApolloCall.StatusEvent) {
-                    if (event == ApolloCall.StatusEvent.COMPLETED) {
-                        close()
+                    override fun onFailure(e: ApolloException) {
+                        close(e)
                     }
-                }
 
-            }
-        )
-        awaitClose { this.cancel() }
-    }
+                    override fun onStatusEvent(event: ApolloCall.StatusEvent) {
+                        if (event == ApolloCall.StatusEvent.COMPLETED) {
+                            close()
+                        }
+                    }
+
+                }
+            )
+            awaitClose { this.cancel() }
+        }
 }
