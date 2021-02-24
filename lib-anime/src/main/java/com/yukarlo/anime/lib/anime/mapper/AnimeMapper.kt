@@ -1,6 +1,7 @@
 package com.yukarlo.anime.lib.anime.mapper
 
 import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.Image
 import com.yukarlo.anime.core.model.Title
 import query.TopAnimesQuery
 import javax.inject.Inject
@@ -15,7 +16,10 @@ class AnimeMapper @Inject constructor() {
                     native = it?.title?.native_.orEmpty(),
                     userPreferred = it?.title?.userPreferred.orEmpty()
                 ),
-                coverImage = it?.coverImage?.large.orEmpty(),
+                coverImage = Image(
+                    extraLarge = it?.coverImage?.extraLarge.orEmpty(),
+                    large = it?.coverImage?.large.orEmpty()
+                ),
                 status = it?.status?.name.orEmpty()
             )
         }
