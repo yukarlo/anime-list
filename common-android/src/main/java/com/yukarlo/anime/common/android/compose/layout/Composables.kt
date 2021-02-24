@@ -9,11 +9,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -27,6 +26,7 @@ import com.yukarlo.anime.common.android.base.Result.LOADING
 import com.yukarlo.anime.common.android.ui.theme.teal200
 import com.yukarlo.anime.core.model.Anime
 import dev.chrisbanes.accompanist.coil.CoilImage
+import kotlinx.coroutines.launch
 
 @Composable
 fun <T> LazyGrid(
@@ -36,6 +36,7 @@ fun <T> LazyGrid(
     headerText: String? = null,
     itemContent: @Composable LazyItemScope.(T, Int) -> Unit
 ) {
+    val animatedSet = remember { mutableSetOf<Int>() }
     val chunkedList = items.chunked(size = rows)
     LazyColumn(
         modifier = Modifier.padding(horizontal = padding.dp)
@@ -56,13 +57,66 @@ fun <T> LazyGrid(
             }
         }
         itemsIndexed(items = chunkedList) { index, it ->
+            val offsetValue = remember {
+                Animatable(
+                    initialValue = if (index in animatedSet) {
+                        0F
+                    } else {
+                        150F
+                    }
+                )
+            }
+
+            val alphaValue = remember {
+                Animatable(
+                    initialValue = if (index in animatedSet) {
+                        1F
+                    } else {
+                        150F
+                    }
+                )
+            }
+
+            val composableScope = rememberCoroutineScope()
+            DisposableEffect(Unit) {
+                composableScope.launch {
+                    offsetValue.animateTo(
+                        targetValue = 0F,
+                        animationSpec = TweenSpec(
+                            durationMillis = 400,
+                            delay = 100,
+                            easing = LinearOutSlowInEasing
+                        )
+                    )
+                    alphaValue.animateTo(
+                        targetValue = 1F,
+                        animationSpec = TweenSpec(
+                            durationMillis = 400,
+                            delay = 100,
+                            easing = LinearOutSlowInEasing
+                        )
+                    )
+                    animatedSet.add(index)
+                }
+
+                onDispose {
+                    composableScope.launch {
+                        offsetValue.snapTo(0F)
+                        offsetValue.stop()
+                    }
+                }
+            }
+
             if (index == 0) {
                 Spacer(
                     modifier = Modifier.size(size = padding.dp)
                 )
             }
 
-            Row(modifier = Modifier.wrapContentWidth()) {
+            Row(modifier = Modifier
+                .offset(y = offsetValue.value.toInt().dp)
+                .alpha(alpha = alphaValue.value)
+                .wrapContentWidth()) {
                 it.forEachIndexed { rowIndex, item ->
                     Box(
                         modifier = Modifier
