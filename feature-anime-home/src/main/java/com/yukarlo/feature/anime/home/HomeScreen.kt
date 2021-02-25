@@ -9,10 +9,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
-import com.yukarlo.anime.common.android.compose.layout.AnimeCard
-import com.yukarlo.anime.common.android.compose.layout.AnimeWithTextOverlay
-import com.yukarlo.anime.common.android.compose.layout.LazyGrid
-import com.yukarlo.anime.common.android.compose.layout.ScreenState
+import com.yukarlo.anime.common.android.components.AnimeCard
+import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
+import com.yukarlo.anime.common.android.components.LazyGrid
+import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.Image
 import com.yukarlo.anime.core.model.Title
