@@ -296,11 +296,9 @@ fun ErrorView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = message, color = MaterialTheme.colors.error)
-        Button(,
-            colors = ButtonDefaults.textButtonColors(
-                
-            ),
-            onClick = { retry() }) {
+        Button(onClick = {
+            retry()
+        }) {
             Text(
                 text = "Retry"
             )
