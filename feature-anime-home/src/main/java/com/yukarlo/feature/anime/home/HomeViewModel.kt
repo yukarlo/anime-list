@@ -3,7 +3,6 @@ package com.yukarlo.feature.anime.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result.*
-import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeParam
 import com.yukarlo.anime.core.model.AnimeSeason
 import com.yukarlo.anime.core.model.AnimeSort
@@ -44,10 +43,10 @@ internal class HomeViewModel @Inject constructor(
                     }
                 }
                 .catch {
-                    page = 1
                     updateHome.value = HomeUiState(
                         result = ERROR,
-                        homeItems = listOf()
+                        homeAnimeBanner = updateHome.value.homeAnimeBanner,
+                        homeItems = updateHome.value.homeItems
                     )
                 }
                 .collect { newAnime ->
@@ -104,6 +103,10 @@ internal class HomeViewModel @Inject constructor(
     }
 
     fun requestNextPage() {
+        fetchTopAnime()
+    }
+
+    fun retry() {
         fetchTopAnime()
     }
 }

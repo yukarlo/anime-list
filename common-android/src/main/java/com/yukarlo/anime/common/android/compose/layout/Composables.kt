@@ -255,11 +255,12 @@ fun AnimeWithTextOverlay(anime: Anime) {
 @Composable
 fun ScreenState(
     result: Result,
-    renderView: @Composable () -> Unit
+    renderView: @Composable () -> Unit,
+    retry: () -> Unit
 ) {
     when (result) {
         Result.ERROR -> {
-            ErrorView()
+            ErrorView(retry = retry)
         }
         Result.SUCCESS -> {
             renderView()
@@ -285,13 +286,25 @@ fun ToolBar(title: String) {
 }
 
 @Composable
-fun ErrorView(message: String = "Oops! Something went wrong!") {
+fun ErrorView(
+    message: String = "Oops! Something went wrong!",
+    retry: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = message, color = MaterialTheme.colors.error)
+        Button(,
+            colors = ButtonDefaults.textButtonColors(
+                
+            ),
+            onClick = { retry() }) {
+            Text(
+                text = "Retry"
+            )
+        }
     }
 }
 

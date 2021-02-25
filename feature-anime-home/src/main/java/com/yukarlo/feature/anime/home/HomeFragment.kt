@@ -28,12 +28,18 @@ internal class HomeFragment : BaseFragment() {
                     ToolBar(title = "Anime List")
                 }
             ) {
-                ScreenState(result = homeState.result) {
-                    AnimeList(
-                        animeList = homeState.homeItems,
-                        animeBanner = homeState.homeAnimeBanner
-                    )
-                }
+                ScreenState(
+                    result = homeState.result,
+                    retry = {
+                        viewModel.retry()
+                    },
+                    renderView = {
+                        AnimeList(
+                            animeList = homeState.homeItems,
+                            animeBanner = homeState.homeAnimeBanner
+                        )
+                    }
+                )
             }
         }
     }
