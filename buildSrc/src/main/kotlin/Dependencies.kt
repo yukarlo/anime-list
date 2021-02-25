@@ -2,7 +2,6 @@ object Dependencies {
     object Kotlin {
         const val VERSION = "1.4.30"
         const val STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$VERSION"
-        const val GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$VERSION"
         const val EXTENSIONS = "org.jetbrains.kotlin:kotlin-android-extensions:$VERSION"
     }
 
@@ -19,28 +18,18 @@ object Dependencies {
 
     object AndroidX {
         const val ANDROID_NAVIGATION_VERSION = "2.3.3"
-        const val ANDROID_COMPOSE_VERSION = "1.0.0-alpha12"
+        const val ANDROID_COMPOSE_VERSION = "1.0.0-beta01"
         private const val ANDROID_LIFECYCLE_VERSION = "2.3.0"
 
         const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.0-beta01"
         const val CORE_KTX = "androidx.core:core-ktx:1.5.0-beta01"
-        const val SWIPE_REFRESH_LAYOUT =
-            "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
-        const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.0-alpha2"
-        const val NAVIGATION_FRAGMENT_KTX =
-            "androidx.navigation:navigation-fragment-ktx:$ANDROID_NAVIGATION_VERSION"
-        const val NAVIGATION_UI_KTX =
-            "androidx.navigation:navigation-ui-ktx:$ANDROID_NAVIGATION_VERSION"
-        const val NAVIGATION_COMPOSE =
-            "androidx.navigation:navigation-compose:1.0.0-alpha07"
-        const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.3.0"
         const val LIFECYCLE_COMMON_JAVA8 =
             "androidx.lifecycle:lifecycle-common-java8:$ANDROID_LIFECYCLE_VERSION"
         const val RUNTIME_KTX =
             "androidx.lifecycle:lifecycle-runtime-ktx:$ANDROID_LIFECYCLE_VERSION"
-        const val VIEWMODEL_KTX =
-            "androidx.lifecycle:lifecycle-viewmodel-ktx:$ANDROID_LIFECYCLE_VERSION"
-        const val COMPOSE_ACTIVITY = "androidx.activity:activity-compose:1.3.0-alpha02"
+        const val COMPOSE_ACTIVITY = "androidx.activity:activity-compose:1.3.0-alpha03"
+        const val COMPOSE_NAVIGATION = "androidx.navigation:navigation-compose:1.0.0-alpha08"
+        const val COMPOSE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"
         const val COMPOSE_UI = "androidx.compose.ui:ui:$ANDROID_COMPOSE_VERSION"
         const val COMPOSE_MATERIAL = "androidx.compose.material:material:$ANDROID_COMPOSE_VERSION"
         const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling:$ANDROID_COMPOSE_VERSION"
@@ -58,6 +47,7 @@ object Dependencies {
         const val DAGGER_HILT_LIFECYCLE_VIEWMODEL =
             "androidx.hilt:hilt-lifecycle-viewmodel:$DAGGER_HILT_VERSION"
         const val DAGGER_HILT_COMPILER = "androidx.hilt:hilt-compiler:$DAGGER_HILT_VERSION"
+        const val DAGGER_HILT_NAVIGATION = "androidx.hilt:hilt-navigation:$DAGGER_HILT_VERSION"
         const val DAGGER_HILT_ANDROID_GRADLE_PLUGIN =
             "com.google.dagger:hilt-android-gradle-plugin:$DAGGER_HILT_ANDROID_VERSION"
     }
@@ -79,6 +69,6 @@ object Dependencies {
     }
 
     object Accompanist {
-        const val ACCOMPANIST_COIL = "dev.chrisbanes.accompanist:accompanist-coil:0.5.1"
+        const val ACCOMPANIST_COIL = "dev.chrisbanes.accompanist:accompanist-coil:0.6.0"
     }
 }
