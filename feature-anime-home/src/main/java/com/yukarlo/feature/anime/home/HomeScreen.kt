@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
@@ -36,7 +37,8 @@ fun HomeScreen(
                 AnimeList(
                     animeList = homeState.homeItems,
                     animeBanner = homeState.homeAnimeBanner,
-                    requestNextPage = viewModel::requestNextPage
+                    requestNextPage = viewModel::requestNextPage,
+                    dispose = { viewModel }
                 )
             }
         )
@@ -47,7 +49,8 @@ fun HomeScreen(
 private fun AnimeList(
     animeList: List<Anime>,
     animeBanner: Anime?,
-    requestNextPage: () -> Unit
+    requestNextPage: () -> Unit,
+    dispose: () -> Unit
 ) {
     Column {
         LazyGrid(
@@ -62,7 +65,7 @@ private fun AnimeList(
                         requestNextPage()
                     }
                     onDispose {
-                        requestNextPage()
+                        dispose()
                     }
                 }
                 AnimeCard(anime = it)
@@ -76,7 +79,7 @@ private fun AnimeList(
     }
 }
 
-@androidx.compose.ui.tooling.preview.Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     val animeList = listOf(
@@ -103,6 +106,7 @@ fun DefaultPreview() {
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing"
         ),
-        requestNextPage = { }
+        requestNextPage = { },
+        dispose = { }
     )
 }
