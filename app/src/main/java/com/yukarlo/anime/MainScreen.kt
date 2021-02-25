@@ -2,12 +2,15 @@ package com.yukarlo.anime
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
+import com.yukarlo.anime.BottomNavigationScreens.*
 import com.yukarlo.feature.anime.home.HomeScreen
 
 sealed class BottomNavigationScreens(
@@ -39,9 +42,9 @@ fun MainScreen() {
     val navController = rememberNavController()
 
     val bottomNavigationItems = listOf(
-        BottomNavigationScreens.Home,
-        BottomNavigationScreens.Search,
-        BottomNavigationScreens.About
+        Home,
+        Search,
+        About
     )
 
     Scaffold(
@@ -62,13 +65,13 @@ private fun MainScreenNavigationConfigurations(
 ) {
     NavHost(
         navController = navController,
-        startDestination = BottomNavigationScreens.Home.route
+        startDestination = Home.route
     ) {
-        composable(BottomNavigationScreens.Home.route) { navBackStackEntry ->
+        composable(route = Home.route) { navBackStackEntry ->
             HomeScreen(navBackStackEntry = navBackStackEntry)
         }
-        composable(BottomNavigationScreens.Search.route) {}
-        composable(BottomNavigationScreens.About.route) {}
+        composable(route = Search.route) {}
+        composable(route = About.route) {}
     }
 }
 
