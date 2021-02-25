@@ -40,11 +40,10 @@ dependencies {
     implementation(Dependencies.Google.MATERIAL)
     implementation(Dependencies.AndroidX.RUNTIME_KTX)
     implementation(Dependencies.Apollo.RUNTIME)
-    implementation(Dependencies.AndroidX.NAVIGATION_UI_KTX)
-    implementation(Dependencies.AndroidX.NAVIGATION_FRAGMENT_KTX)
 
     addComposeDependencies()
     implementation(Dependencies.AndroidX.COMPOSE_ACTIVITY)
+    implementation(Dependencies.AndroidX.COMPOSE_NAVIGATION)
 
     addDaggerDependencies()
 
