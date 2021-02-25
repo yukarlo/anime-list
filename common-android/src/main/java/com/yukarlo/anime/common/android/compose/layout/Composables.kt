@@ -203,7 +203,7 @@ fun AnimeWithTextOverlay(anime: Anime) {
         CoilImage(
             data = anime.coverImage.extraLarge,
             modifier = Modifier
-                .preferredHeight(350.dp)
+                .requiredHeight(height = 350.dp)
                 .onGloballyPositioned {
                     width.value = it.size.width / density
                     height.value = it.size.height / density
