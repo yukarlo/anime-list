@@ -24,8 +24,7 @@ dependencies {
     implementation(Dependencies.Google.MATERIAL)
     implementation(Dependencies.AndroidX.RUNTIME_KTX)
     implementation(Dependencies.Accompanist.ACCOMPANIST_COIL)
-    implementation(Dependencies.AndroidX.VIEWMODEL_KTX)
-    implementation(Dependencies.AndroidX.FRAGMENT_KTX)
+    implementation(Dependencies.AndroidX.COMPOSE_VIEWMODEL)
     implementation(Dependencies.Coroutines.CORE)
 
     addDaggerDependencies()

@@ -53,7 +53,7 @@ internal class HomeViewModel @Inject constructor(
                     page++
                     updateHome.value = HomeUiState(
                         result = SUCCESS,
-                        homeAnimeBanner = newAnime?.random(),
+                        homeAnimeBanner = updateHome.value.homeItems.first(),
                         homeItems = newAnime?.let {
                             updateHome.value.homeItems + it
                         } ?: emptyList()
