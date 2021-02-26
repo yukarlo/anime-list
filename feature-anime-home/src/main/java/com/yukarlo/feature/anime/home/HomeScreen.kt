@@ -25,7 +25,10 @@ fun HomeScreen(
         context = LocalContext.current,
         navBackStackEntry = navBackStackEntry
     )
-    val viewModel: HomeViewModel = viewModel("HomeViewModel", factory)
+    val viewModel: HomeViewModel = viewModel(
+        key = HomeViewModel::class.java.simpleName,
+        factory = factory
+    )
 
     viewModel.onUpdateHome.collectAsState().value.let { homeState ->
         ScreenState(
