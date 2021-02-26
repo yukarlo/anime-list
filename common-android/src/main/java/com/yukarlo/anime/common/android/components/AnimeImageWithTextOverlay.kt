@@ -31,22 +31,22 @@ fun AnimeWithTextOverlay(anime: Anime) {
         CoilImage(
             data = anime.coverImage.extraLarge,
             modifier = Modifier
-                .requiredHeight(height = 350.dp)
+                .requiredHeight(height = 450.dp)
                 .onGloballyPositioned {
                     width.value = it.size.width / density
-                    height.value = it.size.height / density
+                    height.value = it.size.height / (density * 2)
                 },
             contentScale = ContentScale.Crop,
             contentDescription = anime.title.english
         )
         Column(
             modifier = Modifier
-                .size(width.value.dp, height.value.dp)
+                .size(width = width.value.dp, height = height.value.dp)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(Color.Transparent, MaterialTheme.colors.background),
-                        startY = 150F,
-                        endY = 1000F
+                        startY = 0F,
+                        endY = 600F
                     )
                 )
                 .align(alignment = Alignment.BottomStart)
