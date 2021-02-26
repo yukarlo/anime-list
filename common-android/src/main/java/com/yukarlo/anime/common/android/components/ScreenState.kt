@@ -17,7 +17,7 @@ fun ScreenState(
             renderView()
         }
         Result.LOADING -> {
-            Loading()
+            CircularLoading()
         }
     }
 }

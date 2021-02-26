@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import com.yukarlo.anime.common.android.ui.theme.teal200
 
 @Composable
-fun Loading() {
+fun CircularLoading() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
