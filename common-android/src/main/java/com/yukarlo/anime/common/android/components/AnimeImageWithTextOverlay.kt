@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -61,13 +60,12 @@ fun AnimeWithTextOverlay(anime: Anime) {
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colors.onSurface,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.h2,
-                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.h3,
+                modifier = Modifier.padding(horizontal = 16.dp),
                 textAlign = TextAlign.Center
             )
             Text(
-                text = anime.status,
+                text = anime.genres.orEmpty(),
                 maxLines = 1,
                 color = MaterialTheme.colors.onSurface,
                 style = MaterialTheme.typography.caption,
