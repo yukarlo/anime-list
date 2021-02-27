@@ -89,17 +89,29 @@ fun DefaultPreview() {
         Anime(
             title = Title("Anime 1"),
             coverImage = Image(extraLarge = "", large = ""),
-            status = "Ongoing"
+            status = "Ongoing",
+            startDate = "",
+            endDate = "",
+            genres = "",
+            formatAndYear = ""
         ),
         Anime(
             title = Title("Anime 2"),
             coverImage = Image(extraLarge = "", large = ""),
-            status = "Ongoing"
+            status = "Ongoing",
+            startDate = "",
+            endDate = "",
+            genres = "",
+            formatAndYear = ""
         ),
         Anime(
             title = Title("Anime 3"),
             coverImage = Image(extraLarge = "", large = ""),
-            status = "Ongoing"
+            status = "Ongoing",
+            startDate = "",
+            endDate = "",
+            genres = "",
+            formatAndYear = ""
         )
     )
     AnimeList(
@@ -107,7 +119,11 @@ fun DefaultPreview() {
         animeBanner = Anime(
             title = Title("Anime 0"),
             coverImage = Image(extraLarge = "", large = ""),
-            status = "Ongoing"
+            status = "Ongoing",
+            startDate = "",
+            endDate = "",
+            genres = "",
+            formatAndYear = ""
         ),
         requestNextPage = { },
         dispose = { }

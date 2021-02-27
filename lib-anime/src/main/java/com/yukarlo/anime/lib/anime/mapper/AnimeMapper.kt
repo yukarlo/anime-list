@@ -20,7 +20,13 @@ class AnimeMapper @Inject constructor() {
                     extraLarge = it?.coverImage?.extraLarge.orEmpty(),
                     large = it?.coverImage?.large.orEmpty()
                 ),
-                status = it?.status?.name.orEmpty()
+                status = it?.status?.name.orEmpty(),
+                genres = it?.genres?.joinToString(separator = " • ").orEmpty(),
+                startDate = "${it?.startDate?.month}.${it?.startDate?.day}.${it?.startDate?.year}",
+                endDate = "${it?.endDate?.month}.${it?.endDate?.day}.${it?.endDate?.year}",
+                formatAndYear = it?.let { anime ->
+                    "${anime.format?.name?.toLowerCase()} • ${anime.startDate?.year}"
+                }.orEmpty()
             )
         }
 }
