@@ -43,6 +43,7 @@ query TopAnimes(
             }
             status(version: 2)
             genres
+            format
         }
     }
 }
