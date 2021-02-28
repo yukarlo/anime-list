@@ -1,8 +1,6 @@
 package com.yukarlo.anime.common.android.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -16,7 +14,11 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun AnimeCard(anime: Anime) {
-    Column {
+    Column(
+        modifier = Modifier
+            .width(width = 140.dp)
+            .height(height = 260.dp)
+    ) {
         Card(
             elevation = 0.dp,
             shape = MaterialTheme.shapes.medium,
@@ -36,21 +38,27 @@ fun AnimeCard(anime: Anime) {
             overflow = TextOverflow.Ellipsis,
             color = MaterialTheme.colors.onSurface,
             style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 2.dp)
+            modifier = Modifier
+                .padding(start = 4.dp, end = 4.dp, bottom = 2.dp)
+                .wrapContentHeight()
         )
         Text(
             maxLines = 1,
             text = anime.title.native,
             color = MaterialTheme.colors.onSurface,
             style = MaterialTheme.typography.overline,
-            modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
+            modifier = Modifier
+                .padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
+                .wrapContentHeight()
         )
         Text(
             maxLines = 1,
             text = anime.formatAndYear,
             color = MaterialTheme.colors.onSurface,
             style = MaterialTheme.typography.caption,
-            modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
+            modifier = Modifier
+                .padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
+                .fillMaxHeight()
         )
     }
 }
