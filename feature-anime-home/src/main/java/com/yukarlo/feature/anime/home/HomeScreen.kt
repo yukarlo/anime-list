@@ -1,19 +1,27 @@
 package com.yukarlo.feature.anime.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
-import com.yukarlo.anime.common.android.components.LazyGrid
+import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.AnimeRequest
 import com.yukarlo.anime.core.model.Image
 import com.yukarlo.anime.core.model.Title
 
@@ -38,10 +46,7 @@ fun HomeScreen(
             },
             renderView = {
                 AnimeList(
-                    animeList = homeState.homeItems,
-                    animeBanner = homeState.homeAnimeBanner,
-                    requestNextPage = viewModel::requestNextPage,
-                    dispose = { viewModel }
+                    homeItems = homeState.homeItems
                 )
             }
         )
@@ -50,35 +55,42 @@ fun HomeScreen(
 
 @Composable
 private fun AnimeList(
-    animeList: List<Anime>,
-    animeBanner: Anime?,
-    requestNextPage: () -> Unit,
-    dispose: () -> Unit
+    homeItems: List<HomeItems>
 ) {
-    Column {
-        LazyGrid(
-            items = animeList,
-            rows = 3,
-            headerText = "ALL TIME TOP ANIME",
-            viewAll = {
-            },
-            itemContent = { it: Anime, index: Int ->
-                DisposableEffect(Unit) {
-                    if (index == animeList.lastIndex) {
-                        requestNextPage()
-                    }
-                    onDispose {
-                        dispose()
-                    }
+    Column(
+        modifier = Modifier
+            .verticalScroll(state = rememberScrollState())
+    ) {
+        homeItems.forEach { homeItem ->
+            val animeList: List<Anime>? = when (homeItem) {
+                is HomeItems.TrendingAnime -> {
+                    ListHeaderTitle(
+                        title = homeItem.request.title,
+                        viewAll = { }
+                    )
+                    homeItem.trendingAnime
                 }
-                AnimeCard(anime = it)
-            },
-            banner = {
-                animeBanner?.let {
-                    AnimeWithTextOverlay(anime = it)
+                is HomeItems.TopAnime -> {
+                    AnimeWithTextOverlay(anime = homeItem.topAnime.orEmpty().random())
+                    ListHeaderTitle(
+                        title = homeItem.request.title,
+                        viewAll = { }
+                    )
+                    homeItem.topAnime
                 }
             }
-        )
+
+            LazyRow(
+                modifier = Modifier.padding(start = 4.dp, end = 8.dp)
+            ) {
+                itemsIndexed(items = animeList.orEmpty().take(n = 10)) { _, it ->
+                    AnimeCard(anime = it)
+                }
+            }
+
+            Spacer(modifier = Modifier.padding(top = 16.dp))
+        }
+        Spacer(modifier = Modifier.padding(top = 64.dp))
     }
 }
 
@@ -114,18 +126,22 @@ fun DefaultPreview() {
             formatAndYear = ""
         )
     )
+    val homeItems = mutableListOf<HomeItems>().apply {
+        add(
+            HomeItems.TopAnime(
+                topAnime = animeList,
+                request = AnimeRequest.TrendingAnime
+            )
+        )
+        add(
+            HomeItems.TrendingAnime(
+                trendingAnime = animeList,
+                request = AnimeRequest.AllTimePopular
+            )
+        )
+    }
+
     AnimeList(
-        animeList = animeList,
-        animeBanner = Anime(
-            title = Title("Anime 0"),
-            coverImage = Image(extraLarge = "", large = ""),
-            status = "Ongoing",
-            startDate = "",
-            endDate = "",
-            genres = "",
-            formatAndYear = ""
-        ),
-        requestNextPage = { },
-        dispose = { }
+        homeItems = homeItems
     )
 }
