@@ -16,18 +16,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
-import com.yukarlo.anime.core.model.Anime
-import com.yukarlo.anime.core.model.AnimeSortTypes
-import com.yukarlo.anime.core.model.Image
-import com.yukarlo.anime.core.model.Title
+import com.yukarlo.anime.common.android.navigation.AnimeInputModel
+import com.yukarlo.anime.common.android.navigation.NavigationScreens
+import com.yukarlo.anime.core.model.*
 
 @Composable
 fun HomeScreen(
-    navBackStackEntry: NavBackStackEntry
+    navBackStackEntry: NavBackStackEntry,
+    navController: NavController
 ) {
     val factory = HiltViewModelFactory(
         context = LocalContext.current,
@@ -46,7 +48,17 @@ fun HomeScreen(
             },
             renderView = {
                 AnimeList(
-                    homeItems = homeState.homeItems
+                    homeItems = homeState.homeItems,
+                    viewAll = {
+                        navController.apply {
+                            currentBackStackEntry
+                                ?.arguments?.putParcelable(
+                                    NavigationScreens.ViewAllAnime.parcelableKey,
+                                    it
+                                )
+                            navigate(route = NavigationScreens.ViewAllAnime.route)
+                        }
+                    }
                 )
             }
         )
@@ -55,7 +67,8 @@ fun HomeScreen(
 
 @Composable
 private fun AnimeList(
-    homeItems: List<HomeItems>
+    homeItems: List<HomeItems>,
+    viewAll: (AnimeInputModel) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -66,7 +79,15 @@ private fun AnimeList(
                 is HomeItems.TrendingAnime -> {
                     ListHeaderTitle(
                         title = homeItem.sortParameter.title,
-                        viewAll = { }
+                        viewAll = {
+                            viewAll(
+                                AnimeInputModel(
+                                    sort = AnimeSortTypes.TrendingAnime.sortRequest,
+                                    year = 2021,
+                                    season = AnimeSeason.SPRING
+                                )
+                            )
+                        }
                     )
                     homeItem.trendingAnime
                 }
@@ -74,7 +95,15 @@ private fun AnimeList(
                     AnimeWithTextOverlay(anime = homeItem.topAnime.orEmpty().random())
                     ListHeaderTitle(
                         title = homeItem.sortParameter.title,
-                        viewAll = { }
+                        viewAll = {
+                            viewAll(
+                                AnimeInputModel(
+                                    sort = AnimeSortTypes.AllTimePopular.sortRequest,
+                                    year = null,
+                                    season = null
+                                )
+                            )
+                        }
                     )
                     homeItem.topAnime
                 }
@@ -142,6 +171,7 @@ fun DefaultPreview() {
     }
 
     AnimeList(
-        homeItems = homeItems
+        homeItems = homeItems,
+        viewAll = { }
     )
 }
