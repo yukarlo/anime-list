@@ -61,7 +61,9 @@ fun AnimeWithTextOverlay(anime: Anime) {
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colors.onSurface,
                 style = MaterialTheme.typography.h3,
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
             Text(
