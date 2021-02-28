@@ -3,6 +3,7 @@ package com.yukarlo.feature.anime.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result.*
+import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeParam
 import com.yukarlo.anime.core.model.AnimeSeason
@@ -20,6 +21,9 @@ internal class HomeViewModel @Inject constructor(
 
     private val updateHome: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
     val onUpdateHome: StateFlow<HomeUiState> = updateHome
+
+    private val navigate: MutableSharedFlow<AnimeInputModel> = MutableSharedFlow()
+    val onNavigate: SharedFlow<AnimeInputModel> = navigate
 
     init {
         fetchAnime()
@@ -79,5 +83,27 @@ internal class HomeViewModel @Inject constructor(
 
     fun retry() {
         fetchAnime()
+    }
+
+    fun navigateTo(sortType: AnimeSortTypes) {
+        viewModelScope.launch {
+            val inputModel = when (sortType) {
+                AnimeSortTypes.TrendingAnime -> {
+                    AnimeInputModel(
+                        sort = sortType,
+                        year = 2021,
+                        season = AnimeSeason.SPRING
+                    )
+                }
+                else -> {
+                    AnimeInputModel(
+                        sort = sortType,
+                        year = null,
+                        season = null
+                    )
+                }
+            }
+            navigate.emit(inputModel)
+        }
     }
 }

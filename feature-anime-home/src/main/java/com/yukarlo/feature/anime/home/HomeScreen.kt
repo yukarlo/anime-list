@@ -8,7 +8,9 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,9 +24,10 @@ import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
-import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.common.android.navigation.NavigationScreens
 import com.yukarlo.anime.core.model.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -40,6 +43,26 @@ fun HomeScreen(
         factory = factory
     )
 
+    val scope = rememberCoroutineScope()
+    DisposableEffect(Unit) {
+        scope.launch {
+            viewModel.onNavigate
+                .collect {
+                    navController.apply {
+                        currentBackStackEntry
+                            ?.arguments?.putParcelable(
+                                NavigationScreens.ViewAllAnime.parcelableKey,
+                                it
+                            )
+                        navigate(route = NavigationScreens.ViewAllAnime.route)
+                    }
+                }
+        }
+        onDispose {
+            viewModel
+        }
+    }
+
     viewModel.onUpdateHome.collectAsState().value.let { homeState ->
         ScreenState(
             result = homeState.result,
@@ -50,14 +73,7 @@ fun HomeScreen(
                 AnimeList(
                     homeItems = homeState.homeItems,
                     viewAll = {
-                        navController.apply {
-                            currentBackStackEntry
-                                ?.arguments?.putParcelable(
-                                    NavigationScreens.ViewAllAnime.parcelableKey,
-                                    it
-                                )
-                            navigate(route = NavigationScreens.ViewAllAnime.route)
-                        }
+                        viewModel.navigateTo(sortType = it)
                     }
                 )
             }
@@ -68,7 +84,7 @@ fun HomeScreen(
 @Composable
 private fun AnimeList(
     homeItems: List<HomeItems>,
-    viewAll: (AnimeInputModel) -> Unit
+    viewAll: (AnimeSortTypes) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -80,13 +96,7 @@ private fun AnimeList(
                     ListHeaderTitle(
                         title = homeItem.sortParameter.title,
                         viewAll = {
-                            viewAll(
-                                AnimeInputModel(
-                                    sort = AnimeSortTypes.TrendingAnime,
-                                    year = 2021,
-                                    season = AnimeSeason.SPRING
-                                )
-                            )
+                            viewAll(AnimeSortTypes.TrendingAnime)
                         }
                     )
                     homeItem.trendingAnime
@@ -96,13 +106,7 @@ private fun AnimeList(
                     ListHeaderTitle(
                         title = homeItem.sortParameter.title,
                         viewAll = {
-                            viewAll(
-                                AnimeInputModel(
-                                    sort = AnimeSortTypes.AllTimePopular,
-                                    year = null,
-                                    season = null
-                                )
-                            )
+                            viewAll(AnimeSortTypes.AllTimePopular)
                         }
                     )
                     homeItem.topAnime
