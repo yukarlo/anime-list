@@ -7,7 +7,7 @@ import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeParam
 import com.yukarlo.anime.core.model.AnimeSeason
 import com.yukarlo.anime.core.model.AnimeSortTypes
-import com.yukarlo.anime.lib.anime.domain.GetTopAnimeUseCase
+import com.yukarlo.anime.lib.anime.domain.GetAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
-    private val getTopAnimeUseCase: GetTopAnimeUseCase
+    private val getAnimeUseCase: GetAnimeUseCase
 ) : ViewModel() {
 
     private val updateHome: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
@@ -28,12 +28,12 @@ internal class HomeViewModel @Inject constructor(
     private fun fetchTopAnime() {
         viewModelScope.launch {
             combine(
-                getTopAnimeUseCase.execute(
+                getAnimeUseCase.execute(
                     param = AnimeParam(
                         sort = AnimeSortTypes.AllTimePopular.sortRequest
                     )
                 ),
-                getTopAnimeUseCase.execute(
+                getAnimeUseCase.execute(
                     param = AnimeParam(
                         sort = AnimeSortTypes.TrendingAnime.sortRequest,
                         year = 2021,

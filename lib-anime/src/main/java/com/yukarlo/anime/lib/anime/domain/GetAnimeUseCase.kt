@@ -5,7 +5,7 @@ import com.yukarlo.anime.core.model.AnimeParam
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetTopAnimeUseCase @Inject constructor(
+class GetAnimeUseCase @Inject constructor(
     private val animeRepository: AnimeRepository
 ) {
     suspend fun execute(param: AnimeParam): Flow<List<Anime>?> = animeRepository.fetchAnime(param = param)
