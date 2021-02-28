@@ -31,6 +31,7 @@ android {
 
 dependencies {
     implementation(project(":feature-anime-home"))
+    implementation(project(":feature-anime-list"))
     implementation(project(":lib-anime"))
     implementation(project(":common-android"))
     implementation(project(":remote"))
