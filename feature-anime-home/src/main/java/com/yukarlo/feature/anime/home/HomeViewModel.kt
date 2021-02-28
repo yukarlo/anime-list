@@ -3,7 +3,10 @@ package com.yukarlo.feature.anime.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result.*
-import com.yukarlo.anime.core.model.*
+import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.AnimeParam
+import com.yukarlo.anime.core.model.AnimeSeason
+import com.yukarlo.anime.core.model.AnimeSortTypes
 import com.yukarlo.anime.lib.anime.domain.GetTopAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -27,12 +30,12 @@ internal class HomeViewModel @Inject constructor(
             combine(
                 getTopAnimeUseCase.execute(
                     param = AnimeParam(
-                        sort = AnimeRequest.AllTimePopular.sortRequest
+                        sort = AnimeSortTypes.AllTimePopular.sortRequest
                     )
                 ),
                 getTopAnimeUseCase.execute(
                     param = AnimeParam(
-                        sort = AnimeRequest.TrendingAnime.sortRequest,
+                        sort = AnimeSortTypes.TrendingAnime.sortRequest,
                         year = 2021,
                         season = AnimeSeason.SPRING
                     )
@@ -43,13 +46,13 @@ internal class HomeViewModel @Inject constructor(
                     add(
                         HomeItems.TopAnime(
                             topAnime = topAnime,
-                            request = AnimeRequest.AllTimePopular
+                            sortParameter = AnimeSortTypes.AllTimePopular
                         )
                     )
                     add(
                         HomeItems.TrendingAnime(
                             trendingAnime = trendingAnime,
-                            request = AnimeRequest.TrendingAnime
+                            sortParameter = AnimeSortTypes.TrendingAnime
                         )
                     )
                 }

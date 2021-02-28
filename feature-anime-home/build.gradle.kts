@@ -29,6 +29,7 @@ dependencies {
 
     addDaggerDependencies()
     addComposeDependencies()
+    implementation(Dependencies.AndroidX.COMPOSE_NAVIGATION)
 
     testImplementation(Dependencies.JUnit.JUNIT)
 }

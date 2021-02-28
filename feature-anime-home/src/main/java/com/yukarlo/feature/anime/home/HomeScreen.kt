@@ -21,7 +21,7 @@ import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.core.model.Anime
-import com.yukarlo.anime.core.model.AnimeRequest
+import com.yukarlo.anime.core.model.AnimeSortTypes
 import com.yukarlo.anime.core.model.Image
 import com.yukarlo.anime.core.model.Title
 
@@ -65,7 +65,7 @@ private fun AnimeList(
             val animeList: List<Anime>? = when (homeItem) {
                 is HomeItems.TrendingAnime -> {
                     ListHeaderTitle(
-                        title = homeItem.request.title,
+                        title = homeItem.sortParameter.title,
                         viewAll = { }
                     )
                     homeItem.trendingAnime
@@ -73,7 +73,7 @@ private fun AnimeList(
                 is HomeItems.TopAnime -> {
                     AnimeWithTextOverlay(anime = homeItem.topAnime.orEmpty().random())
                     ListHeaderTitle(
-                        title = homeItem.request.title,
+                        title = homeItem.sortParameter.title,
                         viewAll = { }
                     )
                     homeItem.topAnime
@@ -130,13 +130,13 @@ fun DefaultPreview() {
         add(
             HomeItems.TopAnime(
                 topAnime = animeList,
-                request = AnimeRequest.TrendingAnime
+                sortParameter = AnimeSortTypes.TrendingAnime
             )
         )
         add(
             HomeItems.TrendingAnime(
                 trendingAnime = animeList,
-                request = AnimeRequest.AllTimePopular
+                sortParameter = AnimeSortTypes.AllTimePopular
             )
         )
     }
