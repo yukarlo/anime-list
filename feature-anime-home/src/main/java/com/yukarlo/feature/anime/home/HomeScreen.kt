@@ -82,7 +82,7 @@ private fun AnimeList(
                         viewAll = {
                             viewAll(
                                 AnimeInputModel(
-                                    sort = AnimeSortTypes.TrendingAnime.sortRequest,
+                                    sort = AnimeSortTypes.TrendingAnime,
                                     year = 2021,
                                     season = AnimeSeason.SPRING
                                 )
@@ -98,7 +98,7 @@ private fun AnimeList(
                         viewAll = {
                             viewAll(
                                 AnimeInputModel(
-                                    sort = AnimeSortTypes.AllTimePopular.sortRequest,
+                                    sort = AnimeSortTypes.AllTimePopular,
                                     year = null,
                                     season = null
                                 )
