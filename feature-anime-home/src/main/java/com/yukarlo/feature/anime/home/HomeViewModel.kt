@@ -22,10 +22,10 @@ internal class HomeViewModel @Inject constructor(
     val onUpdateHome: StateFlow<HomeUiState> = updateHome
 
     init {
-        fetchTopAnime()
+        fetchAnime()
     }
 
-    private fun fetchTopAnime() {
+    private fun fetchAnime() {
         viewModelScope.launch {
             combine(
                 getAnimeUseCase.execute(
@@ -78,6 +78,6 @@ internal class HomeViewModel @Inject constructor(
     }
 
     fun retry() {
-        fetchTopAnime()
+        fetchAnime()
     }
 }
