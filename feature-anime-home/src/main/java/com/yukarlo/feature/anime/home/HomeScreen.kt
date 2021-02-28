@@ -110,7 +110,7 @@ private fun AnimeList(
             }
 
             LazyRow(
-                modifier = Modifier.padding(start = 4.dp, end = 8.dp)
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             ) {
                 itemsIndexed(items = animeList.orEmpty().take(n = 10)) { _, it ->
                     AnimeCard(anime = it)

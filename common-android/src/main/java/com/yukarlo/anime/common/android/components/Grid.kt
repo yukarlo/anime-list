@@ -78,10 +78,9 @@ fun <T> LazyGrid(
             Row(
                 modifier = Modifier
                     .padding(
-                        top = padding.dp,
+                        top = (padding + 8).dp,
                         start = (padding + 4).dp,
-                        end = (padding + 4).dp,
-                        bottom = (padding + 8).dp
+                        end = (padding + 4).dp
                     )
                     .offset(y = offset.dp)
                     .alpha(alpha = alpha)
