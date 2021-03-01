@@ -6,18 +6,20 @@ import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
+import com.yukarlo.anime.core.model.Anime
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
-import query.TopAnimesQuery
+import query.AnimeQuery
 import type.MediaSeason
 import type.MediaSort
 import javax.inject.Inject
 
 internal class RemoteClientImpl @Inject constructor(
-    private val apolloClient: ApolloClient
+    private val apolloClient: ApolloClient,
+    private val animeMapper: AnimeMapper
 ) : RemoteClient {
 
     override fun getTopAnimeFlow(
@@ -26,9 +28,9 @@ internal class RemoteClientImpl @Inject constructor(
         year: Int?,
         season: MediaSeason?,
         sort: List<MediaSort>?
-    ): Flow<TopAnimesQuery.Page> =
+    ): Flow<List<Anime>?> =
         flow {
-            val topAnimeQuery = TopAnimesQuery(
+            val animeQuery = AnimeQuery(
                 page = Input.optional(value = page),
                 itemsPerPage = Input.optional(value = itemsPerPage),
                 year = Input.optional(value = year),
@@ -36,9 +38,10 @@ internal class RemoteClientImpl @Inject constructor(
                 sort = Input.optional(value = sort)
             )
 
-            val response = apolloClient.query(topAnimeQuery).await()
+            val response = apolloClient.query(animeQuery).await()
             response.data?.page?.let {
-                emit(it)
+                val result = animeMapper.mapTopAnimeToDomain(result = it.media)
+                emit(result)
             }
         }
 
@@ -48,20 +51,21 @@ internal class RemoteClientImpl @Inject constructor(
         year: Int?,
         season: MediaSeason?,
         sort: List<MediaSort>?
-    ): Flow<TopAnimesQuery.Page> =
+    ): Flow<List<Anime>?> =
         callbackFlow {
-            val topAnimeQuery = TopAnimesQuery(
+            val animeQuery = AnimeQuery(
                 page = Input.optional(value = page),
                 itemsPerPage = Input.optional(value = itemsPerPage),
                 year = Input.optional(value = year),
                 season = Input.optional(value = season),
                 sort = Input.optional(value = sort)
             )
-            apolloClient.query(topAnimeQuery).enqueue(
-                object : ApolloCall.Callback<TopAnimesQuery.Data>() {
-                    override fun onResponse(response: Response<TopAnimesQuery.Data>) {
+            apolloClient.query(animeQuery).enqueue(
+                object : ApolloCall.Callback<AnimeQuery.Data>() {
+                    override fun onResponse(response: Response<AnimeQuery.Data>) {
                         response.data?.page?.let {
-                            offer(it)
+                            val result = animeMapper.mapTopAnimeToDomain(result = it.media)
+                            offer(result)
                         }
                     }
 

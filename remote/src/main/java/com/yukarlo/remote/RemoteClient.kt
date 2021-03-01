@@ -1,7 +1,7 @@
 package com.yukarlo.remote
 
+import com.yukarlo.anime.core.model.Anime
 import kotlinx.coroutines.flow.Flow
-import query.TopAnimesQuery
 import type.MediaSeason
 import type.MediaSort
 
@@ -12,7 +12,7 @@ interface RemoteClient {
         year: Int?,
         season: MediaSeason?,
         sort: List<MediaSort>?
-    ): Flow<TopAnimesQuery.Page>
+    ): Flow<List<Anime>?>
 
     fun getTopAnimeCallbackFlow(
         page: Int,
@@ -20,5 +20,5 @@ interface RemoteClient {
         year: Int?,
         season: MediaSeason?,
         sort: List<MediaSort>?
-    ): Flow<TopAnimesQuery.Page>
+    ): Flow<List<Anime>?>
 }
