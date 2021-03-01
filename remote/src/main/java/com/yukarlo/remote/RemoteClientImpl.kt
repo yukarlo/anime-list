@@ -40,7 +40,7 @@ internal class RemoteClientImpl @Inject constructor(
 
             val response = apolloClient.query(animeQuery).await()
             response.data?.page?.let {
-                val result = animeMapper.mapTopAnimeToDomain(result = it.media)
+                val result = animeMapper.mapAnimeToDomain(result = it.media)
                 emit(result)
             }
         }
@@ -64,7 +64,7 @@ internal class RemoteClientImpl @Inject constructor(
                 object : ApolloCall.Callback<AnimeQuery.Data>() {
                     override fun onResponse(response: Response<AnimeQuery.Data>) {
                         response.data?.page?.let {
-                            val result = animeMapper.mapTopAnimeToDomain(result = it.media)
+                            val result = animeMapper.mapAnimeToDomain(result = it.media)
                             offer(result)
                         }
                     }

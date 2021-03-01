@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 internal class AnimeMapper @Inject constructor() {
 
-    fun mapTopAnimeToDomain(result: List<AnimeQuery.Medium?>?): List<Anime>? =
+    fun mapAnimeToDomain(result: List<AnimeQuery.Medium?>?): List<Anime>? =
         result?.map {
             Anime(
                 title = Title(
