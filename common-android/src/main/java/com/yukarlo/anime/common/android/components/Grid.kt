@@ -8,16 +8,87 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
+import com.yukarlo.anime.core.model.Anime
+
+@Composable
+fun VerticalGrid(
+    items: List<Anime> = listOf(),
+    requestNextPage: () -> Unit,
+    dispose: () -> Unit
+) {
+    val animatedItemIndex = remember { mutableSetOf<Int>() }
+    val transition = updateTransition(targetState = animatedItemIndex)
+
+    LazyVerticalGrid(
+        cells = GridCells.Fixed(count = 3),
+        modifier = Modifier.padding(
+            start = 4.dp,
+            end = 4.dp
+        )
+    ) {
+        itemsIndexed(items) { index: Int, item: Anime ->
+            DisposableEffect(Unit) {
+                if (index == items.lastIndex) {
+                    requestNextPage()
+                }
+                onDispose {
+                    dispose()
+                }
+            }
+            val offset: Float by transition.animateFloat(
+                transitionSpec = {
+                    tween(
+                        durationMillis = 400,
+                        delayMillis = 100,
+                        easing = LinearOutSlowInEasing
+                    )
+                }
+            ) { state ->
+                if (state.contains(index)) {
+                    0F
+                } else {
+                    150F
+                }
+            }
+
+            val alpha: Float by transition.animateFloat(
+                transitionSpec = {
+                    tween(
+                        durationMillis = 400,
+                        delayMillis = 100,
+                        easing = LinearOutSlowInEasing
+                    )
+                }
+            ) { state ->
+                if (index in state) {
+                    1F
+                } else {
+                    0F
+                }
+            }
+
+            animatedItemIndex.add(index)
+
+            Row(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .offset(y = offset.dp)
+                    .alpha(alpha = alpha)
+            ) {
+                AnimeCard(anime = item)
+            }
+        }
+    }
+}
 
 @Composable
 fun <T> LazyGrid(

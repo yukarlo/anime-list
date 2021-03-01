@@ -1,7 +1,5 @@
 package com.yukarlo.anime.feature.anime.list
 
-import android.widget.Toast
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -14,9 +12,8 @@ import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import com.yukarlo.anime.common.android.components.AnimeCard
-import com.yukarlo.anime.common.android.components.LazyGrid
 import com.yukarlo.anime.common.android.components.ScreenState
+import com.yukarlo.anime.common.android.components.VerticalGrid
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.Anime
 
@@ -82,25 +79,9 @@ private fun AnimeList(
     requestNextPage: () -> Unit,
     dispose: () -> Unit
 ) {
-    Column {
-        val context = LocalContext.current
-        LazyGrid(
-            items = animeList,
-            rows = 3,
-            viewAll = {
-                Toast.makeText(context, "view all clicked", Toast.LENGTH_LONG).show()
-            },
-            itemContent = { it: Anime, index: Int ->
-                DisposableEffect(Unit) {
-                    if (index == animeList.lastIndex) {
-                        requestNextPage()
-                    }
-                    onDispose {
-                        dispose()
-                    }
-                }
-                AnimeCard(anime = it)
-            }
-        )
-    }
+    VerticalGrid(
+        items = animeList,
+        requestNextPage = { requestNextPage() },
+        dispose = { dispose() }
+    )
 }
