@@ -11,6 +11,8 @@ apollo {
 }
 
 dependencies {
+    implementation(project(":core-model"))
+
     implementation(Dependencies.Kotlin.STDLIB)
     implementation(Dependencies.Apollo.RUNTIME)
     implementation(Dependencies.Apollo.APOLLO_COROUTINES)
