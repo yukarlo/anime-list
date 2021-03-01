@@ -24,7 +24,7 @@ internal class RemoteClientImpl @Inject constructor(
     private val animeMapper: AnimeMapper
 ) : RemoteClient {
 
-    override fun getTopAnimeFlow(
+    override fun getAnimeFlow(
         page: Int,
         itemsPerPage: Int,
         year: Int?,
@@ -47,7 +47,7 @@ internal class RemoteClientImpl @Inject constructor(
             }
         }
 
-    override fun getTopAnimeCallbackFlow(
+    override fun getAnimeCallbackFlow(
         page: Int,
         itemsPerPage: Int,
         year: Int?,

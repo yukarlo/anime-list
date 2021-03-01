@@ -7,7 +7,7 @@ import type.MediaSeason
 import type.MediaSort
 
 interface RemoteClient {
-    fun getTopAnimeFlow(
+    fun getAnimeFlow(
         page: Int,
         itemsPerPage: Int,
         year: Int?,
@@ -15,7 +15,7 @@ interface RemoteClient {
         sort: List<MediaSort>?
     ): Flow<List<Anime>?>
 
-    fun getTopAnimeCallbackFlow(
+    fun getAnimeCallbackFlow(
         page: Int,
         itemsPerPage: Int,
         year: Int?,

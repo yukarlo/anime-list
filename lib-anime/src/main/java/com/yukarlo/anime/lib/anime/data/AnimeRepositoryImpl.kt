@@ -16,7 +16,7 @@ internal class AnimeRepositoryImpl @Inject constructor(
 ) : AnimeRepository {
 
     override suspend fun fetchAnime(param: AnimeParam): Flow<List<Anime>?> =
-        remoteClient.getTopAnimeFlow(
+        remoteClient.getAnimeFlow(
             page = param.page,
             itemsPerPage = param.itemsPerPage,
             year = param.year,
