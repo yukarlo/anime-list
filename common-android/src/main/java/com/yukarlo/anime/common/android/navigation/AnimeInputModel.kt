@@ -4,11 +4,10 @@ import android.os.Parcelable
 import com.yukarlo.anime.core.model.AnimeSeason
 import com.yukarlo.anime.core.model.AnimeSortTypes
 import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class AnimeInputModel(
-    val sort: @RawValue AnimeSortTypes,
+    val sort: AnimeSortTypes,
     val year: Int?,
     val season: AnimeSeason?
 ) : Parcelable

@@ -1,5 +1,7 @@
 plugins {
-    kotlin("jvm")
+    id("com.android.library")
+    kotlin(module = "android")
+    kotlin(module = "android.extensions")
 }
 
 dependencies {
