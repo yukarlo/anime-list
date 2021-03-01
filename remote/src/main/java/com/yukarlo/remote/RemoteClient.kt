@@ -26,5 +26,5 @@ interface RemoteClient {
     fun getMultipleAnimeSortFlow(
         year: Int?,
         season: MediaSeason?
-    ): Flow<MultipleAnimeSort?>
+    ): Flow<MultipleAnimeSort>
 }
