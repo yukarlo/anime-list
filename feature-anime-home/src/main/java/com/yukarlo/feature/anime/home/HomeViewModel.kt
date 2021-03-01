@@ -4,11 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result.*
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
-import com.yukarlo.anime.core.model.Anime
-import com.yukarlo.anime.core.model.AnimeParam
-import com.yukarlo.anime.core.model.AnimeSeason
-import com.yukarlo.anime.core.model.AnimeSortTypes
-import com.yukarlo.anime.lib.anime.domain.GetAnimeUseCase
+import com.yukarlo.anime.core.model.*
+import com.yukarlo.anime.lib.anime.domain.GetMultipleAnimeSortUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
-    private val getAnimeUseCase: GetAnimeUseCase
+    private val getMultipleAnimeSortUseCase: GetMultipleAnimeSortUseCase
 ) : ViewModel() {
 
     private val updateHome: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
@@ -31,44 +28,16 @@ internal class HomeViewModel @Inject constructor(
 
     private fun fetchAnime() {
         viewModelScope.launch {
-            combine(
-                getAnimeUseCase.execute(
-                    param = AnimeParam(
-                        sort = AnimeSortTypes.AllTimePopular.sortRequest
-                    )
-                ),
-                getAnimeUseCase.execute(
-                    param = AnimeParam(
-                        sort = AnimeSortTypes.TrendingAnime.sortRequest,
-                        year = 2021,
-                        season = AnimeSeason.SPRING
-                    )
+            getMultipleAnimeSortUseCase.execute(
+                param = AnimeParam(
+                    year = 2021,
+                    season = AnimeSeason.WINTER
                 )
-            ) { topAnime: List<Anime>?, trendingAnime: List<Anime>? ->
-
-                val homeItems = mutableListOf<HomeItems>().apply {
-                    add(
-                        HomeItems.TopAnime(
-                            topAnime = topAnime,
-                            sortParameter = AnimeSortTypes.AllTimePopular
-                        )
-                    )
-                    add(
-                        HomeItems.TrendingAnime(
-                            trendingAnime = trendingAnime,
-                            sortParameter = AnimeSortTypes.TrendingAnime
-                        )
-                    )
-                }
-                updateHome.value = HomeUiState(
-                    result = SUCCESS,
-                    homeItems = homeItems
-                )
-            }
+            )
                 .onStart {
                     updateHome.value = HomeUiState(
                         result = LOADING,
-                        homeItems = emptyList()
+                        homeItems = linkedMapOf()
                     )
                 }
                 .catch {
@@ -76,10 +45,36 @@ internal class HomeViewModel @Inject constructor(
                         result = ERROR,
                         homeItems = updateHome.value.homeItems
                     )
+                }.collect {
+                    val homeItems = collectAnime(anime = it)
+
+                    updateHome.value = HomeUiState(
+                        result = SUCCESS,
+                        homeItems = homeItems
+                    )
                 }
-                .collect()
         }
     }
+
+    private fun collectAnime(anime: MultipleAnimeSort): LinkedHashMap<AnimeSortTypes, List<Anime>> =
+        with(anime) {
+            val animeHashMap = LinkedHashMap<AnimeSortTypes, List<Anime>>()
+
+            if (trendingNow.isNotEmpty()) {
+                animeHashMap[AnimeSortTypes.TrendingAnime] = trendingNow
+            }
+            if (popularThisSeason.isNotEmpty()) {
+                animeHashMap[AnimeSortTypes.PopularThisSeason] = popularThisSeason
+            }
+            if (allTimePopular.isNotEmpty()) {
+                animeHashMap[AnimeSortTypes.AllTimePopular] = allTimePopular
+            }
+            if (top10.isNotEmpty()) {
+                animeHashMap[AnimeSortTypes.Top10] = top10
+            }
+
+            animeHashMap
+        }
 
     fun retry() {
         fetchAnime()
@@ -88,18 +83,16 @@ internal class HomeViewModel @Inject constructor(
     fun navigateTo(sortType: AnimeSortTypes) {
         viewModelScope.launch {
             val inputModel = when (sortType) {
-                AnimeSortTypes.TrendingAnime -> {
+                AnimeSortTypes.PopularThisSeason -> {
                     AnimeInputModel(
                         sort = sortType,
                         year = 2021,
-                        season = AnimeSeason.SPRING
+                        season = AnimeSeason.WINTER
                     )
                 }
                 else -> {
                     AnimeInputModel(
-                        sort = sortType,
-                        year = null,
-                        season = null
+                        sort = sortType
                     )
                 }
             }

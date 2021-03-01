@@ -25,7 +25,10 @@ import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.common.android.navigation.NavigationScreens
-import com.yukarlo.anime.core.model.*
+import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.AnimeSortTypes
+import com.yukarlo.anime.core.model.Image
+import com.yukarlo.anime.core.model.Title
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -83,40 +86,28 @@ fun HomeScreen(
 
 @Composable
 private fun AnimeList(
-    homeItems: List<HomeItems>,
+    homeItems: LinkedHashMap<AnimeSortTypes, List<Anime>>,
     viewAll: (AnimeSortTypes) -> Unit
 ) {
     Column(
         modifier = Modifier
             .verticalScroll(state = rememberScrollState())
     ) {
-        homeItems.forEach { homeItem ->
-            val animeList: List<Anime>? = when (homeItem) {
-                is HomeItems.TrendingAnime -> {
-                    ListHeaderTitle(
-                        title = homeItem.sortParameter.title,
-                        viewAll = {
-                            viewAll(AnimeSortTypes.TrendingAnime)
-                        }
-                    )
-                    homeItem.trendingAnime
+        homeItems[AnimeSortTypes.Top10]?.let {
+            AnimeWithTextOverlay(anime = it.random())
+        }
+        homeItems.map { (sort: AnimeSortTypes, anime: List<Anime>) ->
+            ListHeaderTitle(
+                title = sort.title,
+                viewAll = {
+                    viewAll(sort)
                 }
-                is HomeItems.TopAnime -> {
-                    AnimeWithTextOverlay(anime = homeItem.topAnime.orEmpty().random())
-                    ListHeaderTitle(
-                        title = homeItem.sortParameter.title,
-                        viewAll = {
-                            viewAll(AnimeSortTypes.AllTimePopular)
-                        }
-                    )
-                    homeItem.topAnime
-                }
-            }
+            )
 
             LazyRow(
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             ) {
-                itemsIndexed(items = animeList.orEmpty().take(n = 10)) { _, it ->
+                itemsIndexed(items = anime) { _, it ->
                     AnimeCard(anime = it)
                 }
             }
@@ -159,23 +150,13 @@ fun DefaultPreview() {
             formatAndYear = ""
         )
     )
-    val homeItems = mutableListOf<HomeItems>().apply {
-        add(
-            HomeItems.TopAnime(
-                topAnime = animeList,
-                sortParameter = AnimeSortTypes.TrendingAnime
-            )
-        )
-        add(
-            HomeItems.TrendingAnime(
-                trendingAnime = animeList,
-                sortParameter = AnimeSortTypes.AllTimePopular
-            )
-        )
-    }
+    val animeHashMap = LinkedHashMap<AnimeSortTypes, List<Anime>>()
+    animeHashMap[AnimeSortTypes.TrendingAnime] = animeList
+    animeHashMap[AnimeSortTypes.AllTimePopular] = animeList
+    animeHashMap[AnimeSortTypes.Top10] = animeList
 
     AnimeList(
-        homeItems = homeItems,
+        homeItems = animeHashMap,
         viewAll = { }
     )
 }
