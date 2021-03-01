@@ -8,6 +8,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class AnimeInputModel(
     val sort: AnimeSortTypes,
-    val year: Int?,
-    val season: AnimeSeason?
+    val year: Int? = null,
+    val season: AnimeSeason? = null
 ) : Parcelable
