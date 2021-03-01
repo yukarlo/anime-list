@@ -2,32 +2,130 @@ package com.yukarlo.remote
 
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.Image
+import com.yukarlo.anime.core.model.MultipleAnimeSort
 import com.yukarlo.anime.core.model.Title
+import fragment.AnimeMedia
 import query.AnimeQuery
+import query.MultipleAnimeSortQuery
 import javax.inject.Inject
 
 internal class AnimeMapper @Inject constructor() {
 
     fun mapAnimeToDomain(result: List<AnimeQuery.Medium?>?): List<Anime>? =
         result?.map {
-            Anime(
+            mapAnime(
                 title = Title(
                     english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
                     native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
                     userPreferred = it?.fragments?.animeMedia?.title?.userPreferred.orEmpty()
                 ),
-                coverImage = Image(
+                image = Image(
                     extraLarge = it?.fragments?.animeMedia?.coverImage?.extraLarge.orEmpty(),
                     large = it?.fragments?.animeMedia?.coverImage?.large.orEmpty()
                 ),
-                status = it?.fragments?.animeMedia?.status?.name.orEmpty(),
-                genres = it?.fragments?.animeMedia?.genres?.joinToString(separator = " • ")
-                    .orEmpty(),
-                startDate = "${it?.fragments?.animeMedia?.startDate?.month}.${it?.fragments?.animeMedia?.startDate?.day}.${it?.fragments?.animeMedia?.startDate?.year}",
-                endDate = "${it?.fragments?.animeMedia?.endDate?.month}.${it?.fragments?.animeMedia?.endDate?.day}.${it?.fragments?.animeMedia?.endDate?.year}",
-                formatAndYear = it?.fragments?.animeMedia?.let { anime ->
-                    "${anime.format?.name?.toLowerCase()} • ${anime.startDate?.year}"
-                }.orEmpty()
+                genres = it?.fragments?.animeMedia?.genres,
+                status = it?.fragments?.animeMedia?.status?.name,
+                startDate = it?.fragments?.animeMedia?.startDate,
+                endDate = it?.fragments?.animeMedia?.endDate,
+                format = it?.fragments?.animeMedia?.format?.name
             )
         }
+
+    fun mapMultipleAnimeToDomain(data: MultipleAnimeSortQuery.Data): MultipleAnimeSort =
+        MultipleAnimeSort(
+            top100 = data.top10?.media?.map {
+                mapAnime(
+                    title = Title(
+                        english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
+                        native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
+                        userPreferred = it?.fragments?.animeMedia?.title?.userPreferred.orEmpty()
+                    ),
+                    image = Image(
+                        extraLarge = it?.fragments?.animeMedia?.coverImage?.extraLarge.orEmpty(),
+                        large = it?.fragments?.animeMedia?.coverImage?.large.orEmpty()
+                    ),
+                    genres = it?.fragments?.animeMedia?.genres,
+                    status = it?.fragments?.animeMedia?.status?.name,
+                    startDate = it?.fragments?.animeMedia?.startDate,
+                    endDate = it?.fragments?.animeMedia?.endDate,
+                    format = it?.fragments?.animeMedia?.format?.name
+                )
+            } ?: emptyList(),
+            popularThisSeason = data.popularThisSeason?.media?.map {
+                mapAnime(
+                    title = Title(
+                        english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
+                        native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
+                        userPreferred = it?.fragments?.animeMedia?.title?.userPreferred.orEmpty()
+                    ),
+                    image = Image(
+                        extraLarge = it?.fragments?.animeMedia?.coverImage?.extraLarge.orEmpty(),
+                        large = it?.fragments?.animeMedia?.coverImage?.large.orEmpty()
+                    ),
+                    genres = it?.fragments?.animeMedia?.genres,
+                    status = it?.fragments?.animeMedia?.status?.name,
+                    startDate = it?.fragments?.animeMedia?.startDate,
+                    endDate = it?.fragments?.animeMedia?.endDate,
+                    format = it?.fragments?.animeMedia?.format?.name
+                )
+            } ?: emptyList(),
+            trendingNow = data.trendingNow?.media?.map {
+                mapAnime(
+                    title = Title(
+                        english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
+                        native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
+                        userPreferred = it?.fragments?.animeMedia?.title?.userPreferred.orEmpty()
+                    ),
+                    image = Image(
+                        extraLarge = it?.fragments?.animeMedia?.coverImage?.extraLarge.orEmpty(),
+                        large = it?.fragments?.animeMedia?.coverImage?.large.orEmpty()
+                    ),
+                    genres = it?.fragments?.animeMedia?.genres,
+                    status = it?.fragments?.animeMedia?.status?.name,
+                    startDate = it?.fragments?.animeMedia?.startDate,
+                    endDate = it?.fragments?.animeMedia?.endDate,
+                    format = it?.fragments?.animeMedia?.format?.name
+                )
+            } ?: emptyList(),
+            allTimePopular = data.allTimePopular?.media?.map {
+                mapAnime(
+                    title = Title(
+                        english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
+                        native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
+                        userPreferred = it?.fragments?.animeMedia?.title?.userPreferred.orEmpty()
+                    ),
+                    image = Image(
+                        extraLarge = it?.fragments?.animeMedia?.coverImage?.extraLarge.orEmpty(),
+                        large = it?.fragments?.animeMedia?.coverImage?.large.orEmpty()
+                    ),
+                    genres = it?.fragments?.animeMedia?.genres,
+                    status = it?.fragments?.animeMedia?.status?.name,
+                    startDate = it?.fragments?.animeMedia?.startDate,
+                    endDate = it?.fragments?.animeMedia?.endDate,
+                    format = it?.fragments?.animeMedia?.format?.name
+                )
+            } ?: emptyList()
+        )
+
+    private fun mapAnime(
+        title: Title,
+        image: Image,
+        status: String?,
+        genres: List<String?>?,
+        startDate: AnimeMedia.StartDate?,
+        endDate: AnimeMedia.EndDate?,
+        format: String?
+    ): Anime = Anime(
+        title = title,
+        coverImage = image,
+        status = status.orEmpty(),
+        genres = genres.orEmpty().joinToString(separator = " • "),
+        startDate = startDate?.let {
+            "${it.month}.${it.day}.${it.year}"
+        } ?: "",
+        endDate = endDate?.let {
+            "${it.month}.${it.day}.${it.year}"
+        } ?: "",
+        formatAndYear = "$format • ${startDate?.year}"
+    )
 }
