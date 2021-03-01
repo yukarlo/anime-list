@@ -33,7 +33,7 @@ internal class AnimeMapper @Inject constructor() {
 
     fun mapMultipleAnimeToDomain(data: MultipleAnimeSortQuery.Data): MultipleAnimeSort =
         MultipleAnimeSort(
-            top100 = data.top10?.media?.map {
+            top10 = data.top10?.media?.map {
                 mapAnime(
                     title = Title(
                         english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
