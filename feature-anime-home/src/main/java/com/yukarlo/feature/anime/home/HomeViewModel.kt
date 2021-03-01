@@ -4,7 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result.*
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
-import com.yukarlo.anime.core.model.*
+import com.yukarlo.anime.common.android.utils.SeasonUtil
+import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.AnimeParam
+import com.yukarlo.anime.core.model.AnimeSortTypes
+import com.yukarlo.anime.core.model.MultipleAnimeSort
 import com.yukarlo.anime.lib.anime.domain.GetMultipleAnimeSortUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -13,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
-    private val getMultipleAnimeSortUseCase: GetMultipleAnimeSortUseCase
+    private val getMultipleAnimeSortUseCase: GetMultipleAnimeSortUseCase,
+    private val seasonUtil: SeasonUtil
 ) : ViewModel() {
 
     private val updateHome: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
@@ -30,8 +35,8 @@ internal class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getMultipleAnimeSortUseCase.execute(
                 param = AnimeParam(
-                    year = 2021,
-                    season = AnimeSeason.WINTER
+                    year = seasonUtil.getYear(),
+                    season = seasonUtil.getAstronomicalSeason()
                 )
             )
                 .onStart {
@@ -86,8 +91,8 @@ internal class HomeViewModel @Inject constructor(
                 AnimeSortTypes.PopularThisSeason -> {
                     AnimeInputModel(
                         sort = sortType,
-                        year = 2021,
-                        season = AnimeSeason.WINTER
+                        year = seasonUtil.getYear(),
+                        season = seasonUtil.getAstronomicalSeason()
                     )
                 }
                 else -> {
