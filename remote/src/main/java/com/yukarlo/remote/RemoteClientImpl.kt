@@ -7,12 +7,14 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
 import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.MultipleAnimeSort
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import query.AnimeQuery
+import query.MultipleAnimeSortQuery
 import type.MediaSeason
 import type.MediaSort
 import javax.inject.Inject
@@ -82,5 +84,22 @@ internal class RemoteClientImpl @Inject constructor(
                 }
             )
             awaitClose { this.cancel() }
+        }
+
+    override fun getMultipleAnimeSortFlow(
+        year: Int?,
+        season: MediaSeason?
+    ): Flow<MultipleAnimeSort> =
+        flow {
+            val animeQuery = MultipleAnimeSortQuery(
+                year = Input.optional(value = year),
+                season = Input.optional(value = season)
+            )
+
+            val response = apolloClient.query(animeQuery).await()
+            response.data?.let {
+                val result = animeMapper.mapMultipleAnimeToDomain(data = it)
+                emit(result)
+            }
         }
 }
