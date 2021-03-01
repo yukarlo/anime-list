@@ -2,30 +2,9 @@ query AnimeDetails(
     $id: Int
 ) {
     Media(id: $id) {
-        id
-        title {
-            userPreferred
-            english
-            native
-        }
-        coverImage {
-            large
-        }
-        bannerImage
-        startDate {
-            year
-            month
-            day
-        }
-        endDate {
-            year
-            month
-            day
-        }
+        ...AnimeMedia
         averageScore
-        genres
         description(asHtml: true)
-        status(version: 2)
         episodes
         nextAiringEpisode {
             airingAt

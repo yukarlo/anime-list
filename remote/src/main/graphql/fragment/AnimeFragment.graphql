@@ -1,0 +1,26 @@
+fragment AnimeMedia on Media {
+    id
+    title {
+        english
+        native
+        userPreferred
+    }
+    coverImage {
+        extraLarge
+        large
+    }
+    bannerImage
+    startDate {
+        year
+        month
+        day
+    }
+    endDate {
+        year
+        month
+        day
+    }
+    status(version: 2)
+    genres
+    format
+}

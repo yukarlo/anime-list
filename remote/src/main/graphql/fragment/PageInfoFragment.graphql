@@ -1,0 +1,7 @@
+fragment PageInformation on PageInfo {
+    total
+    perPage
+    currentPage
+    lastPage
+    hasNextPage
+}

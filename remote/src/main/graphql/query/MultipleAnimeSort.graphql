@@ -1,0 +1,43 @@
+query MultipleAnimeSort(
+    $year: Int,
+    $season: MediaSeason
+) {
+    trendingNow: Page(page: 1, perPage: 10) {
+        media(
+            format: TV,
+            type: ANIME,
+            sort: [TRENDING_DESC]
+        ) {
+            ...AnimeMedia
+        }
+    }
+    popularThisSeason: Page(page: 1, perPage: 10) {
+        media(
+            format: TV,
+            type: ANIME,
+            sort: [POPULARITY_DESC],
+            season: $season
+            seasonYear: $year
+        ) {
+            ...AnimeMedia
+        }
+    }
+    allTimePopular: Page(page: 1, perPage: 10) {
+        media(
+            format: TV,
+            type: ANIME,
+            sort: [POPULARITY_DESC]
+        ) {
+            ...AnimeMedia
+        }
+    }
+    top10: Page(page: 1, perPage: 10) {
+        media(
+            format: TV,
+            type: ANIME,
+            sort: [SCORE_DESC]
+        ) {
+            ...AnimeMedia
+        }
+    }
+}

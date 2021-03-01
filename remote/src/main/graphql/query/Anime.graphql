@@ -1,4 +1,4 @@
-query TopAnimes(
+query Anime(
     $page: Int,
     $itemsPerPage: Int,
     $sort: [MediaSort],
@@ -7,11 +7,7 @@ query TopAnimes(
 ) {
     Page(page: $page, perPage: $itemsPerPage) {
         pageInfo {
-            total
-            perPage
-            currentPage
-            lastPage
-            hasNextPage
+            ...PageInformation
         }
         media(
             format: TV,
@@ -20,30 +16,7 @@ query TopAnimes(
             seasonYear: $year,
             season: $season
         ) {
-            id
-            title {
-                english
-                native
-                userPreferred
-            }
-            coverImage {
-                extraLarge
-                large
-            }
-            bannerImage
-            startDate {
-                year
-                month
-                day
-            }
-            endDate {
-                year
-                month
-                day
-            }
-            status(version: 2)
-            genres
-            format
+            ...AnimeMedia
         }
     }
 }
