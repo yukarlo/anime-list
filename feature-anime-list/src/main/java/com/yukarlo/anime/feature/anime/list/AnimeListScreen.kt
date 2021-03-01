@@ -4,7 +4,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -32,11 +32,8 @@ fun AnimeListScreen(
         factory = factory
     )
 
-    DisposableEffect(Unit) {
+    LaunchedEffect(parcelable) {
         viewModel.fetchAnime(inputModel = parcelable)
-        onDispose {
-            viewModel
-        }
     }
 
     viewModel.onUpdateAnimeList.collectAsState().value.let { animeScreenState ->
