@@ -14,4 +14,14 @@ internal sealed class HomeItems {
         val trendingAnime: List<Anime>?,
         val sortParameter: AnimeSortTypes
     ) : HomeItems()
+
+    internal data class PopularThisSeasonAnime(
+        val popularThisSeasonAnime: List<Anime>?,
+        val sortParameter: AnimeSortTypes
+    ) : HomeItems()
+
+    internal data class Top10Anime(
+        val top10Anime: List<Anime>?,
+        val sortParameter: AnimeSortTypes
+    ) : HomeItems()
 }
