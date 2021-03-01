@@ -2,6 +2,7 @@ package com.yukarlo.anime.lib.anime.data
 
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeParam
+import com.yukarlo.anime.core.model.MultipleAnimeSort
 import com.yukarlo.anime.lib.anime.domain.AnimeRepository
 import com.yukarlo.anime.lib.anime.mapper.SeasonMapper
 import com.yukarlo.anime.lib.anime.mapper.SortMapper
@@ -22,5 +23,11 @@ internal class AnimeRepositoryImpl @Inject constructor(
             year = param.year,
             season = seasonMapper.mapSeason(animeSeason = param.season),
             sort = sortMapper.mapSort(animeSort = param.sort)
+        )
+
+    override suspend fun fetchMultipleAnimeSort(param: AnimeParam): Flow<MultipleAnimeSort> =
+        remoteClient.getMultipleAnimeSortFlow(
+            year = param.year,
+            season = seasonMapper.mapSeason(animeSeason = param.season)
         )
 }
