@@ -32,7 +32,22 @@ internal class AnimeMapper @Inject constructor() {
 
     fun mapAnimeDetailsToDomain(result: AnimeDetailsQuery.Media?): AnimeDetails =
         AnimeDetails(
-            basicInfo = mapAnime(animeMedia = result?.fragments?.animeMedia)
+            basicInfo = mapAnime(animeMedia = result?.fragments?.animeMedia),
+            characters = result?.characterPreview?.edges?.map {
+                Character(
+                    name = it?.node?.name?.full.orEmpty(),
+                    image = Image(
+                        large = it?.node?.image?.large.orEmpty()
+                    ),
+                    voiceActor = it?.voiceActors?.first()?.name?.full.orEmpty(),
+                    voiceActorImage = Image(
+                        large = it?.voiceActors?.first()?.image?.large.orEmpty()
+                    )
+                )
+            }.orEmpty(),
+            episodes = result?.episodes ?: 0,
+            trailerId = result?.trailer?.id.orEmpty(),
+            trailerSite = result?.trailer?.site.orEmpty()
         )
 
     private fun mapAnime(animeMedia: AnimeMedia?): Anime =
