@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ListHeaderTitle(
     title: String,
-    viewAll: () -> Unit
+    viewAll: () -> Unit,
+    showViewAll: Boolean = true
 ) {
     Box(
         modifier = Modifier
@@ -36,20 +37,22 @@ fun ListHeaderTitle(
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.caption
         )
-        Text(
-            text = "view all",
-            modifier = Modifier
-                .align(alignment = Alignment.CenterEnd)
-                .padding(
-                    start = 8.dp,
-                    end = 12.dp,
-                    top = 4.dp
-                )
-                .clickable {
-                    viewAll()
-                },
-            textAlign = TextAlign.End,
-            style = MaterialTheme.typography.caption
-        )
+        if (showViewAll) {
+            Text(
+                text = "view all",
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterEnd)
+                    .padding(
+                        start = 8.dp,
+                        end = 12.dp,
+                        top = 4.dp
+                    )
+                    .clickable {
+                        viewAll()
+                    },
+                textAlign = TextAlign.End,
+                style = MaterialTheme.typography.caption
+            )
+        }
     }
 }
