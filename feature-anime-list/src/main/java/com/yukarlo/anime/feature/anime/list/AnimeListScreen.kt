@@ -1,5 +1,7 @@
 package com.yukarlo.anime.feature.anime.list
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -82,6 +84,7 @@ fun AnimeListScreen(
                             navigateToDetails(it)
                         }
                     )
+                    Spacer(modifier = Modifier.padding(top = 64.dp))
                 }
             }
         )
