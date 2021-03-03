@@ -1,6 +1,7 @@
 package com.yukarlo.anime.core.model
 
 data class Anime(
+    val id: Int?,
     val title: Title,
     val coverImage: Image,
     val genres: String?,

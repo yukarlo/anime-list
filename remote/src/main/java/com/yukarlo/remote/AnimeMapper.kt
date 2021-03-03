@@ -14,6 +14,7 @@ internal class AnimeMapper @Inject constructor() {
     fun mapAnimeToDomain(result: List<AnimeQuery.Medium?>?): List<Anime>? =
         result?.map {
             mapAnime(
+                id = it?.fragments?.animeMedia?.id,
                 title = Title(
                     english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
                     native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
@@ -35,6 +36,7 @@ internal class AnimeMapper @Inject constructor() {
         MultipleAnimeSort(
             top10 = data.top10?.media?.map {
                 mapAnime(
+                    id = it?.fragments?.animeMedia?.id,
                     title = Title(
                         english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
                         native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
@@ -53,6 +55,7 @@ internal class AnimeMapper @Inject constructor() {
             } ?: emptyList(),
             popularThisSeason = data.popularThisSeason?.media?.map {
                 mapAnime(
+                    id = it?.fragments?.animeMedia?.id,
                     title = Title(
                         english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
                         native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
@@ -71,6 +74,7 @@ internal class AnimeMapper @Inject constructor() {
             } ?: emptyList(),
             trendingNow = data.trendingNow?.media?.map {
                 mapAnime(
+                    id = it?.fragments?.animeMedia?.id,
                     title = Title(
                         english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
                         native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
@@ -89,6 +93,7 @@ internal class AnimeMapper @Inject constructor() {
             } ?: emptyList(),
             allTimePopular = data.allTimePopular?.media?.map {
                 mapAnime(
+                    id = it?.fragments?.animeMedia?.id,
                     title = Title(
                         english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
                         native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
@@ -108,6 +113,7 @@ internal class AnimeMapper @Inject constructor() {
         )
 
     private fun mapAnime(
+        id: Int?,
         title: Title,
         image: Image,
         status: String?,
@@ -116,6 +122,7 @@ internal class AnimeMapper @Inject constructor() {
         endDate: AnimeMedia.EndDate?,
         format: String?
     ): Anime = Anime(
+        id = id,
         title = title,
         coverImage = image,
         status = status.orEmpty(),
