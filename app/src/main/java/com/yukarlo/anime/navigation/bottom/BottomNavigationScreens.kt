@@ -1,4 +1,4 @@
-package com.yukarlo.anime
+package com.yukarlo.anime.navigation.bottom
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox

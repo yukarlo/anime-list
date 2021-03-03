@@ -1,5 +1,6 @@
 package com.yukarlo.feature.anime.home
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -7,36 +8,38 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
-import com.yukarlo.anime.common.android.navigation.NavigationScreens
+import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeSortTypes
 import com.yukarlo.anime.core.model.Image
 import com.yukarlo.anime.core.model.Title
+import dev.chrisbanes.accompanist.insets.systemBarsPadding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(
-    navBackStackEntry: NavBackStackEntry,
-    navController: NavController
-) {
+fun HomeScreen(viewAll: (AnimeInputModel) -> Unit, navBackStackEntry: NavBackStackEntry) {
     val factory = HiltViewModelFactory(
         context = LocalContext.current,
         navBackStackEntry = navBackStackEntry
@@ -51,14 +54,7 @@ fun HomeScreen(
         scope.launch {
             viewModel.onNavigate
                 .collect {
-                    navController.apply {
-                        currentBackStackEntry
-                            ?.arguments?.putParcelable(
-                                NavigationScreens.ViewAllAnime.parcelableKey,
-                                it
-                            )
-                        navigate(route = NavigationScreens.ViewAllAnime.route)
-                    }
+                    viewAll(it)
                 }
         }
         onDispose {
@@ -93,8 +89,23 @@ private fun AnimeList(
         modifier = Modifier
             .verticalScroll(state = rememberScrollState())
     ) {
-        homeItems[AnimeSortTypes.Top10]?.let {
-            AnimeWithTextOverlay(anime = it.random())
+        Box {
+            homeItems[AnimeSortTypes.Top10]?.let {
+                AnimeWithTextOverlay(anime = it.random())
+            }
+            TopAppBar(
+                backgroundColor = Color.Transparent,
+                elevation = 0.dp,
+                contentColor = Color.White,
+                modifier = Modifier.systemBarsPadding()
+            ) {
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.Rounded.ArrowBack,
+                        contentDescription = "back"
+                    )
+                }
+            }
         }
         homeItems.map { (sort: AnimeSortTypes, anime: List<Anime>) ->
             ListHeaderTitle(

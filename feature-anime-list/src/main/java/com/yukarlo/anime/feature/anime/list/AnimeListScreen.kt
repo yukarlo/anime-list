@@ -1,11 +1,13 @@
 package com.yukarlo.anime.feature.anime.list
 
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
@@ -16,6 +18,7 @@ import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.common.android.components.VerticalGrid
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.Anime
+import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 @Composable
 fun AnimeListScreen(
@@ -44,10 +47,19 @@ fun AnimeListScreen(
             },
             renderView = {
                 Scaffold(
+                    modifier = Modifier.statusBarsPadding(),
+                    backgroundColor = Color.Transparent,
                     topBar = {
                         if (animeScreenState.toolbarTitle.isNotBlank()) {
                             TopAppBar(
                                 title = {
+                                    IconButton(onClick = { }) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.ArrowBack,
+                                            contentDescription = "back"
+                                        )
+                                    }
+
                                     Text(
                                         text = animeScreenState.toolbarTitle,
                                     )

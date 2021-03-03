@@ -1,13 +1,12 @@
-package com.yukarlo.anime.components
+package com.yukarlo.anime.navigation.main
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.yukarlo.anime.BottomNavigationScreens
-import com.yukarlo.anime.common.android.navigation.NavigationScreens
+import androidx.navigation.compose.navigate
+import com.yukarlo.anime.MainScreen
 import com.yukarlo.anime.feature.anime.list.AnimeListScreen
-import com.yukarlo.feature.anime.home.HomeScreen
 
 @Composable
 internal fun MainScreenNavigationConfig(
@@ -15,16 +14,23 @@ internal fun MainScreenNavigationConfig(
 ) {
     NavHost(
         navController = navController,
-        startDestination = BottomNavigationScreens.Home.route
+        startDestination = NavigationScreens.AnimeMain.route
     ) {
-        composable(route = BottomNavigationScreens.Home.route) { navBackStackEntry ->
-            HomeScreen(
-                navBackStackEntry = navBackStackEntry,
-                navController = navController
+        composable(route = NavigationScreens.AnimeMain.route) { navBackStackEntry ->
+            MainScreen(
+                viewAll = {
+                    navController.apply {
+                        currentBackStackEntry
+                            ?.arguments?.putParcelable(
+                                NavigationScreens.ViewAllAnime.parcelableKey,
+                                it
+                            )
+                        navigate(route = NavigationScreens.ViewAllAnime.route)
+                    }
+                },
+                navBackStackEntry = navBackStackEntry
             )
         }
-        composable(route = BottomNavigationScreens.Search.route) {}
-        composable(route = BottomNavigationScreens.About.route) {}
         composable(
             route = NavigationScreens.ViewAllAnime.route
         ) { navBackStackEntry ->

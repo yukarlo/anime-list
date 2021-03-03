@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -31,6 +32,7 @@ fun AnimeWithTextOverlay(anime: Anime) {
             data = anime.coverImage.extraLarge,
             modifier = Modifier
                 .requiredHeight(height = 450.dp)
+                .scrim(colors = listOf(Color(0x80000000), Color(0x33000000)))
                 .onGloballyPositioned {
                     width.value = it.size.width / density
                     height.value = it.size.height / (density * 2)
@@ -78,4 +80,9 @@ fun AnimeWithTextOverlay(anime: Anime) {
             )
         }
     }
+}
+
+fun Modifier.scrim(colors: List<Color>): Modifier = drawWithContent {
+    drawContent()
+    drawRect(Brush.verticalGradient(colors))
 }
