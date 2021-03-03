@@ -23,7 +23,8 @@ import com.yukarlo.anime.core.model.Anime
 fun VerticalGrid(
     items: List<Anime> = listOf(),
     requestNextPage: () -> Unit,
-    dispose: () -> Unit
+    dispose: () -> Unit,
+    onAnimeClick: (Int?) -> Unit
 ) {
     val animatedItemIndex = remember { mutableSetOf<Int>() }
     val transition = updateTransition(targetState = animatedItemIndex)
@@ -84,7 +85,12 @@ fun VerticalGrid(
                     .offset(y = offset.dp)
                     .alpha(alpha = alpha)
             ) {
-                AnimeCard(anime = item)
+                AnimeCard(
+                    anime = item,
+                    onClick = {
+                        onAnimeClick(it)
+                    }
+                )
             }
         }
     }

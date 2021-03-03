@@ -19,7 +19,8 @@ import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 @Composable
 internal fun MainScreen(
     viewAll: (AnimeInputModel) -> Unit,
-    navBackStackEntry: NavBackStackEntry
+    navBackStackEntry: NavBackStackEntry,
+    navigateToDetails: (Int?) -> Unit
 ) {
     val bottomNavigationItems = listOf(
         BottomNavigationScreens.Home,
@@ -53,6 +54,9 @@ internal fun MainScreen(
                 BottomNavigationScreens.Home -> HomeScreen(
                     viewAll = {
                         viewAll(it)
+                    },
+                    navigateToDetails = {
+                        navigateToDetails(it)
                     },
                     navBackStackEntry = navBackStackEntry
                 )

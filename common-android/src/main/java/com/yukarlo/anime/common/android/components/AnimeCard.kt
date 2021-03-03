@@ -1,5 +1,6 @@
 package com.yukarlo.anime.common.android.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -13,11 +14,17 @@ import com.yukarlo.anime.core.model.Anime
 import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
-fun AnimeCard(anime: Anime) {
+fun AnimeCard(
+    anime: Anime,
+    onClick: (Int?) -> Unit
+) {
     Column(
         modifier = Modifier
             .width(width = 140.dp)
             .height(height = 260.dp)
+            .clickable {
+                onClick(anime.id)
+            }
     ) {
         Card(
             elevation = 0.dp,

@@ -28,6 +28,9 @@ internal fun MainScreenNavigationConfig(
                         navigate(route = NavigationScreens.ViewAllAnime.route)
                     }
                 },
+                navigateToDetails = {
+
+                },
                 navBackStackEntry = navBackStackEntry
             )
         }

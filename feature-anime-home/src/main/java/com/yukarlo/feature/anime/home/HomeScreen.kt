@@ -39,7 +39,11 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(viewAll: (AnimeInputModel) -> Unit, navBackStackEntry: NavBackStackEntry) {
+fun HomeScreen(
+    viewAll: (AnimeInputModel) -> Unit,
+    navigateToDetails: (Int?) -> Unit,
+    navBackStackEntry: NavBackStackEntry
+) {
     val factory = HiltViewModelFactory(
         context = LocalContext.current,
         navBackStackEntry = navBackStackEntry
@@ -73,6 +77,9 @@ fun HomeScreen(viewAll: (AnimeInputModel) -> Unit, navBackStackEntry: NavBackSta
                     homeItems = homeState.homeItems,
                     viewAll = {
                         viewModel.navigateTo(sortType = it)
+                    },
+                    onAnimeClick = {
+                        navigateToDetails(it)
                     }
                 )
             }
@@ -83,7 +90,8 @@ fun HomeScreen(viewAll: (AnimeInputModel) -> Unit, navBackStackEntry: NavBackSta
 @Composable
 private fun AnimeList(
     homeItems: LinkedHashMap<AnimeSortTypes, List<Anime>>,
-    viewAll: (AnimeSortTypes) -> Unit
+    viewAll: (AnimeSortTypes) -> Unit,
+    onAnimeClick: (Int?) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -119,7 +127,9 @@ private fun AnimeList(
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             ) {
                 itemsIndexed(items = anime) { _, it ->
-                    AnimeCard(anime = it)
+                    AnimeCard(anime = it, onClick = {
+                        onAnimeClick(it)
+                    })
                 }
             }
 
@@ -134,6 +144,7 @@ private fun AnimeList(
 fun DefaultPreview() {
     val animeList = listOf(
         Anime(
+            id=1,
             title = Title("Anime 1"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",
@@ -143,6 +154,7 @@ fun DefaultPreview() {
             formatAndYear = ""
         ),
         Anime(
+            id=2,
             title = Title("Anime 2"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",
@@ -152,6 +164,7 @@ fun DefaultPreview() {
             formatAndYear = ""
         ),
         Anime(
+            id=3,
             title = Title("Anime 3"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",
@@ -168,6 +181,7 @@ fun DefaultPreview() {
 
     AnimeList(
         homeItems = animeHashMap,
-        viewAll = { }
+        viewAll = { },
+        onAnimeClick = { }
     )
 }

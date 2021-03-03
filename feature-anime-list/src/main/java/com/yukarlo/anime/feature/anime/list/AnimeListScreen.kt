@@ -24,7 +24,8 @@ import dev.chrisbanes.accompanist.insets.statusBarsPadding
 fun AnimeListScreen(
     navBackStackEntry: NavBackStackEntry,
     navController: NavController,
-    parcelable: AnimeInputModel?
+    parcelable: AnimeInputModel?,
+    navigateToDetails: (Int?) -> Unit,
 ) {
     val factory = HiltViewModelFactory(
         context = LocalContext.current,
@@ -53,7 +54,9 @@ fun AnimeListScreen(
                         if (animeScreenState.toolbarTitle.isNotBlank()) {
                             TopAppBar(
                                 title = {
-                                    IconButton(onClick = { }) {
+                                    IconButton(onClick = {
+                                        navController.navigateUp()
+                                    }) {
                                         Icon(
                                             imageVector = Icons.Rounded.ArrowBack,
                                             contentDescription = "back"
@@ -74,7 +77,10 @@ fun AnimeListScreen(
                         requestNextPage = {
                             viewModel.fetchNewPage(inputModel = parcelable)
                         },
-                        dispose = { viewModel }
+                        dispose = { viewModel },
+                        onAnimeClick = {
+                            navigateToDetails(it)
+                        }
                     )
                 }
             }
@@ -86,11 +92,15 @@ fun AnimeListScreen(
 private fun AnimeList(
     animeList: List<Anime>,
     requestNextPage: () -> Unit,
-    dispose: () -> Unit
+    dispose: () -> Unit,
+    onAnimeClick: (Int?) -> Unit
 ) {
     VerticalGrid(
         items = animeList,
         requestNextPage = { requestNextPage() },
-        dispose = { dispose() }
+        dispose = { dispose() },
+        onAnimeClick = {
+            onAnimeClick(it)
+        }
     )
 }
