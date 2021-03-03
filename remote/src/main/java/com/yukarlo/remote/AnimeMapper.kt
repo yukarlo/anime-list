@@ -1,10 +1,8 @@
 package com.yukarlo.remote
 
-import com.yukarlo.anime.core.model.Anime
-import com.yukarlo.anime.core.model.Image
-import com.yukarlo.anime.core.model.MultipleAnimeSort
-import com.yukarlo.anime.core.model.Title
+import com.yukarlo.anime.core.model.*
 import fragment.AnimeMedia
+import query.AnimeDetailsQuery
 import query.AnimeQuery
 import query.MultipleAnimeSortQuery
 import javax.inject.Inject
@@ -111,6 +109,29 @@ internal class AnimeMapper @Inject constructor() {
                 )
             } ?: emptyList()
         )
+
+    fun mapAnimeDetailsToDomain(result: AnimeDetailsQuery.Media?): AnimeDetails =
+        result.let {
+            AnimeDetails(
+                basicInfo = mapAnime(
+                    id = null,
+                    Title(
+                        english = it?.fragments?.animeMedia?.title?.english.orEmpty(),
+                        native = it?.fragments?.animeMedia?.title?.native_.orEmpty(),
+                        userPreferred = it?.fragments?.animeMedia?.title?.userPreferred.orEmpty()
+                    ),
+                    image = Image(
+                        extraLarge = it?.fragments?.animeMedia?.coverImage?.extraLarge.orEmpty(),
+                        large = it?.fragments?.animeMedia?.coverImage?.large.orEmpty()
+                    ),
+                    genres = it?.fragments?.animeMedia?.genres,
+                    status = it?.fragments?.animeMedia?.status?.name,
+                    startDate = it?.fragments?.animeMedia?.startDate,
+                    endDate = it?.fragments?.animeMedia?.endDate,
+                    format = it?.fragments?.animeMedia?.format?.name
+                )
+            )
+        }
 
     private fun mapAnime(
         id: Int?,

@@ -1,6 +1,7 @@
 package com.yukarlo.remote
 
 import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.MultipleAnimeSort
 import kotlinx.coroutines.flow.Flow
 import type.MediaSeason
@@ -27,4 +28,8 @@ interface RemoteClient {
         year: Int?,
         season: MediaSeason?
     ): Flow<MultipleAnimeSort>
+
+    fun getAnimeDetails(
+        animeId: Int
+    ): Flow<AnimeDetails>
 }
