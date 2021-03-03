@@ -24,7 +24,6 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 @Composable
 fun AnimeWithTextOverlay(anime: Anime) {
     val density = LocalDensity.current.density
-    val width = remember { mutableStateOf(value = 0f) }
     val height = remember { mutableStateOf(value = 0f) }
 
     Box {
@@ -34,7 +33,6 @@ fun AnimeWithTextOverlay(anime: Anime) {
                 .requiredHeight(height = 450.dp)
                 .scrim(colors = listOf(Color(0x80000000), Color(0x33000000)))
                 .onGloballyPositioned {
-                    width.value = it.size.width / density
                     height.value = it.size.height / (density * 2)
                 },
             contentScale = ContentScale.Crop,
@@ -42,7 +40,8 @@ fun AnimeWithTextOverlay(anime: Anime) {
         )
         Column(
             modifier = Modifier
-                .size(width = width.value.dp, height = height.value.dp)
+                .height(height = height.value.dp)
+                .fillMaxWidth()
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(Color.Transparent, MaterialTheme.colors.background),
