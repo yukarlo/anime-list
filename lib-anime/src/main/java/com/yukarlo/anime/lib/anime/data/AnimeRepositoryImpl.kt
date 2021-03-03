@@ -1,6 +1,7 @@
 package com.yukarlo.anime.lib.anime.data
 
 import com.yukarlo.anime.core.model.Anime
+import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.AnimeParam
 import com.yukarlo.anime.core.model.MultipleAnimeSort
 import com.yukarlo.anime.lib.anime.domain.AnimeRepository
@@ -30,4 +31,7 @@ internal class AnimeRepositoryImpl @Inject constructor(
             year = param.year,
             season = seasonMapper.mapSeason(animeSeason = param.season)
         )
+
+    override suspend fun fetchAnimeDetails(id: Int): Flow<AnimeDetails> =
+        remoteClient.getAnimeDetails(animeId = id)
 }
