@@ -1,24 +1,24 @@
 package com.yukarlo.anime.navigation.main
 
 sealed class NavigationScreens(
-    val parcelableKey: String,
+    val key: String,
     val route: String,
     val label: String,
 ) {
     object AnimeMain : NavigationScreens(
-        parcelableKey = "",
+        key = "",
         route = "AnimeMain",
         label = "Anime Main"
     )
 
     object AnimeDetails : NavigationScreens(
-        parcelableKey = "",
+        key = "AnimeIdKey",
         route = "AnimeDetails",
         label = "Anime Details"
     )
 
     object ViewAllAnime : NavigationScreens(
-        parcelableKey = "AnimeInputModelKey",
+        key = "AnimeInputModelKey",
         route = "ViewAllAnime",
         label = "All Anime"
     )
