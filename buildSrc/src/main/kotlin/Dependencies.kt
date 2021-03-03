@@ -69,6 +69,9 @@ object Dependencies {
     }
 
     object Accompanist {
-        const val ACCOMPANIST_COIL = "dev.chrisbanes.accompanist:accompanist-coil:0.6.0"
+        private const val VERSION = "0.6.0"
+
+        const val ACCOMPANIST_COIL = "dev.chrisbanes.accompanist:accompanist-coil:$VERSION"
+        const val ACCOMPANIST_INSETS = "dev.chrisbanes.accompanist:accompanist-insets:$VERSION"
     }
 }

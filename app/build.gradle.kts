@@ -45,6 +45,7 @@ dependencies {
     addComposeDependencies()
     implementation(Dependencies.AndroidX.COMPOSE_ACTIVITY)
     implementation(Dependencies.AndroidX.COMPOSE_NAVIGATION)
+    implementation(Dependencies.Accompanist.ACCOMPANIST_INSETS)
 
     addDaggerDependencies()
 

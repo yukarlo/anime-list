@@ -26,6 +26,7 @@ dependencies {
     implementation(Dependencies.Accompanist.ACCOMPANIST_COIL)
     implementation(Dependencies.AndroidX.COMPOSE_VIEWMODEL)
     implementation(Dependencies.Coroutines.CORE)
+    implementation(Dependencies.Accompanist.ACCOMPANIST_INSETS)
 
     addDaggerDependencies()
     addComposeDependencies()
