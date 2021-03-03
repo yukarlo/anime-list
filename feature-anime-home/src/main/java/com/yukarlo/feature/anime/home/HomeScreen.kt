@@ -123,13 +123,27 @@ private fun AnimeList(
                 }
             )
 
-            LazyRow(
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-            ) {
-                itemsIndexed(items = anime) { _, it ->
-                    AnimeCard(anime = it, onClick = {
-                        onAnimeClick(it)
-                    })
+            LazyRow {
+                itemsIndexed(items = anime) { index, it ->
+                    val modifier = when (index) {
+                        0 -> {
+                            Modifier.padding(start = 8.dp)
+                        }
+                        anime.lastIndex -> {
+                            Modifier.padding(end = 8.dp)
+                        }
+                        else -> {
+                            Modifier
+                        }
+                    }
+
+                    AnimeCard(
+                        anime = it,
+                        onClick = {
+                            onAnimeClick(it)
+                        },
+                        modifier = modifier
+                    )
                 }
             }
 
@@ -144,7 +158,7 @@ private fun AnimeList(
 fun DefaultPreview() {
     val animeList = listOf(
         Anime(
-            id=1,
+            id = 1,
             title = Title("Anime 1"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",
@@ -154,7 +168,7 @@ fun DefaultPreview() {
             formatAndYear = ""
         ),
         Anime(
-            id=2,
+            id = 2,
             title = Title("Anime 2"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",
@@ -164,7 +178,7 @@ fun DefaultPreview() {
             formatAndYear = ""
         ),
         Anime(
-            id=3,
+            id = 3,
             title = Title("Anime 3"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",

@@ -16,10 +16,11 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 @Composable
 fun AnimeCard(
     anime: Anime,
-    onClick: (Int?) -> Unit
+    onClick: (Int?) -> Unit,
+    modifier: Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .width(width = 140.dp)
             .height(height = 260.dp)
             .clickable {

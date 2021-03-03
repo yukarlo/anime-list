@@ -89,7 +89,8 @@ fun VerticalGrid(
                     anime = item,
                     onClick = {
                         onAnimeClick(it)
-                    }
+                    },
+                    modifier = Modifier
                 )
             }
         }
