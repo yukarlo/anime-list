@@ -1,14 +1,10 @@
 package com.yukarlo.anime.feature.anime.details
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
@@ -67,29 +63,49 @@ private fun AnimeDetails(
     animeDetails: AnimeDetails,
     onUp: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .verticalScroll(state = rememberScrollState())
-    ) {
-        Box {
-            AnimeWithTextOverlay(anime = animeDetails.basicInfo)
-            TopAppBar(
-                backgroundColor = Color.Transparent,
-                elevation = 0.dp,
-                contentColor = Color.White,
-                modifier = Modifier.systemBarsPadding()
-            ) {
-                IconButton(onClick = {
-                    onUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.Rounded.ArrowBack,
-                        contentDescription = "back"
-                    )
+    Scaffold {
+        Column(
+            modifier = Modifier
+                .verticalScroll(state = rememberScrollState())
+        ) {
+            Box {
+                AnimeWithTextOverlay(anime = animeDetails.basicInfo)
+                TopAppBar(
+                    backgroundColor = Color.Transparent,
+                    elevation = 0.dp,
+                    contentColor = Color.White,
+                    modifier = Modifier.systemBarsPadding()
+                ) {
+                    IconButton(onClick = {
+                        onUp()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Rounded.ArrowBack,
+                            contentDescription = "back"
+                        )
+                    }
                 }
             }
+            if (animeDetails.characters.isNotEmpty()) {
+                Row(
+                    modifier = Modifier
+                        .horizontalScroll(state = rememberScrollState())
+                ) {
+                    animeDetails.characters.forEach {
+                        Column(
+                            modifier = Modifier.padding(
+                                top = 12.dp,
+                                bottom = 12.dp
+                            )
+                        ) {
+                            Text(text = it.name)
+                            Text(text = it.voiceActor)
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.padding(top = 64.dp))
         }
-        Spacer(modifier = Modifier.padding(top = 64.dp))
     }
 }
 

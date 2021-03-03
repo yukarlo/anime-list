@@ -51,7 +51,6 @@ fun AnimeListScreen(
             renderView = {
                 Scaffold(
                     modifier = Modifier.statusBarsPadding(),
-                    backgroundColor = Color.Transparent,
                     topBar = {
                         if (animeScreenState.toolbarTitle.isNotBlank()) {
                             TopAppBar(
