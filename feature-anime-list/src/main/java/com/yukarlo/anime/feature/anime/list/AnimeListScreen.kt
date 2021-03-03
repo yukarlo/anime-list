@@ -2,14 +2,11 @@ package com.yukarlo.anime.feature.anime.list
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
@@ -17,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.yukarlo.anime.common.android.components.ScreenState
+import com.yukarlo.anime.common.android.components.ToolBar
 import com.yukarlo.anime.common.android.components.VerticalGrid
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.Anime
@@ -53,22 +51,9 @@ fun AnimeListScreen(
                     modifier = Modifier.statusBarsPadding(),
                     topBar = {
                         if (animeScreenState.toolbarTitle.isNotBlank()) {
-                            TopAppBar(
-                                title = {
-                                    IconButton(onClick = {
-                                        navController.navigateUp()
-                                    }) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.ArrowBack,
-                                            contentDescription = "back"
-                                        )
-                                    }
-
-                                    Text(
-                                        text = animeScreenState.toolbarTitle,
-                                    )
-                                },
-                                elevation = 12.dp
+                            ToolBar(
+                                title = animeScreenState.toolbarTitle,
+                                onUp = { navController.navigateUp() }
                             )
                         }
                     }
