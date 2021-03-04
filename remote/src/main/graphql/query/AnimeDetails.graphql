@@ -44,7 +44,7 @@ query AnimeDetails(
                 }
             }
         }
-        recommendations(perPage: 7, sort: [RATING_DESC, ID]) {
+        recommendations(perPage: 8, sort: [RATING_DESC, ID]) {
             nodes {
                 mediaRecommendation {
                     ...AnimeMedia
