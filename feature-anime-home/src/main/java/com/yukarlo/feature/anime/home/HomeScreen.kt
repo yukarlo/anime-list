@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
@@ -26,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
-import com.yukarlo.anime.common.android.components.AnimeCard
+import com.yukarlo.anime.common.android.components.AnimeRowList
 import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
@@ -126,29 +124,10 @@ private fun AnimeList(
                 }
             )
 
-            LazyRow {
-                itemsIndexed(items = anime) { index, it ->
-                    val modifier = when (index) {
-                        0 -> {
-                            Modifier.padding(start = 8.dp)
-                        }
-                        anime.lastIndex -> {
-                            Modifier.padding(end = 8.dp)
-                        }
-                        else -> {
-                            Modifier
-                        }
-                    }
-
-                    AnimeCard(
-                        anime = it,
-                        onClick = {
-                            onAnimeClick(it)
-                        },
-                        modifier = modifier
-                    )
-                }
-            }
+            AnimeRowList(
+                items = anime,
+                onAnimeClick = { onAnimeClick(it) }
+            )
 
             Spacer(modifier = Modifier.padding(top = 16.dp))
         }
