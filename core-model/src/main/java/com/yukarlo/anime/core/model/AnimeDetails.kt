@@ -6,6 +6,8 @@ data class AnimeDetails(
     val description: String = "",
     val characters: List<Character> = emptyList(),
     val episodes: Int = 0,
+    val duration: Int = 0,
+    val studio: String = "",
     val trailerId: String = "",
     val trailerSite: String = ""
 )

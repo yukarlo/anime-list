@@ -45,7 +45,10 @@ internal class AnimeMapper @Inject constructor() {
                     )
                 )
             }.orEmpty(),
+            description = result?.description.orEmpty(),
+            duration = result?.duration ?: 0,
             episodes = result?.episodes ?: 0,
+            studio = result?.studios?.nodes?.first()?.name.orEmpty(),
             trailerId = result?.trailer?.id.orEmpty(),
             trailerSite = result?.trailer?.site.orEmpty()
         )
