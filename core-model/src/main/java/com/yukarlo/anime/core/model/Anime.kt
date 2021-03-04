@@ -5,8 +5,8 @@ data class Anime(
     val title: Title = Title(),
     val coverImage: Image = Image(),
     val genres: String? = null,
-    val startDate: String = "",
-    val endDate: String = "",
+    val startDate: Date? = null,
+    val endDate: Date? = null,
     val status: String = "",
-    val formatAndYear: String = "",
+    val format: String = "",
 )
