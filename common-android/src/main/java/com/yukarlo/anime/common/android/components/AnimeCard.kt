@@ -61,7 +61,7 @@ fun AnimeCard(
         )
         Text(
             maxLines = 1,
-            text = anime.formatAndYear,
+            text = "${anime.format} • ${anime.startDate?.year}",
             color = MaterialTheme.colors.onSurface,
             style = MaterialTheme.typography.caption,
             modifier = Modifier
