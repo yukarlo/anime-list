@@ -14,20 +14,8 @@ query AnimeDetails(
         }
         relations {
             edges {
-                id
-                relationType(version: 2)
                 node {
-                    id
-                    title {
-                        userPreferred
-                    }
-                    format
-                    type
-                    status(version: 2)
-                    bannerImage
-                    coverImage {
-                        large
-                    }
+                    ...AnimeMedia
                 }
             }
         }
