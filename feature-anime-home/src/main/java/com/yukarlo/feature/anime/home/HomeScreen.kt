@@ -162,30 +162,30 @@ fun DefaultPreview() {
             title = Title("Anime 1"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",
-            startDate = "",
-            endDate = "",
+            startDate = Date(month = "1", day = "2", year = "2019"),
+            endDate = Date(month = "1", day = "2", year = "2021"),
             genres = "",
-            formatAndYear = ""
+            format = "tv"
         ),
         Anime(
             id = 2,
             title = Title("Anime 2"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",
-            startDate = "",
-            endDate = "",
+            startDate = Date(month = "1", day = "2", year = "2019"),
+            endDate = Date(month = "1", day = "2", year = "2021"),
             genres = "",
-            formatAndYear = ""
+            format = "tv"
         ),
         Anime(
             id = 3,
             title = Title("Anime 3"),
             coverImage = Image(extraLarge = "", large = ""),
             status = "Ongoing",
-            startDate = "",
-            endDate = "",
+            startDate = Date(month = "1", day = "2", year = "2019"),
+            endDate = Date(month = "1", day = "2", year = "2021"),
             genres = "",
-            formatAndYear = ""
+            format = "tv"
         )
     )
     val animeHashMap = LinkedHashMap<AnimeSortTypes, List<Anime>>()

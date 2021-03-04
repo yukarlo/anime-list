@@ -65,11 +65,19 @@ internal class AnimeMapper @Inject constructor() {
             status = animeMedia?.status?.name.orEmpty(),
             genres = animeMedia?.genres.orEmpty().joinToString(separator = " • "),
             startDate = animeMedia?.startDate?.let {
-                "${it.month}.${it.day}.${it.year}"
-            } ?: "",
+                Date(
+                    month = it.month.toString(),
+                    day = it.day.toString(),
+                    year = it.year.toString()
+                )
+            },
             endDate = animeMedia?.endDate?.let {
-                "${it.month}.${it.day}.${it.year}"
-            } ?: "",
-            formatAndYear = "${animeMedia?.format?.name?.toLowerCase()} • ${animeMedia?.startDate?.year}"
+                Date(
+                    month = it.month.toString(),
+                    day = it.day.toString(),
+                    year = it.year.toString()
+                )
+            },
+            format = animeMedia?.format?.name?.toLowerCase().orEmpty()
         )
 }
