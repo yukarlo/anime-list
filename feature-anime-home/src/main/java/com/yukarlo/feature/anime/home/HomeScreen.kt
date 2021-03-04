@@ -20,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
@@ -30,10 +31,7 @@ import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
-import com.yukarlo.anime.core.model.Anime
-import com.yukarlo.anime.core.model.AnimeSortTypes
-import com.yukarlo.anime.core.model.Image
-import com.yukarlo.anime.core.model.Title
+import com.yukarlo.anime.core.model.*
 import dev.chrisbanes.accompanist.insets.systemBarsPadding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -99,7 +97,12 @@ private fun AnimeList(
     ) {
         Box {
             homeItems[AnimeSortTypes.Top10]?.let {
-                AnimeWithTextOverlay(anime = it.random())
+                AnimeWithTextOverlay(
+                    anime = it.random(),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                )
             }
             TopAppBar(
                 backgroundColor = Color.Transparent,

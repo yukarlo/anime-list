@@ -22,7 +22,11 @@ import com.yukarlo.anime.core.model.Anime
 import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
-fun AnimeWithTextOverlay(anime: Anime) {
+fun AnimeWithTextOverlay(
+    anime: Anime,
+    textAlign: TextAlign,
+    modifier: Modifier
+) {
     val density = LocalDensity.current.density
     val height = remember { mutableStateOf(value = 0f) }
 
@@ -57,25 +61,24 @@ fun AnimeWithTextOverlay(anime: Anime) {
                 .padding(start = 4.dp, end = 4.dp, bottom = 16.dp)
         ) {
             Text(
-                text = anime.title.english,
+                text = anime.title.userPreferred,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colors.onSurface,
                 style = MaterialTheme.typography.h3,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                modifier = modifier
                     .fillMaxWidth(),
-                textAlign = TextAlign.Center
+                textAlign = textAlign
             )
             Text(
                 text = anime.genres.orEmpty(),
                 maxLines = 1,
                 color = MaterialTheme.colors.onSurface,
                 style = MaterialTheme.typography.caption,
-                modifier = Modifier
+                modifier = modifier
                     .padding(bottom = 4.dp)
                     .fillMaxWidth(),
-                textAlign = TextAlign.Center
+                textAlign = textAlign
             )
         }
     }
