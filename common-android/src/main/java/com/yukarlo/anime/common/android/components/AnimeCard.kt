@@ -21,8 +21,6 @@ fun AnimeCard(
 ) {
     Column(
         modifier = modifier
-            .width(width = 140.dp)
-            .height(height = 260.dp)
             .clickable {
                 onClick(anime.id)
             }

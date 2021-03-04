@@ -1,6 +1,8 @@
 package com.yukarlo.anime.common.android.components
 
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -26,7 +28,9 @@ fun AnimeRowList(items: List<Anime>, onAnimeClick: (Int?) -> Unit) {
 
             AnimeCard(
                 anime = it,
-                modifier = modifier,
+                modifier = modifier
+                    .width(width = 140.dp)
+                    .height(height = 260.dp),
                 onClick = {
                     onAnimeClick(it)
                 }
