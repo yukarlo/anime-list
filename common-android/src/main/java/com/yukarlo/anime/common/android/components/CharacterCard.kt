@@ -20,7 +20,7 @@ fun CharacterCard(
     Column(
         modifier = modifier
             .width(width = 140.dp)
-            .wrapContentHeight()
+            .height(height = 220.dp)
     ) {
         Card(
             elevation = 0.dp,
