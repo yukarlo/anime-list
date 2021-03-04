@@ -33,6 +33,7 @@ object Dependencies {
         const val COMPOSE_UI = "androidx.compose.ui:ui:$ANDROID_COMPOSE_VERSION"
         const val COMPOSE_MATERIAL = "androidx.compose.material:material:$ANDROID_COMPOSE_VERSION"
         const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling:$ANDROID_COMPOSE_VERSION"
+        const val COMPOSE_CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
     }
 
     object Dagger {

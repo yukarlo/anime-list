@@ -30,6 +30,7 @@ dependencies {
 
     addDaggerDependencies()
     addComposeDependencies()
+    implementation(Dependencies.AndroidX.COMPOSE_CONSTRAINT_LAYOUT)
 
     testImplementation(Dependencies.JUnit.JUNIT)
 }
