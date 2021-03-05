@@ -4,24 +4,23 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-import com.yukarlo.anime.core.model.Anime
 
 @Composable
-fun VerticalGrid(
-    items: List<Anime> = listOf(),
-    requestNextPage: () -> Unit,
-    dispose: () -> Unit,
-    onAnimeClick: (Int?) -> Unit
+fun <T> VerticalGrid(
+    items: List<T> = listOf(),
+    itemContent: @Composable LazyItemScope.(T, Int) -> Unit
 ) {
     val animatedItemIndex = remember { mutableSetOf<Int>() }
     val transition = updateTransition(targetState = animatedItemIndex)
@@ -33,15 +32,7 @@ fun VerticalGrid(
             end = 4.dp
         )
     ) {
-        itemsIndexed(items) { index: Int, item: Anime ->
-            DisposableEffect(Unit) {
-                if (index == items.lastIndex) {
-                    requestNextPage()
-                }
-                onDispose {
-                    dispose()
-                }
-            }
+        itemsIndexed(items) { index, item ->
             val offset: Float by transition.animateFloat(
                 transitionSpec = {
                     tween(
@@ -82,22 +73,14 @@ fun VerticalGrid(
                     .offset(y = offset.dp)
                     .alpha(alpha = alpha)
             ) {
-                AnimeCard(
-                    anime = item,
-                    onClick = {
-                        onAnimeClick(it)
-                    },
-                    modifier = Modifier
-                        .width(width = 140.dp)
-                        .height(height = 260.dp)
-                )
+                itemContent(item, index)
             }
         }
     }
 }
 
 @Composable
-fun <T> LazyGrid(
+fun <T> VerticalGrid(
     items: List<T> = listOf(),
     rows: Int = 2,
     padding: Int = 4,

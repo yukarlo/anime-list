@@ -285,10 +285,19 @@ fun RelationRowSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) {
             showViewAll = false
         )
 
-        AnimeRowList(
-            items = anime,
-            onAnimeClick = { onAnimeClick(it) }
-        )
+        HorizontalList(
+            items = anime
+        ) { item: Anime, modifier: Modifier ->
+            AnimeCard(
+                anime = item,
+                modifier = modifier
+                    .width(width = 140.dp)
+                    .height(height = 260.dp),
+                onClick = {
+                    onAnimeClick(it)
+                }
+            )
+        }
     }
 }
 

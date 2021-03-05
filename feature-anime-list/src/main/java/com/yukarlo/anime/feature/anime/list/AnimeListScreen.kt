@@ -1,9 +1,12 @@
 package com.yukarlo.anime.feature.anime.list
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -13,6 +16,7 @@ import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.common.android.components.ToolBar
 import com.yukarlo.anime.common.android.components.VerticalGrid
@@ -84,10 +88,24 @@ private fun AnimeList(
 ) {
     VerticalGrid(
         items = animeList,
-        requestNextPage = { requestNextPage() },
-        dispose = { dispose() },
-        onAnimeClick = {
-            onAnimeClick(it)
+    ) { item: Anime, index: Int ->
+        DisposableEffect(Unit) {
+            if (index == animeList.lastIndex) {
+                requestNextPage()
+            }
+            onDispose {
+                dispose()
+            }
         }
-    )
+
+        AnimeCard(
+            anime = item,
+            onClick = {
+                onAnimeClick(it)
+            },
+            modifier = Modifier
+                .width(width = 140.dp)
+                .height(height = 260.dp)
+        )
+    }
 }

@@ -1,9 +1,6 @@
 package com.yukarlo.feature.anime.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
@@ -24,10 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
-import com.yukarlo.anime.common.android.components.AnimeRowList
-import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
-import com.yukarlo.anime.common.android.components.ListHeaderTitle
-import com.yukarlo.anime.common.android.components.ScreenState
+import com.yukarlo.anime.common.android.components.*
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.*
 import dev.chrisbanes.accompanist.insets.systemBarsPadding
@@ -124,10 +118,19 @@ private fun AnimeList(
                 }
             )
 
-            AnimeRowList(
-                items = anime,
-                onAnimeClick = { onAnimeClick(it) }
-            )
+            HorizontalList(
+                items = anime
+            ) { item: Anime, modifier: Modifier ->
+                AnimeCard(
+                    anime = item,
+                    modifier = modifier
+                        .width(width = 140.dp)
+                        .height(height = 260.dp),
+                    onClick = {
+                        onAnimeClick(it)
+                    }
+                )
+            }
 
             Spacer(modifier = Modifier.padding(top = 16.dp))
         }
