@@ -17,6 +17,7 @@ fun DependencyHandler.addComposeDependencies() {
     implement(Dependencies.AndroidX.COMPOSE_MATERIAL)
     implement(Dependencies.AndroidX.COMPOSE_UI_TOOLING)
     implement(Dependencies.AndroidX.COMPOSE_NAVIGATION)
+    implement(Dependencies.Accompanist.ACCOMPANIST_INSETS)
 }
 
 private fun DependencyHandler.implement(dependencyNotation: Any): Dependency? =

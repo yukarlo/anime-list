@@ -71,7 +71,6 @@ fun AnimeDetailsScreen(
             },
             retry = { }
         )
-
     }
 }
 
@@ -111,9 +110,6 @@ private fun AnimeDetails(
                     viewAll = { },
                     showViewAll = false
                 )
-
-//                Spacer(modifier = Modifier.padding(top = 12.dp))
-//                RelationRowSection(anime = animeDetails.relations, onAnimeClick = { })
             }
 
             items(chunkedList) { item ->
@@ -272,31 +268,6 @@ fun RecommendationGridSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) 
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun RelationRowSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) {
-    if (anime.isNotEmpty()) {
-        ListHeaderTitle(
-            title = "Relations",
-            viewAll = { },
-            showViewAll = false
-        )
-
-        HorizontalList(
-            items = anime
-        ) { item: Anime, modifier: Modifier ->
-            AnimeCard(
-                anime = item,
-                modifier = modifier
-                    .width(width = 140.dp)
-                    .height(height = 260.dp),
-                onClick = {
-                    onAnimeClick(it)
-                }
-            )
         }
     }
 }

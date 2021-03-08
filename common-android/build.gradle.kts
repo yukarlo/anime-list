@@ -21,8 +21,6 @@ dependencies {
     implementation(Dependencies.Kotlin.STDLIB)
     implementation(Dependencies.AndroidX.CORE_KTX)
     implementation(Dependencies.AndroidX.APP_COMPAT)
-    implementation(Dependencies.AndroidX.LIFECYCLE_COMMON_JAVA8)
-    implementation(Dependencies.Google.MATERIAL)
     implementation(Dependencies.Accompanist.ACCOMPANIST_COIL)
 
     addComposeDependencies()

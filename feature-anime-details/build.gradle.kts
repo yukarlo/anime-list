@@ -21,7 +21,6 @@ dependencies {
 
     implementation(Dependencies.AndroidX.APP_COMPAT)
     implementation(Dependencies.AndroidX.CORE_KTX)
-    implementation(Dependencies.Google.MATERIAL)
     implementation(Dependencies.AndroidX.RUNTIME_KTX)
     implementation(Dependencies.Accompanist.ACCOMPANIST_COIL)
     implementation(Dependencies.AndroidX.COMPOSE_VIEWMODEL)
