@@ -12,13 +12,6 @@ query AnimeDetails(
             timeUntilAiring
             episode
         }
-        relations {
-            edges {
-                node {
-                    ...AnimeMedia
-                }
-            }
-        }
         characterPreview: characters(perPage: 6, sort: [ROLE, ID]) {
             edges {
                 id
@@ -55,10 +48,6 @@ query AnimeDetails(
             nodes {
                 name
             }
-        }
-        trailer {
-            id
-            site
         }
     }
 }

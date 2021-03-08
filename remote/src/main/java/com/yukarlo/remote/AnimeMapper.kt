@@ -51,12 +51,7 @@ internal class AnimeMapper @Inject constructor() {
             recommendations = result?.recommendations?.nodes?.map {
                 mapAnime(animeMedia = it?.mediaRecommendation?.fragments?.animeMedia)
             }.orEmpty(),
-            relations = result?.relations?.edges?.map {
-                mapAnime(animeMedia = it?.node?.fragments?.animeMedia)
-            }.orEmpty(),
             studio = result?.studios?.nodes?.first()?.name.orEmpty(),
-            trailerId = result?.trailer?.id.orEmpty(),
-            trailerSite = result?.trailer?.site.orEmpty()
         )
 
     private fun mapAnime(animeMedia: AnimeMedia?): Anime =

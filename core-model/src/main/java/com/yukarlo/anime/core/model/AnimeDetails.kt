@@ -8,8 +8,5 @@ data class AnimeDetails(
     val episodes: Int = 0,
     val duration: Int = 0,
     val studio: String = "",
-    val recommendations: List<Anime> = emptyList(),
-    val relations: List<Anime> = emptyList(),
-    val trailerId: String = "",
-    val trailerSite: String = ""
+    val recommendations: List<Anime> = emptyList()
 )
