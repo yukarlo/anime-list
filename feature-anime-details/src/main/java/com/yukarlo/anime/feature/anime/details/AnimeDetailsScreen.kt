@@ -268,6 +268,14 @@ fun RecommendationGridSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) 
                     )
                 }
             }
+            repeat(times = 2 - anime.size) {
+                Box(
+                    modifier = Modifier
+                        .weight(weight = 1F)
+                        .align(alignment = Alignment.Top),
+                    contentAlignment = Alignment.Center
+                ) {}
+            }
         }
     }
 }
