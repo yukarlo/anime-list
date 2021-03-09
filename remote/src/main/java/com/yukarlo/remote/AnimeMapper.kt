@@ -5,9 +5,19 @@ import fragment.AnimeMedia
 import query.AnimeDetailsQuery
 import query.AnimeQuery
 import query.MultipleAnimeSortQuery
+import java.util.regex.Pattern
 import javax.inject.Inject
 
 internal class AnimeMapper @Inject constructor() {
+
+    companion object {
+        private const val YOUTUBE = "youtube"
+        private const val YOUTUBE_FULL_LINK = "https://www.youtube.com/watch?v="
+        private const val YOUTUBE_SHORT_LINK = "https://youtu.be/"
+        private const val PATTERN_YOUTUBE_EXTRACT = "(\\?v=)(.*)"
+        private const val NO_THUMBNAIL = "http://placehold.it/1280x720?text=No+Preview+Available"
+        private const val VIDEO_THUMBNAIL = "https://img.youtube.com/vi/%s/hqdefault.jpg"
+    }
 
     fun mapAnimeToDomain(result: List<AnimeQuery.Medium?>?): List<Anime>? =
         result?.map {
@@ -52,6 +62,16 @@ internal class AnimeMapper @Inject constructor() {
                 mapAnime(animeMedia = it?.mediaRecommendation?.fragments?.animeMedia)
             }.orEmpty(),
             studio = result?.studios?.nodes?.first()?.name.orEmpty(),
+            trailer = buildYoutubeUrl(
+                site = result?.trailer?.site.orEmpty(),
+                id = result?.trailer?.id.orEmpty()
+            ).let {
+                Trailer(
+                    youtubeTrailerUrl = it,
+                    youtubeThumbnail = getYoutubeThumbnail(link = it)
+                )
+            }
+
         )
 
     private fun mapAnime(animeMedia: AnimeMedia?): Anime =
@@ -84,4 +104,26 @@ internal class AnimeMapper @Inject constructor() {
             },
             format = animeMedia?.format?.name?.toLowerCase().orEmpty()
         )
+
+    private fun buildYoutubeUrl(site: String, id: String): String =
+        when {
+            site.contains(YOUTUBE) ||
+                    site.contains(YOUTUBE_SHORT_LINK) ||
+                    site.contains(YOUTUBE_FULL_LINK) -> {
+                YOUTUBE_FULL_LINK + id
+            }
+            else -> {
+                ""
+            }
+        }
+
+    private fun getYoutubeThumbnail(link: String): String {
+        val matcher = Pattern.compile(PATTERN_YOUTUBE_EXTRACT).matcher(link)
+
+        return if (matcher.find()) {
+            String.format(VIDEO_THUMBNAIL, matcher.group(matcher.groupCount()))
+        } else {
+            NO_THUMBNAIL
+        }
+    }
 }
