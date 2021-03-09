@@ -9,6 +9,5 @@ data class AnimeDetails(
     val studio: String = "",
     val recommendations: List<Anime> = emptyList(),
     val trailer: Trailer = Trailer(),
-    val source: String = "",
     val nextAiringSchedule: AiringSchedule? = null
 )

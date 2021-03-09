@@ -72,7 +72,6 @@ internal class AnimeMapper @Inject constructor() {
                     youtubeThumbnail = getYoutubeThumbnail(link = it)
                 )
             },
-            source = result?.source?.name.orEmpty(),
             nextAiringSchedule = result?.nextAiringEpisode?.timeUntilAiring?.let {
                 AiringSchedule(
                     episodeNumber = result.nextAiringEpisode.episode,

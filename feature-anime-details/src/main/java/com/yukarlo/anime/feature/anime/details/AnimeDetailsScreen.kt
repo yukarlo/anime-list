@@ -120,7 +120,7 @@ private fun AnimeDetails(
 
                 Spacer(modifier = Modifier.padding(top = 12.dp))
 
-                MoreInformationSection(anime = animeDetails.basicInfo)
+                MoreInformationSection(animeDetails = animeDetails)
 
                 Spacer(modifier = Modifier.padding(top = 12.dp))
 
@@ -346,7 +346,7 @@ fun RecommendationGridSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) 
 }
 
 @Composable
-fun MoreInformationSection(anime: Anime) {
+fun MoreInformationSection(animeDetails: AnimeDetails) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -382,7 +382,7 @@ fun MoreInformationSection(anime: Anime) {
             )
 
             Text(
-                text = anime.title.userPreferred,
+                text = animeDetails.basicInfo.title.userPreferred,
                 modifier = Modifier
                     .layoutId("titleEnglish")
                     .padding(
@@ -403,7 +403,7 @@ fun MoreInformationSection(anime: Anime) {
             )
 
             Text(
-                text = anime.title.native,
+                text = animeDetails.basicInfo.title.native,
                 modifier = Modifier
                     .layoutId("titleNative")
                     .padding(
@@ -414,7 +414,26 @@ fun MoreInformationSection(anime: Anime) {
             )
 
             Text(
-                text = "Premier:",
+                text = "Average Score:",
+                modifier = Modifier
+                    .layoutId("avgScoreLabel")
+                    .padding(
+                        bottom = 8.dp
+                    ),
+                color = MaterialTheme.colors.onSurface
+            )
+
+            Text(
+                text = animeDetails.basicInfo.averageScore.toString(),
+                modifier = Modifier
+                    .layoutId("avgScore")
+                    .padding(
+                        bottom = 8.dp
+                    )
+            )
+
+            Text(
+                text = "Premier Date:",
                 modifier = Modifier
                     .layoutId("premierLabel")
                     .padding(
@@ -424,7 +443,7 @@ fun MoreInformationSection(anime: Anime) {
             )
 
             Text(
-                text = anime.startDate?.let {
+                text = animeDetails.basicInfo.startDate?.let {
                     "${it.month}.${it.day}.${it.year}"
                 } ?: "N/A",
                 modifier = Modifier
@@ -437,7 +456,30 @@ fun MoreInformationSection(anime: Anime) {
             )
 
             Text(
-                text = "Status:",
+                text = "End Date:",
+                modifier = Modifier
+                    .layoutId("endDateLabel")
+                    .padding(
+                        bottom = 8.dp
+                    ),
+                color = MaterialTheme.colors.onSurface
+            )
+
+            Text(
+                text = animeDetails.basicInfo.endDate?.let {
+                    "${it.month}.${it.day}.${it.year}"
+                } ?: "TBA",
+                modifier = Modifier
+                    .layoutId("endDate")
+                    .padding(
+                        bottom = 8.dp
+                    ),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2
+            )
+
+            Text(
+                text = "Anime Status:",
                 modifier = Modifier
                     .layoutId("statusLabel")
                     .padding(
@@ -447,7 +489,7 @@ fun MoreInformationSection(anime: Anime) {
             )
 
             Text(
-                text = anime.status.toLowerCase().capitalize(),
+                text = animeDetails.basicInfo.status.toLowerCase().capitalize(),
                 modifier = Modifier
                     .layoutId("status")
                     .padding(
@@ -456,6 +498,29 @@ fun MoreInformationSection(anime: Anime) {
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2
             )
+
+            animeDetails.nextAiringSchedule?.let {
+                Text(
+                    text = "Airing:",
+                    modifier = Modifier
+                        .layoutId("nextAiringScheduleLabel")
+                        .padding(
+                            bottom = 8.dp
+                        ),
+                    color = MaterialTheme.colors.onSurface
+                )
+
+                Text(
+                    text = "Ep ${it.episodeNumber} in ${it.date}",
+                    modifier = Modifier
+                        .layoutId("nextAiringSchedule")
+                        .padding(
+                            bottom = 8.dp
+                        ),
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2
+                )
+            }
         }
     }
 }
@@ -470,11 +535,20 @@ private fun decoupledConstraints(): ConstraintSet {
         val titleNativeLabel = createRefFor("titleNativeLabel")
         val titleNative = createRefFor("titleNative")
 
+        val avgScoreLabel = createRefFor("avgScoreLabel")
+        val avgScore = createRefFor("avgScore")
+
         val premierLabel = createRefFor("premierLabel")
         val premier = createRefFor("premier")
 
+        val endDateLabel = createRefFor("endDateLabel")
+        val endDate = createRefFor("endDate")
+
         val statusLabel = createRefFor("statusLabel")
         val status = createRefFor("status")
+
+        val nextAiringScheduleLabel = createRefFor("nextAiringScheduleLabel")
+        val nextAiringSchedule = createRefFor("nextAiringSchedule")
 
         constrain(ref = moreInformationLabel) {
             top.linkTo(parent.top)
@@ -486,7 +560,7 @@ private fun decoupledConstraints(): ConstraintSet {
             top.linkTo(moreInformationLabel.bottom)
             start.linkTo(parent.start)
             end.linkTo(titleEnglish.start)
-            width = percent(0.3F)
+            width = percent(0.35F)
         }
         constrain(ref = titleEnglish) {
             top.linkTo(titleEnglishLabel.top)
@@ -494,14 +568,13 @@ private fun decoupledConstraints(): ConstraintSet {
             start.linkTo(titleEnglishLabel.end)
             bottom.linkTo(titleNative.top)
             width = fillToConstraints
-
         }
 
         constrain(ref = titleNativeLabel) {
             top.linkTo(titleEnglish.bottom)
             start.linkTo(parent.start)
             end.linkTo(titleNative.start)
-            width = percent(0.3F)
+            width = percent(0.35F)
         }
         constrain(ref = titleNative) {
             top.linkTo(titleNativeLabel.top)
@@ -510,11 +583,24 @@ private fun decoupledConstraints(): ConstraintSet {
             width = fillToConstraints
         }
 
-        constrain(ref = premierLabel) {
+        constrain(ref = avgScoreLabel) {
             top.linkTo(titleNative.bottom)
             start.linkTo(parent.start)
+            end.linkTo(avgScore.start)
+            width = percent(0.35F)
+        }
+        constrain(ref = avgScore) {
+            top.linkTo(avgScoreLabel.top)
+            start.linkTo(avgScoreLabel.end)
+            end.linkTo(parent.end)
+            width = fillToConstraints
+        }
+
+        constrain(ref = premierLabel) {
+            top.linkTo(avgScoreLabel.bottom)
+            start.linkTo(parent.start)
             end.linkTo(premier.start)
-            width = percent(0.3F)
+            width = percent(0.35F)
         }
         constrain(ref = premier) {
             top.linkTo(premierLabel.top)
@@ -523,15 +609,41 @@ private fun decoupledConstraints(): ConstraintSet {
             width = fillToConstraints
         }
 
-        constrain(ref = statusLabel) {
+        constrain(ref = endDateLabel) {
             top.linkTo(premierLabel.bottom)
             start.linkTo(parent.start)
-            end.linkTo(premier.start)
-            width = percent(0.3F)
+            end.linkTo(endDate.start)
+            width = percent(0.35F)
+        }
+        constrain(ref = endDate) {
+            top.linkTo(endDateLabel.top)
+            start.linkTo(endDateLabel.end)
+            end.linkTo(parent.end)
+            width = fillToConstraints
+        }
+
+        constrain(ref = statusLabel) {
+            top.linkTo(endDateLabel.bottom)
+            start.linkTo(parent.start)
+            end.linkTo(status.start)
+            width = percent(0.35F)
         }
         constrain(ref = status) {
             top.linkTo(statusLabel.top)
             start.linkTo(statusLabel.end)
+            end.linkTo(parent.end)
+            width = fillToConstraints
+        }
+
+        constrain(ref = nextAiringScheduleLabel) {
+            top.linkTo(statusLabel.bottom)
+            start.linkTo(parent.start)
+            end.linkTo(nextAiringSchedule.start)
+            width = percent(0.35F)
+        }
+        constrain(ref = nextAiringSchedule) {
+            top.linkTo(nextAiringScheduleLabel.top)
+            start.linkTo(nextAiringScheduleLabel.end)
             end.linkTo(parent.end)
             width = fillToConstraints
         }
