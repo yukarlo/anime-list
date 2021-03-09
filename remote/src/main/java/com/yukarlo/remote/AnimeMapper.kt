@@ -7,6 +7,7 @@ import query.AnimeQuery
 import query.MultipleAnimeSortQuery
 import java.util.regex.Pattern
 import javax.inject.Inject
+import kotlin.math.floor
 
 internal class AnimeMapper @Inject constructor() {
 
@@ -70,8 +71,14 @@ internal class AnimeMapper @Inject constructor() {
                     youtubeTrailerUrl = it,
                     youtubeThumbnail = getYoutubeThumbnail(link = it)
                 )
+            },
+            source = result?.source?.name.orEmpty(),
+            nextAiringSchedule = result?.nextAiringEpisode?.timeUntilAiring?.let {
+                AiringSchedule(
+                    episodeNumber = result.nextAiringEpisode.episode,
+                    date = calculateToDaysHoursMinutesRemaining(totalSeconds = it)
+                )
             }
-
         )
 
     private fun mapAnime(animeMedia: AnimeMedia?): Anime =
@@ -88,21 +95,30 @@ internal class AnimeMapper @Inject constructor() {
             ),
             status = animeMedia?.status?.name.orEmpty(),
             genres = animeMedia?.genres.orEmpty().joinToString(separator = " • "),
-            startDate = animeMedia?.startDate?.let {
-                Date(
-                    month = it.month.toString(),
-                    day = it.day.toString(),
-                    year = it.year.toString()
-                )
+            startDate = if (animeMedia?.startDate?.month != null) {
+                animeMedia.startDate.let {
+                    Date(
+                        month = it.month.toString(),
+                        day = it.day.toString(),
+                        year = it.year.toString()
+                    )
+                }
+            } else {
+                null
             },
-            endDate = animeMedia?.endDate?.let {
-                Date(
-                    month = it.month.toString(),
-                    day = it.day.toString(),
-                    year = it.year.toString()
-                )
+            endDate = if (animeMedia?.endDate?.month != null) {
+                animeMedia.endDate.let {
+                    Date(
+                        month = it.month.toString(),
+                        day = it.day.toString(),
+                        year = it.year.toString()
+                    )
+                }
+            } else {
+                null
             },
-            format = animeMedia?.format?.name?.toLowerCase().orEmpty()
+            format = animeMedia?.format?.name?.toLowerCase().orEmpty(),
+            averageScore = animeMedia?.averageScore ?: 0
         )
 
     private fun buildYoutubeUrl(site: String, id: String): String =
@@ -125,5 +141,15 @@ internal class AnimeMapper @Inject constructor() {
         } else {
             NO_THUMBNAIL
         }
+    }
+
+    private fun calculateToDaysHoursMinutesRemaining(totalSeconds: Int): String {
+        val day = 86400
+        val hour = 3600
+
+        val daysRemaining = floor((totalSeconds / day).toDouble())
+        val hoursRemaining = floor((totalSeconds - daysRemaining * day) / hour)
+
+        return "${daysRemaining.toInt()}d ${hoursRemaining.toInt()}h"
     }
 }

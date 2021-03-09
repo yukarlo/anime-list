@@ -9,4 +9,5 @@ data class Anime(
     val endDate: Date? = null,
     val status: String = "",
     val format: String = "",
+    val averageScore: Int = 0
 )

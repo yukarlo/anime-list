@@ -20,6 +20,7 @@ fragment AnimeMedia on Media {
         month
         day
     }
+    averageScore
     status(version: 2)
     genres
     format
