@@ -1,5 +1,9 @@
 package com.yukarlo.anime.feature.anime.details
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,8 +18,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -24,6 +30,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension.Companion.fillToConstraints
 import androidx.constraintlayout.compose.Dimension.Companion.percent
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,6 +40,8 @@ import com.yukarlo.anime.common.android.components.*
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.Character
+import com.yukarlo.anime.core.model.Trailer
+import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.chrisbanes.accompanist.insets.systemBarsPadding
 
 @Composable
@@ -80,6 +89,7 @@ private fun AnimeDetails(
     onAnimeClick: (Int?) -> Unit,
     onUp: () -> Unit
 ) {
+    val context = LocalContext.current
     val chunkedList = animeDetails.recommendations.chunked(size = 2)
     Scaffold {
         LazyColumn(
@@ -94,6 +104,15 @@ private fun AnimeDetails(
                 Spacer(modifier = Modifier.padding(top = 12.dp))
 
                 DescriptionSection(description = animeDetails.description)
+
+                Spacer(modifier = Modifier.padding(top = 12.dp))
+
+                TrailerSection(trailer = animeDetails.trailer) {
+                    Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(it)
+                        startActivity(context, this, null)
+                    }
+                }
 
                 Spacer(modifier = Modifier.padding(top = 12.dp))
 
@@ -207,6 +226,52 @@ fun DescriptionSection(description: String) {
             maxLines = 6,
             lineHeight = 24.sp,
             overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.h6
+        )
+    }
+}
+
+@Composable
+fun TrailerSection(
+    trailer: Trailer,
+    playTrailer: (String) -> Unit
+) {
+    ListHeaderTitle(
+        title = "Trailer",
+        viewAll = { },
+        showViewAll = false
+    )
+
+    if (trailer.youtubeTrailerUrl.isNotEmpty()) {
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 12.dp)
+                .clickable {
+                    playTrailer(trailer.youtubeTrailerUrl)
+                }
+        ) {
+            CoilImage(
+                modifier = Modifier
+                    .aspectRatio(ratio = 16 / 9F)
+                    .scrim(colors = listOf(Color(0x80000000), Color(0x33000000))),
+                data = trailer.youtubeThumbnail,
+                contentDescription = "thumbnail",
+                contentScale = ContentScale.Crop,
+            )
+            Image(
+                painter = painterResource(id = R.drawable.ic_youtube),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .align(alignment = Alignment.Center)
+                    .height(64.dp),
+                contentDescription = "play button"
+            )
+        }
+    } else {
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 12.dp),
+            text = "No trailer available",
             style = MaterialTheme.typography.h6
         )
     }
