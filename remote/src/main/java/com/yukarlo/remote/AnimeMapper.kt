@@ -18,6 +18,9 @@ internal class AnimeMapper @Inject constructor() {
         private const val PATTERN_YOUTUBE_EXTRACT = "(\\?v=)(.*)"
         private const val NO_THUMBNAIL = "http://placehold.it/1280x720?text=No+Preview+Available"
         private const val VIDEO_THUMBNAIL = "https://img.youtube.com/vi/%s/hqdefault.jpg"
+
+        private const val DAY_IN_SECONDS = 86400
+        private const val HOUR_IN_SECONDS = 3600
     }
 
     fun mapAnimeToDomain(result: List<AnimeQuery.Medium?>?): List<Anime>? =
@@ -143,11 +146,9 @@ internal class AnimeMapper @Inject constructor() {
     }
 
     private fun calculateToDaysHoursMinutesRemaining(totalSeconds: Int): String {
-        val day = 86400
-        val hour = 3600
-
-        val daysRemaining = floor((totalSeconds / day).toDouble())
-        val hoursRemaining = floor((totalSeconds - daysRemaining * day) / hour)
+        val daysRemaining = floor((totalSeconds / DAY_IN_SECONDS).toDouble())
+        val hoursRemaining =
+            floor((totalSeconds - daysRemaining * DAY_IN_SECONDS) / HOUR_IN_SECONDS)
 
         return "${daysRemaining.toInt()}d ${hoursRemaining.toInt()}h"
     }
