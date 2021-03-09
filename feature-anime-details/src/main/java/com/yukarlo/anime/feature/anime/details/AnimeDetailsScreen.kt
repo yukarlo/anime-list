@@ -349,9 +349,12 @@ fun RecommendationGridSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) 
 fun MoreInformationSection(animeDetails: AnimeDetails) {
     Surface(
         modifier = Modifier
+            .wrapContentHeight()
             .fillMaxWidth()
     ) {
-        val constraints = decoupledConstraints()
+        val constraints = decoupledConstraints(
+            haveNextAiringSchedule = animeDetails.nextAiringSchedule != null
+        )
 
         ConstraintLayout(
             constraintSet = constraints,
@@ -525,8 +528,8 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
     }
 }
 
-private fun decoupledConstraints(): ConstraintSet {
-    return ConstraintSet {
+private fun decoupledConstraints(haveNextAiringSchedule: Boolean): ConstraintSet =
+    ConstraintSet {
         val moreInformationLabel = createRefFor("moreInformationLabel")
 
         val titleEnglishLabel = createRefFor("titleEnglishLabel")
@@ -635,18 +638,19 @@ private fun decoupledConstraints(): ConstraintSet {
             width = fillToConstraints
         }
 
-        constrain(ref = nextAiringScheduleLabel) {
-            top.linkTo(statusLabel.bottom)
-            start.linkTo(parent.start)
-            end.linkTo(nextAiringSchedule.start)
-            width = percent(0.35F)
-        }
-        constrain(ref = nextAiringSchedule) {
-            top.linkTo(nextAiringScheduleLabel.top)
-            start.linkTo(nextAiringScheduleLabel.end)
-            end.linkTo(parent.end)
-            width = fillToConstraints
+        if (haveNextAiringSchedule) {
+            constrain(ref = nextAiringScheduleLabel) {
+                top.linkTo(statusLabel.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(nextAiringSchedule.start)
+                width = percent(0.35F)
+            }
+            constrain(ref = nextAiringSchedule) {
+                top.linkTo(nextAiringScheduleLabel.top)
+                start.linkTo(nextAiringScheduleLabel.end)
+                end.linkTo(parent.end)
+                width = fillToConstraints
+            }
         }
     }
-}
 
