@@ -61,12 +61,12 @@ fun AnimeListScreen(
         ) {
             AnimeList(
                 animeList = animeScreenState.animeList,
-                requestNextPage = {
-                    viewModel.fetchNewPage(inputModel = parcelable)
-                },
-                dispose = { viewModel },
                 onAnimeClick = navigateToDetails
-            )
+            ) { isOnLastIndex ->
+                if (isOnLastIndex) {
+                    viewModel.fetchNewPage(inputModel = parcelable)
+                }
+            }
             Spacer(modifier = Modifier.padding(top = 64.dp))
         }
     }
@@ -75,21 +75,13 @@ fun AnimeListScreen(
 @Composable
 private fun AnimeList(
     animeList: List<Anime>,
-    requestNextPage: () -> Unit,
-    dispose: () -> Unit,
-    onAnimeClick: (Int?) -> Unit
+    onAnimeClick: (Int?) -> Unit,
+    hasReachedLastIndex: @Composable (Boolean) -> Unit
 ) {
     VerticalGrid(
         items = animeList,
     ) { item: Anime, index: Int ->
-        DisposableEffect(Unit) {
-            if (index == animeList.lastIndex) {
-                requestNextPage()
-            }
-            onDispose {
-                dispose()
-            }
-        }
+        hasReachedLastIndex(index == animeList.lastIndex)
 
         AnimeCard(
             anime = item,
