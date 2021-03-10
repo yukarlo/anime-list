@@ -6,8 +6,8 @@ import com.yukarlo.anime.common.android.base.Result
 @Composable
 fun ScreenState(
     result: Result,
-    renderView: @Composable () -> Unit,
-    retry: () -> Unit
+    retry: () -> Unit,
+    renderView: @Composable () -> Unit
 ) {
     when (result) {
         Result.ERROR -> {

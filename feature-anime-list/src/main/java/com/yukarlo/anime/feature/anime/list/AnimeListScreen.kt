@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -44,38 +41,34 @@ fun AnimeListScreen(
         viewModel.fetchAnime(inputModel = parcelable)
     }
 
-    viewModel.onUpdateAnimeList.collectAsState().value.let { animeScreenState ->
-        ScreenState(
-            result = animeScreenState.result,
-            retry = {
-                viewModel.retry(inputModel = parcelable)
-            },
-            renderView = {
-                Scaffold(
-                    modifier = Modifier.statusBarsPadding(),
-                    topBar = {
-                        if (animeScreenState.toolbarTitle.isNotBlank()) {
-                            ToolBar(
-                                title = animeScreenState.toolbarTitle,
-                                onUp = { navController.navigateUp() }
-                            )
-                        }
-                    }
-                ) {
-                    AnimeList(
-                        animeList = animeScreenState.animeList,
-                        requestNextPage = {
-                            viewModel.fetchNewPage(inputModel = parcelable)
-                        },
-                        dispose = { viewModel },
-                        onAnimeClick = {
-                            navigateToDetails(it)
-                        }
+    val animeScreenState by viewModel.onUpdateAnimeList.collectAsState()
+    ScreenState(
+        result = animeScreenState.result,
+        retry = {
+            viewModel.retry(inputModel = parcelable)
+        }
+    ) {
+        Scaffold(
+            modifier = Modifier.statusBarsPadding(),
+            topBar = {
+                if (animeScreenState.toolbarTitle.isNotBlank()) {
+                    ToolBar(
+                        title = animeScreenState.toolbarTitle,
+                        onUp = { navController.navigateUp() }
                     )
-                    Spacer(modifier = Modifier.padding(top = 64.dp))
                 }
             }
-        )
+        ) {
+            AnimeList(
+                animeList = animeScreenState.animeList,
+                requestNextPage = {
+                    viewModel.fetchNewPage(inputModel = parcelable)
+                },
+                dispose = { viewModel },
+                onAnimeClick = navigateToDetails
+            )
+            Spacer(modifier = Modifier.padding(top = 64.dp))
+        }
     }
 }
 
@@ -100,8 +93,10 @@ private fun AnimeList(
 
         AnimeCard(
             anime = item,
-            onClick = {
-                onAnimeClick(it)
+            onClick = { animeId ->
+                animeId?.let {
+                    onAnimeClick(it)
+                }
             },
             modifier = Modifier
                 .width(width = 140.dp)

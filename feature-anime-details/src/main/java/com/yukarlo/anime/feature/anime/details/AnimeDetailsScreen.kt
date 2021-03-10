@@ -11,6 +11,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -22,7 +23,6 @@ import androidx.navigation.NavController
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.core.model.AnimeDetails
-import com.yukarlo.anime.feature.anime.details.R.*
 import com.yukarlo.anime.feature.anime.details.components.*
 
 @Composable
@@ -44,30 +44,23 @@ fun AnimeDetailsScreen(
         viewModel.getAnimeDetails(animeId = animeId)
     }
 
-    viewModel.onAnimeDetails.collectAsState().value.let { animeDetailsScreenState ->
-        ScreenState(result = animeDetailsScreenState.result,
-            renderView = {
-                AnimeDetails(
-                    animeDetails = animeDetailsScreenState.animeDetails,
-                    onUp = {
-                        navController.navigateUp()
-                    },
-                    onAnimeClick = { animeId ->
-                        animeId?.let {
-                            viewModel.getAnimeDetails(animeId = it)
-                        }
-                    }
-                )
-            },
-            retry = { }
-        )
-    }
+    val animeDetailsScreenState by viewModel.onAnimeDetails.collectAsState()
+    ScreenState(result = animeDetailsScreenState.result,
+        renderView = {
+            AnimeDetails(
+                animeDetails = animeDetailsScreenState.animeDetails,
+                onUp = navController::navigateUp,
+                onAnimeClick = viewModel::getAnimeDetails
+            )
+        },
+        retry = { }
+    )
 }
 
 @Composable
 private fun AnimeDetails(
     animeDetails: AnimeDetails,
-    onAnimeClick: (Int?) -> Unit,
+    onAnimeClick: (Int) -> Unit,
     onUp: () -> Unit
 ) {
     val context = LocalContext.current
@@ -113,9 +106,14 @@ private fun AnimeDetails(
             }
 
             items(chunkedList) { item ->
-                RecommendationGridSection(anime = item, onAnimeClick = {
-                    onAnimeClick(it)
-                })
+                RecommendationGridSection(
+                    anime = item,
+                    onAnimeClick = { animeId ->
+                        animeId?.let {
+                            onAnimeClick(it)
+                        }
+                    }
+                )
             }
 
             item {

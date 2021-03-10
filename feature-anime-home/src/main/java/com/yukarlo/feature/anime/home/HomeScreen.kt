@@ -8,10 +8,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -21,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
+import com.yukarlo.anime.common.android.base.Result
 import com.yukarlo.anime.common.android.components.*
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.*
@@ -56,23 +54,12 @@ fun HomeScreen(
         }
     }
 
-    viewModel.onUpdateHome.collectAsState().value.let { homeState ->
-        ScreenState(
-            result = homeState.result,
-            retry = {
-                viewModel.retry()
-            },
-            renderView = {
-                AnimeList(
-                    homeItems = homeState.homeItems,
-                    viewAll = {
-                        viewModel.navigateTo(sortType = it)
-                    },
-                    onAnimeClick = {
-                        navigateToDetails(it)
-                    }
-                )
-            }
+    val homeState by viewModel.onUpdateHome.collectAsState()
+    ScreenState(result = homeState.result, retry = viewModel::retry) {
+        AnimeList(
+            homeItems = homeState.homeItems,
+            viewAll = viewModel::navigateTo,
+            onAnimeClick = navigateToDetails
         )
     }
 }
