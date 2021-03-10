@@ -17,14 +17,11 @@ object Dependencies {
     }
 
     object AndroidX {
-        const val ANDROID_NAVIGATION_VERSION = "2.3.3"
         const val ANDROID_COMPOSE_VERSION = "1.0.0-beta01"
         private const val ANDROID_LIFECYCLE_VERSION = "2.3.0"
 
         const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.0-beta01"
         const val CORE_KTX = "androidx.core:core-ktx:1.5.0-beta01"
-        const val LIFECYCLE_COMMON_JAVA8 =
-            "androidx.lifecycle:lifecycle-common-java8:$ANDROID_LIFECYCLE_VERSION"
         const val RUNTIME_KTX =
             "androidx.lifecycle:lifecycle-runtime-ktx:$ANDROID_LIFECYCLE_VERSION"
         const val COMPOSE_ACTIVITY = "androidx.activity:activity-compose:1.3.0-alpha03"
