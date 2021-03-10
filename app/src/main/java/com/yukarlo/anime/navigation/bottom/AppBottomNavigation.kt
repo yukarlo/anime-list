@@ -5,20 +5,15 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.KEY_ROUTE
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigate
 import dev.chrisbanes.accompanist.insets.navigationBarsHeight
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 
 @Composable
 internal fun AppBottomNavigation(
-    navController: NavHostController,
-    selectScreen: (String)-> Unit
+    currentSelectedScreen: BottomNavigationScreens,
+    newScreen: (BottomNavigationScreens) -> Unit
 ) {
     val bottomNavigationItems = listOf(
         BottomNavigationScreens.Home,
@@ -29,30 +24,17 @@ internal fun AppBottomNavigation(
     BottomNavigation(
         modifier = Modifier.navigationBarsHeight(additional = 56.dp)
     ) {
-        val currentRoute = currentRoute(navController = navController)
         bottomNavigationItems.forEach { screen ->
             BottomNavigationItem(
                 modifier = Modifier.navigationBarsPadding(),
                 icon = { Icon(imageVector = screen.icon, contentDescription = "") },
                 label = { Text(text = screen.label) },
-                selected = currentRoute == screen.route,
+                selected = currentSelectedScreen == screen,
                 alwaysShowLabel = false,
                 onClick = {
-                    if (currentRoute != screen.route) {
-                        selectScreen(screen.route)
-//                        navController.navigate(screen.route) {
-//                            popUpTo = navController.graph.startDestination
-//                            launchSingleTop = true
-//                        }
-                    }
+                    newScreen(screen)
                 }
             )
         }
     }
-}
-
-@Composable
-private fun currentRoute(navController: NavHostController): String? {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 }

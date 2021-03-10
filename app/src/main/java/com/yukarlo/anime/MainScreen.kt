@@ -1,19 +1,18 @@
 package com.yukarlo.anime
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.common.android.navigation.BackHandler
+import com.yukarlo.anime.navigation.bottom.AppBottomNavigation
 import com.yukarlo.anime.navigation.bottom.BottomNavigationScreens
 import com.yukarlo.feature.anime.home.HomeScreen
-import dev.chrisbanes.accompanist.insets.navigationBarsHeight
-import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 
 @Composable
 internal fun MainScreen(
@@ -31,20 +30,12 @@ internal fun MainScreen(
 
     Scaffold(
         bottomBar = {
-            BottomNavigation(
-                modifier = Modifier.navigationBarsHeight(additional = 56.dp)
-            ) {
-                bottomNavigationItems.forEach { screen ->
-                    BottomNavigationItem(
-                        modifier = Modifier.navigationBarsPadding(),
-                        icon = { Icon(imageVector = screen.icon, contentDescription = "") },
-                        label = { Text(text = screen.label) },
-                        selected = screen == selectedScreen,
-                        alwaysShowLabel = false,
-                        onClick = { setSelectedScreen(screen) }
-                    )
+            AppBottomNavigation(
+                currentSelectedScreen = selectedScreen,
+                newScreen = {
+                    setSelectedScreen(it)
                 }
-            }
+            )
         },
     ) { innerPadding ->
         val modifier = Modifier.padding(innerPadding)
