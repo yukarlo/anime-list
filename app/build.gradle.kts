@@ -33,6 +33,8 @@ dependencies {
     implementation(project(":feature-anime-home"))
     implementation(project(":feature-anime-list"))
     implementation(project(":feature-anime-details"))
+    implementation(project(":feature-anime-search"))
+    implementation(project(":feature-about"))
     implementation(project(":lib-anime"))
     implementation(project(":common-android"))
     implementation(project(":remote"))
