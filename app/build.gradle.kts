@@ -26,6 +26,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
         kotlinCompilerVersion = Dependencies.Kotlin.VERSION
+        useLiveLiterals = true
     }
 }
 
