@@ -19,6 +19,8 @@
     <color name="grey100">#CFD8DC</color>
     <color name="grey50">#ECEFF1</color>
 
+    <color name="ic_launcher_background">#1A3E4C</color>
+
     <color name="immersive_sys_ui">#33000000</color>
     <color name="nav_bar">@color/immersive_sys_ui</color>
 </resources>
