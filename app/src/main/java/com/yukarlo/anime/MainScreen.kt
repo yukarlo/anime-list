@@ -56,7 +56,6 @@ internal fun MainScreen(
                 }
             )
             BottomNavigationScreens.About -> AccountScreen(
-                navBackStackEntry = navBackStackEntry,
                 onBack = {
                     setSelectedScreen(BottomNavigationScreens.Home)
                 })
