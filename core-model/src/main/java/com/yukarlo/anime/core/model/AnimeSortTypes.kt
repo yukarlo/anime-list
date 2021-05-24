@@ -1,7 +1,7 @@
 package com.yukarlo.anime.core.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 sealed class AnimeSortTypes(
     val title: String,

@@ -3,7 +3,7 @@ package com.yukarlo.anime.common.android.navigation
 import android.os.Parcelable
 import com.yukarlo.anime.core.model.AnimeSeason
 import com.yukarlo.anime.core.model.AnimeSortTypes
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AnimeInputModel(
