@@ -16,7 +16,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            minifyEnabled(enabled = false)
+            isMinifyEnabled = false
             proguardFiles("proguard-rules.pro")
         }
     }
@@ -25,7 +25,6 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
-        kotlinCompilerVersion = Dependencies.Kotlin.VERSION
         useLiveLiterals = true
     }
 }

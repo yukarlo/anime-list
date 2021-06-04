@@ -5,9 +5,8 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 
 fun DependencyHandler.addDaggerDependencies() {
     implement(Dependencies.Dagger.DAGGER_HILT_ANDROID)
-    implement(Dependencies.Dagger.DAGGER_HILT)
     implement(Dependencies.Dagger.DAGGER_HILT_LIFECYCLE_VIEWMODEL)
-    implement(Dependencies.Dagger.DAGGER_HILT_NAVIGATION)
+    implement(Dependencies.Dagger.DAGGER_HILT_NAVIGATION_COMPOSE)
     kapt(Dependencies.Dagger.DAGGER_HILT_ANDROID_COMPILER)
     kapt(Dependencies.Dagger.DAGGER_HILT_COMPILER)
 }

@@ -1,15 +1,25 @@
-import com.android.build.gradle.*
+import com.android.build.gradle.AppExtension
+import com.android.build.gradle.AppPlugin
+import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
+import com.android.build.gradle.LibraryPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
-        mavenCentral()
         google()
+        mavenCentral()
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots") {
+            content {
+                includeModule("com.google.dagger", "hilt-android-gradle-plugin")
+            }
+        }
         jcenter()
     }
     dependencies {
-        classpath(dependencyNotation = "com.android.tools.build:gradle:7.0.0-alpha09")
-        classpath(dependencyNotation = Dependencies.Dagger.DAGGER_HILT_ANDROID_GRADLE_PLUGIN)
+        classpath(dependencyNotation = "com.android.tools.build:gradle:7.1.0-alpha01")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:HEAD-SNAPSHOT")
+//        classpath(dependencyNotation = Dependencies.Dagger.DAGGER_HILT_ANDROID_GRADLE_PLUGIN)
         classpath(dependencyNotation = Dependencies.Apollo.GRADLE)
         classpath(kotlin(module = "gradle-plugin", version = Dependencies.Kotlin.VERSION))
     }
