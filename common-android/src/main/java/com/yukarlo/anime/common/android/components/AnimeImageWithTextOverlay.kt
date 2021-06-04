@@ -40,6 +40,7 @@ fun AnimeWithTextOverlay(
         Image(
             painter = rememberCoilPainter(request = anime.coverImage.extraLarge),
             modifier = Modifier
+                .fillMaxWidth()
                 .requiredHeight(height = 450.dp)
                 .scrim(colors = listOf(Color(0x80000000), Color(0x33000000)))
                 .onGloballyPositioned {

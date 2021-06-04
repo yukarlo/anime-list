@@ -1,5 +1,6 @@
 package com.yukarlo.anime.navigation.main
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -21,12 +22,14 @@ internal fun MainScreenNavigationConfig(
         composable(route = NavigationScreens.AnimeMain.route) { navBackStackEntry ->
             MainScreen(
                 viewAll = {
+                    val bundle: Bundle = Bundle().apply {
+                        putParcelable(
+                            NavigationScreens.ViewAllAnime.key,
+                            it
+                        )
+                    }
                     navController.apply {
-                        currentBackStackEntry
-                            ?.arguments?.putParcelable(
-                                NavigationScreens.ViewAllAnime.key,
-                                it
-                            )
+                        currentBackStackEntry?.arguments = bundle
                         navigate(route = NavigationScreens.ViewAllAnime.route)
                     }
                 },

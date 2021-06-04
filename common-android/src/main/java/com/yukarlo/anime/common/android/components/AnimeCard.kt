@@ -32,7 +32,11 @@ fun AnimeCard(
             modifier = Modifier.padding(horizontal = 4.dp)
         ) {
             Image(
-                modifier = Modifier.aspectRatio(3 / 4F),
+                modifier = Modifier
+                    .aspectRatio(ratio = 3 / 4F)
+                    .clickable {
+                        onClick(anime.id)
+                    },
                 painter = rememberCoilPainter(anime.coverImage.large, fadeIn = true),
                 contentScale = ContentScale.Crop,
                 contentDescription = anime.title.english

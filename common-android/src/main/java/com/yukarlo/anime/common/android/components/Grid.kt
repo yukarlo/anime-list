@@ -23,7 +23,7 @@ fun <T> VerticalGrid(
     itemContent: @Composable LazyItemScope.(T, Int) -> Unit
 ) {
     val animatedItemIndex = remember { mutableSetOf<Int>() }
-    val transition = updateTransition(targetState = animatedItemIndex)
+    val transition = updateTransition(targetState = animatedItemIndex, label = "")
 
     LazyVerticalGrid(
         cells = GridCells.Fixed(count = 3),
@@ -33,45 +33,45 @@ fun <T> VerticalGrid(
         )
     ) {
         itemsIndexed(items) { index, item ->
-            val offset: Float by transition.animateFloat(
-                transitionSpec = {
-                    tween(
-                        durationMillis = 400,
-                        delayMillis = 100,
-                        easing = LinearOutSlowInEasing
-                    )
-                }
-            ) { state ->
-                if (state.contains(index)) {
-                    0F
-                } else {
-                    150F
-                }
-            }
-
-            val alpha: Float by transition.animateFloat(
-                transitionSpec = {
-                    tween(
-                        durationMillis = 400,
-                        delayMillis = 100,
-                        easing = LinearOutSlowInEasing
-                    )
-                }
-            ) { state ->
-                if (index in state) {
-                    1F
-                } else {
-                    0F
-                }
-            }
+//            val offset: Float by transition.animateFloat(
+//                transitionSpec = {
+//                    tween(
+//                        durationMillis = 400,
+//                        delayMillis = 100,
+//                        easing = LinearOutSlowInEasing
+//                    )
+//                }, label = ""
+//            ) { state ->
+//                if (state.contains(index)) {
+//                    0F
+//                } else {
+//                    150F
+//                }
+//            }
+//
+//            val alpha: Float by transition.animateFloat(
+//                transitionSpec = {
+//                    tween(
+//                        durationMillis = 400,
+//                        delayMillis = 100,
+//                        easing = LinearOutSlowInEasing
+//                    )
+//                }, label = ""
+//            ) { state ->
+//                if (index in state) {
+//                    1F
+//                } else {
+//                    0F
+//                }
+//            }
 
             animatedItemIndex.add(index)
 
             Row(
                 modifier = Modifier
                     .padding(top = 8.dp)
-                    .offset(y = offset.dp)
-                    .alpha(alpha = alpha)
+//                    .offset(y = offset.dp)
+//                    .alpha(alpha = alpha)
             ) {
                 itemContent(item, index)
             }
@@ -89,7 +89,7 @@ fun <T> VerticalGrid(
     itemContent: @Composable LazyItemScope.(T, Int) -> Unit
 ) {
     val animatedItemIndex = remember { mutableSetOf<Int>() }
-    val transition = updateTransition(animatedItemIndex)
+    val transition = updateTransition(animatedItemIndex, label = "")
     val chunkedList = items.chunked(size = rows)
     LazyColumn {
         headerText?.let {
@@ -108,7 +108,7 @@ fun <T> VerticalGrid(
                         delayMillis = 100,
                         easing = LinearOutSlowInEasing
                     )
-                }
+                }, label = ""
             ) { state ->
                 if (state.contains(index)) {
                     0F
@@ -124,7 +124,7 @@ fun <T> VerticalGrid(
                         delayMillis = 100,
                         easing = LinearOutSlowInEasing
                     )
-                }
+                }, label = ""
             ) { state ->
                 if (index in state) {
                     1F
