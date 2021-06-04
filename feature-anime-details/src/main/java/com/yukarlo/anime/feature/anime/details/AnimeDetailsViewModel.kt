@@ -28,6 +28,7 @@ internal class AnimeDetailsViewModel @Inject constructor(
                 }
                 .catch {
                     animeDetails.value = AnimeDetailsUiState(
+                        result = Result.ERROR,
                         animeDetails = animeDetails.value.animeDetails
                     )
                 }
