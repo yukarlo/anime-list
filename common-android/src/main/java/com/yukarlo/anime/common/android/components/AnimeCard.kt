@@ -1,5 +1,6 @@
 package com.yukarlo.anime.common.android.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -10,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.coil.rememberCoilPainter
 import com.yukarlo.anime.core.model.Anime
-import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun AnimeCard(
@@ -30,10 +31,9 @@ fun AnimeCard(
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.padding(horizontal = 4.dp)
         ) {
-            CoilImage(
-                data = anime.coverImage.large,
-                modifier = Modifier
-                    .aspectRatio(3 / 4F),
+            Image(
+                modifier = Modifier.aspectRatio(3 / 4F),
+                painter = rememberCoilPainter(anime.coverImage.large, fadeIn = true),
                 contentScale = ContentScale.Crop,
                 contentDescription = anime.title.english
             )

@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
+import com.google.accompanist.insets.statusBarsPadding
 import com.yukarlo.anime.common.android.navigation.BackHandler
-import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 @Composable
 fun SearchScreen(navBackStackEntry: NavBackStackEntry, onBack: () -> Unit) {

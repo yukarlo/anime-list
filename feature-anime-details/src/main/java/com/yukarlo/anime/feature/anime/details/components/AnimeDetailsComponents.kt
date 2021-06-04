@@ -23,14 +23,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.text.HtmlCompat
+import com.google.accompanist.coil.rememberCoilPainter
+import com.google.accompanist.insets.systemBarsPadding
 import com.yukarlo.anime.common.android.components.*
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.Character
 import com.yukarlo.anime.core.model.Trailer
 import com.yukarlo.anime.feature.anime.details.R
-import dev.chrisbanes.accompanist.coil.CoilImage
-import dev.chrisbanes.accompanist.insets.systemBarsPadding
 
 @Composable
 fun HeaderSection(
@@ -138,11 +138,11 @@ fun TrailerSection(
                     playTrailer(trailer.youtubeTrailerUrl)
                 }
         ) {
-            CoilImage(
+            Image(
+                painter = rememberCoilPainter(request = trailer.youtubeThumbnail),
                 modifier = Modifier
                     .aspectRatio(ratio = 16 / 9F)
                     .scrim(colors = listOf(Color(0x80000000), Color(0x33000000))),
-                data = trailer.youtubeThumbnail,
                 contentDescription = "thumbnail",
                 contentScale = ContentScale.Crop,
             )

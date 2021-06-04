@@ -6,7 +6,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
-import androidx.navigation.compose.navigate
 import com.yukarlo.anime.MainScreen
 import com.yukarlo.anime.feature.anime.details.AnimeDetailsScreen
 import com.yukarlo.anime.feature.anime.list.AnimeListScreen

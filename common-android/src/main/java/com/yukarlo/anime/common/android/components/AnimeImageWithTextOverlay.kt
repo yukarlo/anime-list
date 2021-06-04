@@ -1,7 +1,13 @@
 package com.yukarlo.anime.common.android.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,8 +24,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.coil.rememberCoilPainter
 import com.yukarlo.anime.core.model.Anime
-import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun AnimeWithTextOverlay(
@@ -31,8 +37,8 @@ fun AnimeWithTextOverlay(
     val height = remember { mutableStateOf(value = 0f) }
 
     Box {
-        CoilImage(
-            data = anime.coverImage.extraLarge,
+        Image(
+            painter = rememberCoilPainter(request = anime.coverImage.extraLarge),
             modifier = Modifier
                 .requiredHeight(height = 450.dp)
                 .scrim(colors = listOf(Color(0x80000000), Color(0x33000000)))

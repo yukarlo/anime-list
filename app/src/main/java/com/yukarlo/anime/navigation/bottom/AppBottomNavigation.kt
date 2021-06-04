@@ -7,8 +7,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.accompanist.insets.navigationBarsHeight
-import dev.chrisbanes.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.insets.navigationBarsHeight
+import com.google.accompanist.insets.navigationBarsPadding
 
 @Composable
 internal fun AppBottomNavigation(

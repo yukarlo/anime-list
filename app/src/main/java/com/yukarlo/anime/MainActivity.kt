@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.yukarlo.anime.common.android.navigation.LocalBackDispatcher
 import com.yukarlo.anime.common.android.ui.theme.AnimeTheme
 import com.yukarlo.anime.navigation.main.MainScreenNavigationConfig
 import dagger.hilt.android.AndroidEntryPoint
-import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 @AndroidEntryPoint
 internal class MainActivity : AppCompatActivity() {

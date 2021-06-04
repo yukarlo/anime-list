@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.statusBarsPadding
 import com.yukarlo.anime.common.android.navigation.BackHandler
-import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 @Composable
 fun AccountScreen(onBack: () -> Unit) {

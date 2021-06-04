@@ -5,21 +5,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.HiltViewModelFactory
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import com.google.accompanist.insets.statusBarsPadding
 import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.common.android.components.ToolBar
 import com.yukarlo.anime.common.android.components.VerticalGrid
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.Anime
-import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 @Composable
 fun AnimeListScreen(
@@ -28,14 +29,7 @@ fun AnimeListScreen(
     parcelable: AnimeInputModel?,
     navigateToDetails: (Int?) -> Unit,
 ) {
-    val factory = HiltViewModelFactory(
-        context = LocalContext.current,
-        navBackStackEntry = navBackStackEntry
-    )
-    val viewModel: AnimeListViewModel = viewModel(
-        key = AnimeListViewModel::class.java.simpleName,
-        factory = factory
-    )
+    val viewModel: AnimeListViewModel = hiltViewModel(backStackEntry = navBackStackEntry)
 
     LaunchedEffect(parcelable) {
         viewModel.fetchAnime(inputModel = parcelable)
