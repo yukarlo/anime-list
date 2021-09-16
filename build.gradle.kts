@@ -12,7 +12,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath(dependencyNotation = "com.android.tools.build:gradle:7.1.0-alpha05")
+        classpath(dependencyNotation = "com.android.tools.build:gradle:7.1.0-alpha11")
         classpath(dependencyNotation = Dependencies.Dagger.DAGGER_HILT_ANDROID_GRADLE_PLUGIN)
         classpath(dependencyNotation = Dependencies.Apollo.GRADLE)
         classpath(kotlin(module = "gradle-plugin", version = Dependencies.Kotlin.VERSION))
