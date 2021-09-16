@@ -1,6 +1,6 @@
 object Dependencies {
     object Kotlin {
-        const val VERSION = "1.5.10"
+        const val VERSION = "1.5.30"
         const val STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$VERSION"
     }
 
@@ -16,7 +16,7 @@ object Dependencies {
     }
 
     object AndroidX {
-        const val ANDROID_COMPOSE_VERSION = "1.0.0-beta08"
+        const val ANDROID_COMPOSE_VERSION = "1.1.0-alpha04"
         private const val ANDROID_LIFECYCLE_VERSION = "2.3.1"
 
         const val APP_COMPAT = "androidx.appcompat:appcompat:1.4.0-alpha01"
@@ -33,7 +33,7 @@ object Dependencies {
     }
 
     object Dagger {
-        private const val DAGGER_HILT_ANDROID_VERSION = "2.36"
+        private const val DAGGER_HILT_ANDROID_VERSION = "2.38.1"
         private const val DAGGER_HILT_VERSION = "1.0.0"
 
         const val DAGGER_HILT_ANDROID =
@@ -65,9 +65,10 @@ object Dependencies {
     }
 
     object Accompanist {
-        private const val VERSION = "0.11.0"
+        const val ACCOMPANIST_INSETS = "com.google.accompanist:accompanist-insets:0.18.0"
+    }
 
-        const val ACCOMPANIST_COIL = "com.google.accompanist:accompanist-coil:$VERSION"
-        const val ACCOMPANIST_INSETS = "com.google.accompanist:accompanist-insets:$VERSION"
+    object Coil {
+        const val COIL_COMPOSE = "io.coil-kt:coil-compose:1.3.2"
     }
 }
