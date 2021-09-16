@@ -34,7 +34,6 @@ subprojects {
                 "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
             )
-            useIR = true
         }
     }
 
@@ -65,8 +64,8 @@ fun BaseExtension.applyBaseCommons() = apply {
     compileSdkVersion(Android.Sdk.COMPILE)
 
     defaultConfig.apply {
-        minSdkVersion(Android.Sdk.MIN)
-        targetSdkVersion(Android.Sdk.TARGET)
+        minSdk = Android.Sdk.MIN
+        targetSdk = Android.Sdk.TARGET
     }
 
     buildFeatures.viewBinding = true
