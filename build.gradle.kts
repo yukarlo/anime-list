@@ -9,7 +9,6 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
     dependencies {
         classpath(dependencyNotation = "com.android.tools.build:gradle:7.1.0-alpha11")

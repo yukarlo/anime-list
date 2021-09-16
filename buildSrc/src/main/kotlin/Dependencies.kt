@@ -57,7 +57,7 @@ object Dependencies {
     }
 
     object Apollo {
-        private const val VERSION = "2.5.3"
+        private const val VERSION = "2.5.9"
 
         const val GRADLE = "com.apollographql.apollo:apollo-gradle-plugin:$VERSION"
         const val RUNTIME = "com.apollographql.apollo:apollo-runtime:$VERSION"
