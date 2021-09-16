@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.coil.rememberCoilPainter
+import coil.compose.rememberImagePainter
 import com.yukarlo.anime.core.model.Anime
 
 @Composable
@@ -38,7 +38,7 @@ fun AnimeWithTextOverlay(
 
     Box {
         Image(
-            painter = rememberCoilPainter(request = anime.coverImage.extraLarge),
+            painter = rememberImagePainter(data = anime.coverImage.extraLarge),
             modifier = Modifier
                 .fillMaxWidth()
                 .requiredHeight(height = 450.dp)

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.coil.rememberCoilPainter
+import coil.compose.rememberImagePainter
 import com.yukarlo.anime.core.model.Character
 
 @Composable
@@ -34,7 +34,7 @@ fun CharacterCard(
             modifier = Modifier.padding(horizontal = 4.dp)
         ) {
             Image(
-                painter = rememberCoilPainter(request = character.image.large),
+                painter = rememberImagePainter(data = character.image.large),
                 contentDescription = character.name,
                 modifier = Modifier
                     .aspectRatio(3 / 4F),

@@ -2,10 +2,21 @@ package com.yukarlo.anime.feature.anime.details.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
@@ -23,9 +34,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.text.HtmlCompat
-import com.google.accompanist.coil.rememberCoilPainter
+import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.systemBarsPadding
-import com.yukarlo.anime.common.android.components.*
+import com.yukarlo.anime.common.android.components.AnimeCard
+import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
+import com.yukarlo.anime.common.android.components.CharacterCard
+import com.yukarlo.anime.common.android.components.Chip
+import com.yukarlo.anime.common.android.components.ListHeaderTitle
+import com.yukarlo.anime.common.android.components.scrim
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.Character
@@ -139,7 +155,7 @@ fun TrailerSection(
                 }
         ) {
             Image(
-                painter = rememberCoilPainter(request = trailer.youtubeThumbnail),
+                painter = rememberImagePainter(data = trailer.youtubeThumbnail),
                 modifier = Modifier
                     .aspectRatio(ratio = 16 / 9F)
                     .scrim(colors = listOf(Color(0x80000000), Color(0x33000000))),
