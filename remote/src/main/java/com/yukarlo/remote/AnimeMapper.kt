@@ -119,7 +119,7 @@ internal class AnimeMapper @Inject constructor() {
             } else {
                 null
             },
-            format = animeMedia?.format?.name?.toLowerCase().orEmpty(),
+            format = animeMedia?.format?.name?.lowercase().orEmpty(),
             averageScore = animeMedia?.averageScore ?: 0
         )
 
