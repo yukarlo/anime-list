@@ -20,7 +20,7 @@ dependencies {
     implementation(Dependencies.Kotlin.STDLIB)
     implementation(Dependencies.AndroidX.CORE_KTX)
     implementation(Dependencies.AndroidX.APP_COMPAT)
-    implementation(Dependencies.Accompanist.ACCOMPANIST_COIL)
+    implementation(Dependencies.Coil.COIL_COMPOSE)
 
     addComposeDependencies()
     addDaggerDependencies()

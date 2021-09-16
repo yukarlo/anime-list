@@ -9,17 +9,11 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven(url = "https://oss.sonatype.org/content/repositories/snapshots") {
-            content {
-                includeModule("com.google.dagger", "hilt-android-gradle-plugin")
-            }
-        }
         jcenter()
     }
     dependencies {
-        classpath(dependencyNotation = "com.android.tools.build:gradle:7.1.0-alpha01")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:HEAD-SNAPSHOT")
-//        classpath(dependencyNotation = Dependencies.Dagger.DAGGER_HILT_ANDROID_GRADLE_PLUGIN)
+        classpath(dependencyNotation = "com.android.tools.build:gradle:7.1.0-alpha05")
+        classpath(dependencyNotation = Dependencies.Dagger.DAGGER_HILT_ANDROID_GRADLE_PLUGIN)
         classpath(dependencyNotation = Dependencies.Apollo.GRADLE)
         classpath(kotlin(module = "gradle-plugin", version = Dependencies.Kotlin.VERSION))
     }

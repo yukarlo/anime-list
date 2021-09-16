@@ -22,7 +22,7 @@ dependencies {
     implementation(Dependencies.AndroidX.APP_COMPAT)
     implementation(Dependencies.AndroidX.CORE_KTX)
     implementation(Dependencies.AndroidX.RUNTIME_KTX)
-    implementation(Dependencies.Accompanist.ACCOMPANIST_COIL)
+    implementation(Dependencies.Coil.COIL_COMPOSE)
     implementation(Dependencies.AndroidX.COMPOSE_VIEWMODEL)
     implementation(Dependencies.Coroutines.CORE)
     implementation(Dependencies.Accompanist.ACCOMPANIST_INSETS)
