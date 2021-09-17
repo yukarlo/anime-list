@@ -69,7 +69,7 @@ internal class RemoteClientImpl @Inject constructor(
                     override fun onResponse(response: Response<AnimeQuery.Data>) {
                         response.data?.page?.let {
                             val result = animeMapper.mapAnimeToDomain(result = it.media)
-                            offer(result)
+                            trySend(result)
                         }
                     }
 
