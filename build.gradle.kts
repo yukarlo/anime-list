@@ -32,7 +32,8 @@ subprojects {
             freeCompilerArgs = listOf(
                 "-Xopt-in=kotlin.RequiresOptIn",
                 "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+                "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-Xopt-in=coil.annotation.ExperimentalCoilApi"
             )
         }
     }
