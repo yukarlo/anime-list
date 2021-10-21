@@ -11,7 +11,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(dependencyNotation = "com.android.tools.build:gradle:7.1.0-alpha12")
+        classpath(dependencyNotation = "com.android.tools.build:gradle:7.2.0-alpha02")
         classpath(dependencyNotation = Dependencies.Dagger.DAGGER_HILT_ANDROID_GRADLE_PLUGIN)
         classpath(dependencyNotation = Dependencies.Apollo.GRADLE)
         classpath(kotlin(module = "gradle-plugin", version = Dependencies.Kotlin.VERSION))
