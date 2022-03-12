@@ -17,7 +17,7 @@ internal class AnimeRepositoryImpl @Inject constructor(
     private val sortMapper: SortMapper
 ) : AnimeRepository {
 
-    override suspend fun fetchAnime(param: AnimeParam): Flow<List<Anime>?> =
+    override fun fetchAnime(param: AnimeParam): Flow<List<Anime>?> =
         remoteClient.getAnimeFlow(
             page = param.page,
             itemsPerPage = param.itemsPerPage,
@@ -26,12 +26,12 @@ internal class AnimeRepositoryImpl @Inject constructor(
             sort = sortMapper.mapSort(animeSort = param.sort)
         )
 
-    override suspend fun fetchMultipleAnimeSort(param: AnimeParam): Flow<MultipleAnimeSort> =
+    override fun fetchMultipleAnimeSort(param: AnimeParam): Flow<MultipleAnimeSort> =
         remoteClient.getMultipleAnimeSortFlow(
             year = param.year,
             season = seasonMapper.mapSeason(animeSeason = param.season)
         )
 
-    override suspend fun fetchAnimeDetails(id: Int): Flow<AnimeDetails> =
+    override fun fetchAnimeDetails(id: Int): Flow<AnimeDetails> =
         remoteClient.getAnimeDetails(animeId = id)
 }

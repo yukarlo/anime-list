@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetMultipleAnimeSortUseCase @Inject constructor(
     private val animeRepository: AnimeRepository
 ) {
-    suspend fun execute(param: AnimeParam): Flow<MultipleAnimeSort> =
+    fun execute(param: AnimeParam): Flow<MultipleAnimeSort> =
         animeRepository.fetchMultipleAnimeSort(param = param)
 }

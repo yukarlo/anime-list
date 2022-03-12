@@ -8,5 +8,5 @@ import javax.inject.Inject
 class GetAnimeUseCase @Inject constructor(
     private val animeRepository: AnimeRepository
 ) {
-    suspend fun execute(param: AnimeParam): Flow<List<Anime>?> = animeRepository.fetchAnime(param = param)
+    fun execute(param: AnimeParam): Flow<List<Anime>?> = animeRepository.fetchAnime(param = param)
 }
