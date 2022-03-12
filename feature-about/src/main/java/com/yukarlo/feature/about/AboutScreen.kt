@@ -3,10 +3,10 @@ package com.yukarlo.feature.about
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -20,7 +20,7 @@ import com.yukarlo.anime.common.android.navigation.BackHandler
 
 @Composable
 fun AccountScreen(onBack: () -> Unit) {
-    Scaffold(
+    Box(
         modifier = Modifier.statusBarsPadding(),
     ) {
         Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 12.dp)) {

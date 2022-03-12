@@ -5,9 +5,9 @@ import android.net.Uri
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -66,7 +66,7 @@ private fun AnimeDetails(
 ) {
     val context = LocalContext.current
     val chunkedList = animeDetails.recommendations.chunked(size = 2)
-    Scaffold {
+    Box {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
