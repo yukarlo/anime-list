@@ -1,13 +1,13 @@
 plugins {
     id("com.android.library")
-    id("com.apollographql.apollo")
+    id("com.apollographql.apollo3")
     id("dagger.hilt.android.plugin")
     kotlin(module = "android")
     kotlin(module = "kapt")
 }
 
 apollo {
-    generateKotlinModels.set(true)
+    packageName.set("com.yukarlo")
 }
 
 dependencies {
@@ -15,7 +15,6 @@ dependencies {
 
     implementation(Dependencies.Kotlin.STDLIB)
     implementation(Dependencies.Apollo.RUNTIME)
-    implementation(Dependencies.Apollo.APOLLO_COROUTINES)
     implementation(Dependencies.Coroutines.CORE)
 
     addDaggerDependencies()
