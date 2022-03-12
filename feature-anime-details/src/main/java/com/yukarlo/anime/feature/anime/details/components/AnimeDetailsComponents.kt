@@ -47,6 +47,7 @@ import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.Character
 import com.yukarlo.anime.core.model.Trailer
 import com.yukarlo.anime.feature.anime.details.R
+import java.util.Locale
 
 @Composable
 fun HeaderSection(
@@ -396,7 +397,13 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
             )
 
             Text(
-                text = animeDetails.basicInfo.status.toLowerCase().capitalize(),
+                text = animeDetails.basicInfo.status.lowercase().replaceFirstChar {
+                    if (it.isLowerCase()) {
+                        it.titlecase(Locale.getDefault())
+                    } else {
+                        it.toString()
+                    }
+                },
                 modifier = Modifier
                     .layoutId("status")
                     .padding(
