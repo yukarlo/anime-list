@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,7 +30,10 @@ fun AnimeListScreen(
     parcelable: AnimeInputModel?,
     navigateToDetails: (Int?) -> Unit,
 ) {
-    val viewModel: AnimeListViewModel = hiltViewModel(backStackEntry = navBackStackEntry)
+    val parentEntry = remember { navController.getBackStackEntry(navBackStackEntry.destination.route ?: "") }
+    val viewModel: AnimeListViewModel = hiltViewModel(parentEntry)
+
+    // TODO: Fix parcelable
 
     LaunchedEffect(parcelable) {
         viewModel.fetchAnime(inputModel = parcelable)

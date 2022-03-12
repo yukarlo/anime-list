@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import com.yukarlo.anime.MainScreen
 import com.yukarlo.anime.feature.anime.details.AnimeDetailsScreen
 import com.yukarlo.anime.feature.anime.list.AnimeListScreen
@@ -29,7 +29,7 @@ internal fun MainScreenNavigationConfig(
                         )
                     }
                     navController.apply {
-                        currentBackStackEntry?.arguments = bundle
+//                        currentBackStackEntry?.arguments = bundle
                         navigate(route = NavigationScreens.ViewAllAnime.route)
                     }
                 },

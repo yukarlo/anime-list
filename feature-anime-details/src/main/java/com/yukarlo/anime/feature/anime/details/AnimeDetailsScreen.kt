@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,9 @@ fun AnimeDetailsScreen(
     navBackStackEntry: NavBackStackEntry,
     navController: NavController,
 ) {
-    val viewModel: AnimeDetailsViewModel = hiltViewModel(backStackEntry = navBackStackEntry)
+    val parentEntry =
+        remember { navController.getBackStackEntry(navBackStackEntry.destination.route ?: "") }
+    val viewModel: AnimeDetailsViewModel = hiltViewModel(parentEntry)
 
     LaunchedEffect(animeId) {
         viewModel.getAnimeDetails(animeId = animeId)
