@@ -4,8 +4,8 @@ import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.MultipleAnimeSort
 import kotlinx.coroutines.flow.Flow
-import type.MediaSeason
-import type.MediaSort
+import com.yukarlo.type.MediaSeason
+import com.yukarlo.type.MediaSort
 
 interface RemoteClient {
     fun getAnimeFlow(

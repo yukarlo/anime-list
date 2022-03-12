@@ -1,7 +1,7 @@
 package com.yukarlo.anime.lib.anime.mapper
 
 import com.yukarlo.anime.core.model.AnimeSeason
-import type.MediaSeason
+import com.yukarlo.type.MediaSeason
 import javax.inject.Inject
 
 class SeasonMapper @Inject constructor() {

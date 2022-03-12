@@ -1,7 +1,7 @@
 query SearchAnimes(
     $id: Int
 ) {
-    Media(id: $id, format: TV) {
+    animeMedia: Media(id: $id, format: TV) {
         ...AnimeMedia
     }
 }

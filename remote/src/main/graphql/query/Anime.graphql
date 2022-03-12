@@ -5,7 +5,7 @@ query Anime(
     $year: Int,
     $season: MediaSeason
 ) {
-    Page(page: $page, perPage: $itemsPerPage) {
+    animePage: Page(page: $page, perPage: $itemsPerPage) {
         pageInfo {
             ...PageInformation
         }

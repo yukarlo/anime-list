@@ -1,6 +1,7 @@
 package com.yukarlo.remote.di
 
-import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.network.okHttpClient
 import com.yukarlo.remote.RemoteClient
 import com.yukarlo.remote.RemoteClientImpl
 import dagger.Binds
@@ -31,7 +32,7 @@ internal abstract class RemoteModule {
             okHttpClient: OkHttpClient,
             serverUrl: String
         ): ApolloClient =
-            ApolloClient.builder()
+            ApolloClient.Builder()
                 .serverUrl(serverUrl)
                 .okHttpClient(okHttpClient)
                 .build()

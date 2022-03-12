@@ -1,7 +1,7 @@
 package com.yukarlo.anime.lib.anime.mapper
 
 import com.yukarlo.anime.core.model.AnimeSort
-import type.MediaSort
+import com.yukarlo.type.MediaSort
 import javax.inject.Inject
 
 class SortMapper @Inject constructor() {
