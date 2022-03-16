@@ -1,11 +1,6 @@
 package com.yukarlo.feature.anime.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
@@ -13,30 +8,17 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import com.google.accompanist.insets.systemBarsPadding
-import com.yukarlo.anime.common.android.components.AnimeCard
-import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
-import com.yukarlo.anime.common.android.components.HorizontalList
-import com.yukarlo.anime.common.android.components.ListHeaderTitle
-import com.yukarlo.anime.common.android.components.ScreenState
+import com.yukarlo.anime.common.android.components.*
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
-import com.yukarlo.anime.core.model.Anime
-import com.yukarlo.anime.core.model.AnimeSortTypes
-import com.yukarlo.anime.core.model.Date
-import com.yukarlo.anime.core.model.Image
-import com.yukarlo.anime.core.model.Title
+import com.yukarlo.anime.core.model.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -63,27 +45,32 @@ fun HomeScreen(
     val homeState by viewModel.onUpdateHome.collectAsState()
     ScreenState(result = homeState.result, retry = viewModel::retry) {
         AnimeList(
-            homeItems = homeState.homeItems,
-            viewAll = viewModel::navigateTo,
-            onAnimeClick = navigateToDetails
+            homeState.trendingAnime,
+            homeState.popularThisSeasonAnime,
+            homeState.popularThisSeasonAnime,
+            homeState.topTenAnime,
+            onAnimeClick = navigateToDetails,
+            viewAll = { viewModel.navigateTo(it) }
         )
     }
 }
 
 @Composable
 private fun AnimeList(
-    homeItems: LinkedHashMap<AnimeSortTypes, List<Anime>>,
-    viewAll: (AnimeSortTypes) -> Unit,
-    onAnimeClick: (Int?) -> Unit
+    trending: List<Anime>,
+    allTimePopular: List<Anime>,
+    popularThisSeason: List<Anime>,
+    topTen: List<Anime>,
+    onAnimeClick: (Int?) -> Unit,
+    viewAll: (AnimeSortTypes) -> Unit
 ) {
     Column(
-        modifier = Modifier
-            .verticalScroll(state = rememberScrollState())
+        modifier = Modifier.verticalScroll(state = rememberScrollState())
     ) {
         Box {
-            homeItems[AnimeSortTypes.Top10]?.let {
+            if (topTen.isNotEmpty()) {
                 AnimeWithTextOverlay(
-                    anime = it.random(),
+                    anime = topTen.random(),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
@@ -103,32 +90,63 @@ private fun AnimeList(
                 }
             }
         }
-        homeItems.map { (sort: AnimeSortTypes, anime: List<Anime>) ->
-            ListHeaderTitle(
-                title = sort.title,
-                viewAll = {
-                    viewAll(sort)
-                }
-            )
 
-            HorizontalList(
-                items = anime
-            ) { item: Anime, modifier: Modifier ->
-                AnimeCard(
-                    anime = item,
-                    modifier = modifier
-                        .width(width = 140.dp)
-                        .height(height = 260.dp),
-                    onClick = {
-                        onAnimeClick(it)
-                    }
-                )
+        if (trending.isNotEmpty()) {
+            AnimeRowCategory(AnimeSortTypes.TrendingAnime.title, trending, onAnimeClick) {
+                viewAll(AnimeSortTypes.TrendingAnime)
             }
 
-            Spacer(modifier = Modifier.padding(top = 16.dp))
         }
+
+        if (allTimePopular.isNotEmpty()) {
+            AnimeRowCategory(AnimeSortTypes.AllTimePopular.title, allTimePopular, onAnimeClick) {
+                viewAll(AnimeSortTypes.AllTimePopular)
+            }
+
+        }
+
+        if (popularThisSeason.isNotEmpty()) {
+            AnimeRowCategory(AnimeSortTypes.PopularThisSeason.title, popularThisSeason, onAnimeClick) {
+                viewAll(AnimeSortTypes.PopularThisSeason)
+            }
+
+        }
+
+        if (topTen.isNotEmpty()) {
+            AnimeRowCategory(AnimeSortTypes.Top10.title, topTen, onAnimeClick) {
+                viewAll(AnimeSortTypes.Top10)
+            }
+        }
+
         Spacer(modifier = Modifier.padding(top = 64.dp))
     }
+}
+
+@Composable
+private fun AnimeRowCategory(
+    title: String,
+    anime: List<Anime>,
+    onAnimeClick: (Int?) -> Unit,
+    viewAll: () -> Unit
+) {
+    ListHeaderTitle(
+        title = title,
+        viewAll = viewAll
+    )
+
+    HorizontalList(
+        items = anime
+    ) { item: Anime, modifier: Modifier ->
+        AnimeCard(
+            anime = item,
+            modifier = modifier
+                .width(width = 140.dp)
+                .height(height = 260.dp),
+            onClick = onAnimeClick
+        )
+    }
+
+    Spacer(modifier = Modifier.padding(top = 16.dp))
 }
 
 @Preview(showBackground = true)
@@ -166,14 +184,13 @@ fun DefaultPreview() {
             format = "tv"
         )
     )
-    val animeHashMap = LinkedHashMap<AnimeSortTypes, List<Anime>>()
-    animeHashMap[AnimeSortTypes.TrendingAnime] = animeList
-    animeHashMap[AnimeSortTypes.AllTimePopular] = animeList
-    animeHashMap[AnimeSortTypes.Top10] = animeList
 
     AnimeList(
-        homeItems = animeHashMap,
+        trending = animeList,
+        popularThisSeason = animeList,
+        allTimePopular = animeList,
+        topTen = animeList,
         viewAll = { },
-        onAnimeClick = { }
+        onAnimeClick = { },
     )
 }

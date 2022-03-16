@@ -2,13 +2,12 @@ package com.yukarlo.feature.anime.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yukarlo.anime.common.android.base.Result.*
+import com.yukarlo.anime.common.android.base.Result.ERROR
+import com.yukarlo.anime.common.android.base.Result.SUCCESS
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.common.android.utils.SeasonUtil
-import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeParam
 import com.yukarlo.anime.core.model.AnimeSortTypes
-import com.yukarlo.anime.core.model.MultipleAnimeSort
 import com.yukarlo.anime.lib.anime.domain.GetMultipleAnimeSortUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -40,46 +39,27 @@ internal class HomeViewModel @Inject constructor(
                 )
             )
                 .onStart {
-                    updateHome.value = HomeUiState(
-                        result = LOADING,
-                        homeItems = linkedMapOf()
-                    )
+                    updateHome.value = HomeUiState()
                 }
                 .catch {
                     updateHome.value = HomeUiState(
                         result = ERROR,
-                        homeItems = updateHome.value.homeItems
+                        trendingAnime = updateHome.value.trendingAnime,
+                        popularThisSeasonAnime = updateHome.value.popularThisSeasonAnime,
+                        allTimePopularAnime = updateHome.value.allTimePopularAnime,
+                        topTenAnime = updateHome.value.topTenAnime
                     )
                 }.collect {
-                    val homeItems = collectAnime(anime = it)
-
                     updateHome.value = HomeUiState(
                         result = SUCCESS,
-                        homeItems = homeItems
+                        trendingAnime = it.trendingNow,
+                        popularThisSeasonAnime = it.popularThisSeason,
+                        allTimePopularAnime = it.allTimePopular,
+                        topTenAnime = it.top10
                     )
                 }
         }
     }
-
-    private fun collectAnime(anime: MultipleAnimeSort): LinkedHashMap<AnimeSortTypes, List<Anime>> =
-        with(anime) {
-            val animeHashMap = LinkedHashMap<AnimeSortTypes, List<Anime>>()
-
-            if (trendingNow.isNotEmpty()) {
-                animeHashMap[AnimeSortTypes.TrendingAnime] = trendingNow
-            }
-            if (popularThisSeason.isNotEmpty()) {
-                animeHashMap[AnimeSortTypes.PopularThisSeason] = popularThisSeason
-            }
-            if (allTimePopular.isNotEmpty()) {
-                animeHashMap[AnimeSortTypes.AllTimePopular] = allTimePopular
-            }
-            if (top10.isNotEmpty()) {
-                animeHashMap[AnimeSortTypes.Top10] = top10
-            }
-
-            animeHashMap
-        }
 
     fun retry() {
         fetchAnime()

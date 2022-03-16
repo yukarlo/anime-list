@@ -6,5 +6,8 @@ import com.yukarlo.anime.core.model.AnimeSortTypes
 
 internal data class HomeUiState(
     val result: Result = Result.LOADING,
-    val homeItems: LinkedHashMap<AnimeSortTypes, List<Anime>> = linkedMapOf()
+    val trendingAnime: List<Anime> = emptyList(),
+    val allTimePopularAnime: List<Anime> = emptyList(),
+    val popularThisSeasonAnime: List<Anime> = emptyList(),
+    val topTenAnime: List<Anime> = emptyList()
 )
