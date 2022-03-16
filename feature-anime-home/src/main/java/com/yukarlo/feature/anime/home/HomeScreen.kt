@@ -43,10 +43,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     viewAll: (AnimeInputModel) -> Unit,
-    navigateToDetails: (Int?) -> Unit,
-    navBackStackEntry: NavBackStackEntry
+    navigateToDetails: (Int?) -> Unit
 ) {
-    val viewModel: HomeViewModel = hiltViewModel(navBackStackEntry)
+    val viewModel: HomeViewModel = hiltViewModel()
 
     val scope = rememberCoroutineScope()
     DisposableEffect(Unit) {

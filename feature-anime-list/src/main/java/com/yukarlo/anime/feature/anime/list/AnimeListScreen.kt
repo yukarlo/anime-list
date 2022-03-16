@@ -9,12 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
 import com.google.accompanist.insets.statusBarsPadding
 import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.ScreenState
@@ -25,13 +22,11 @@ import com.yukarlo.anime.core.model.Anime
 
 @Composable
 fun AnimeListScreen(
-    navBackStackEntry: NavBackStackEntry,
-    navController: NavController,
+    navigateUp: () -> Unit,
     parcelable: AnimeInputModel?,
     navigateToDetails: (Int?) -> Unit,
 ) {
-    val parentEntry = remember { navController.getBackStackEntry(navBackStackEntry.destination.route ?: "") }
-    val viewModel: AnimeListViewModel = hiltViewModel(parentEntry)
+    val viewModel: AnimeListViewModel = hiltViewModel()
 
     LaunchedEffect(parcelable) {
         viewModel.fetchAnime(inputModel = parcelable)
@@ -50,7 +45,7 @@ fun AnimeListScreen(
                 if (animeScreenState.toolbarTitle.isNotBlank()) {
                     ToolBar(
                         title = animeScreenState.toolbarTitle,
-                        onUp = { navController.navigateUp() }
+                        onUp = navigateUp
                     )
                 }
             }

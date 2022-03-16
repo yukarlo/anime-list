@@ -12,7 +12,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.yukarlo.anime.common.android.navigation.BackHandler
 
 @Composable
-fun SearchScreen(navBackStackEntry: NavBackStackEntry, onBack: () -> Unit) {
+fun SearchScreen(onBack: () -> Unit) {
     Scaffold(
         modifier = Modifier.statusBarsPadding(),
     ) {
