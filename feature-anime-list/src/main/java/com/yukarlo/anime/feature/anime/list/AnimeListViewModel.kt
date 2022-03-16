@@ -1,5 +1,6 @@
 package com.yukarlo.anime.feature.anime.list
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result
@@ -13,8 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AnimeListViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getAnimeUseCase: GetAnimeUseCase
 ) : ViewModel() {
+
+    private val animeModel: AnimeInputModel = savedStateHandle.get("AnimeInputModelKey")!!
 
     private val updateAnimeList: MutableStateFlow<AnimeListUiState> =
         MutableStateFlow(AnimeListUiState())
@@ -22,7 +26,11 @@ internal class AnimeListViewModel @Inject constructor(
 
     private var page = 1
 
-    fun fetchAnime(inputModel: AnimeInputModel?) {
+    init {
+        fetchAnime(animeModel)
+    }
+
+    private fun fetchAnime(inputModel: AnimeInputModel?) {
         viewModelScope.launch {
             getAnimeUseCase.execute(
                 param = AnimeParam(
@@ -61,11 +69,11 @@ internal class AnimeListViewModel @Inject constructor(
         }
     }
 
-    fun retry(inputModel: AnimeInputModel?) {
-        fetchAnime(inputModel = inputModel)
+    fun retry() {
+        fetchAnime(inputModel = animeModel)
     }
 
-    fun fetchNewPage(inputModel: AnimeInputModel?) {
-        fetchAnime(inputModel = inputModel)
+    fun fetchNewPage() {
+        fetchAnime(inputModel = animeModel)
     }
 }

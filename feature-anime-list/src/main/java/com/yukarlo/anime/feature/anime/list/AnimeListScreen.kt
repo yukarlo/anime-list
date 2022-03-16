@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -17,27 +16,19 @@ import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.common.android.components.ToolBar
 import com.yukarlo.anime.common.android.components.VerticalGrid
-import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.Anime
 
 @Composable
 fun AnimeListScreen(
     navigateUp: () -> Unit,
-    parcelable: AnimeInputModel?,
     navigateToDetails: (Int?) -> Unit,
 ) {
     val viewModel: AnimeListViewModel = hiltViewModel()
 
-    LaunchedEffect(parcelable) {
-        viewModel.fetchAnime(inputModel = parcelable)
-    }
-
     val animeScreenState by viewModel.onUpdateAnimeList.collectAsState()
     ScreenState(
         result = animeScreenState.result,
-        retry = {
-            viewModel.retry(inputModel = parcelable)
-        }
+        retry = { viewModel.retry() }
     ) {
         Scaffold(
             modifier = Modifier.statusBarsPadding(),
@@ -55,7 +46,7 @@ fun AnimeListScreen(
                 onAnimeClick = navigateToDetails
             ) { isOnLastIndex ->
                 if (isOnLastIndex) {
-                    viewModel.fetchNewPage(inputModel = parcelable)
+                    viewModel.fetchNewPage()
                 }
             }
             Spacer(modifier = Modifier.padding(top = 64.dp))

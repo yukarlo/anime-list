@@ -1,5 +1,6 @@
 package com.yukarlo.anime.feature.anime.details
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result
@@ -11,14 +12,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AnimeDetailsViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val animeDetailsUseCase: GetAnimeDetailsUseCase
 ) : ViewModel() {
 
-    private val animeDetails: MutableStateFlow<AnimeDetailsUiState> =
-        MutableStateFlow(AnimeDetailsUiState())
+    private val animeId: Int = savedStateHandle.get("AnimeIdKey")!!
+
+    private val animeDetails: MutableStateFlow<AnimeDetailsUiState> = MutableStateFlow(AnimeDetailsUiState())
     val onAnimeDetails: StateFlow<AnimeDetailsUiState> = animeDetails
 
-    fun getAnimeDetails(animeId: Int) {
+    init {
+        getAnimeDetails(animeId = animeId)
+    }
+
+    private fun getAnimeDetails(animeId: Int) {
         viewModelScope.launch {
             animeDetailsUseCase.execute(param = animeId)
                 .onStart {
