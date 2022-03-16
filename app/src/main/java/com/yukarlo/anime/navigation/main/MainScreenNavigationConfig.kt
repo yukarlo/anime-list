@@ -42,8 +42,7 @@ internal fun MainScreenNavigationConfig(
             route = NavigationScreens.ViewAllAnime.route
         ) {
             AnimeListScreen(
-                navController = navController,
-                parcelable = navBackStackEntry.arguments?.getParcelable(NavigationScreens.ViewAllAnime.key),
+                navigateUp = navController::navigateUp,
                 navigateToDetails = { animeId ->
                     navController.navigate(route = "${NavigationScreens.AnimeDetails.route}/$animeId")
                 }

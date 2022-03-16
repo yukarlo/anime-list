@@ -23,7 +23,8 @@ import com.yukarlo.anime.feature.anime.details.components.*
 
 @Composable
 fun AnimeDetailsScreen(
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    openDetails: (Int) -> Unit
 ) {
     val viewModel: AnimeDetailsViewModel = hiltViewModel()
 
@@ -33,7 +34,7 @@ fun AnimeDetailsScreen(
             AnimeDetails(
                 animeDetails = animeDetailsScreenState.animeDetails,
                 onUp = navigateUp,
-                onAnimeClick = { }
+                onAnimeClick = openDetails
             )
         },
         retry = { }
