@@ -33,8 +33,6 @@ fun AnimeListScreen(
     val parentEntry = remember { navController.getBackStackEntry(navBackStackEntry.destination.route ?: "") }
     val viewModel: AnimeListViewModel = hiltViewModel(parentEntry)
 
-    // TODO: Fix parcelable
-
     LaunchedEffect(parcelable) {
         viewModel.fetchAnime(inputModel = parcelable)
     }

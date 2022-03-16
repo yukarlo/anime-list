@@ -2,7 +2,13 @@ package com.yukarlo.anime.navigation.main
 
 import android.os.Bundle
 import androidx.compose.runtime.Composable
+import androidx.core.net.toUri
 import androidx.navigation.NavHostController
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,10 +34,11 @@ internal fun MainScreenNavigationConfig(
                             it
                         )
                     }
-                    navController.apply {
-//                        currentBackStackEntry?.arguments = bundle
-                        navigate(route = NavigationScreens.ViewAllAnime.route)
-                    }
+
+                    navController.navigateTo(
+                        route = NavigationScreens.ViewAllAnime.route,
+                        args = bundle
+                    )
                 },
                 navigateToDetails = { animeId ->
                     navController.navigate(route = "${NavigationScreens.AnimeDetails.route}/$animeId")
@@ -45,8 +52,7 @@ internal fun MainScreenNavigationConfig(
             AnimeListScreen(
                 navBackStackEntry = navBackStackEntry,
                 navController = navController,
-                parcelable = navController.previousBackStackEntry
-                    ?.arguments?.getParcelable(NavigationScreens.ViewAllAnime.key),
+                parcelable = navBackStackEntry.arguments?.getParcelable(NavigationScreens.ViewAllAnime.key),
                 navigateToDetails = { animeId ->
                     navController.navigate(route = "${NavigationScreens.AnimeDetails.route}/$animeId")
                 }
@@ -66,4 +72,20 @@ internal fun MainScreenNavigationConfig(
             )
         }
     }
+}
+
+private fun NavController.navigateTo(
+    route: String,
+    args: Bundle,
+    navOptions: NavOptions? = null,
+    navigatorExtras: Navigator.Extras? = null
+) {
+    val routeLink = NavDeepLinkRequest
+        .Builder
+        .fromUri(NavDestination.createRoute(route).toUri())
+        .build()
+
+    graph.matchDeepLink(routeLink)?.let {
+        navigate(it.destination.id, args, navOptions, navigatorExtras)
+    } ?: navigate(route, navOptions, navigatorExtras)
 }
