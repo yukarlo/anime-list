@@ -5,6 +5,8 @@ sealed class NavigationScreens(
     val route: String,
     val label: String,
 ) {
+    fun createRoute(): String = "${route}/{${key}}"
+
     object AnimeMain : NavigationScreens(
         key = "",
         route = "AnimeMain",
@@ -15,7 +17,9 @@ sealed class NavigationScreens(
         key = "AnimeIdKey",
         route = "AnimeDetails",
         label = "Anime Details"
-    )
+    ) {
+        fun createRoute(id: Int?): String = "$route/$id"
+    }
 
     object ViewAllAnime : NavigationScreens(
         key = "AnimeInputModelKey",

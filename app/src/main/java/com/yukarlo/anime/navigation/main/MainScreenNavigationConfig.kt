@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.yukarlo.anime.MainScreen
 import com.yukarlo.anime.feature.anime.details.AnimeDetailsScreen
 import com.yukarlo.anime.feature.anime.list.AnimeListScreen
+import com.yukarlo.anime.navigation.main.NavigationScreens.AnimeMain.createRoute
 
 @Composable
 internal fun MainScreenNavigationConfig(
@@ -16,40 +17,35 @@ internal fun MainScreenNavigationConfig(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavigationScreens.AnimeMain.route
+        startDestination = NavigationScreens.AnimeMain.createRoute()
     ) {
-        composable(route = NavigationScreens.AnimeMain.route) {
+        composable(route = NavigationScreens.AnimeMain.createRoute()) {
             MainScreen(
                 viewAll = {
-                    val bundle: Bundle = Bundle().apply {
-                        putParcelable(
-                            NavigationScreens.ViewAllAnime.key,
-                            it
-                        )
-                    }
+                    val bundle: Bundle = Bundle().apply { putParcelable(NavigationScreens.ViewAllAnime.key, it) }
 
                     navController.navigateTo(
-                        route = NavigationScreens.ViewAllAnime.route,
+                        route = NavigationScreens.ViewAllAnime.createRoute(),
                         args = bundle
                     )
                 },
                 navigateToDetails = { animeId ->
-                    navController.navigate(route = "${NavigationScreens.AnimeDetails.route}/$animeId")
+                    navController.navigate(route = NavigationScreens.AnimeDetails.createRoute(animeId))
                 }
             )
         }
         composable(
-            route = NavigationScreens.ViewAllAnime.route
+            route = NavigationScreens.ViewAllAnime.createRoute()
         ) {
             AnimeListScreen(
                 navigateUp = navController::navigateUp,
                 navigateToDetails = { animeId ->
-                    navController.navigate(route = "${NavigationScreens.AnimeDetails.route}/$animeId")
+                    navController.navigate(route = NavigationScreens.AnimeDetails.createRoute(animeId))
                 }
             )
         }
         composable(
-            route = "${NavigationScreens.AnimeDetails.route}/{${NavigationScreens.AnimeDetails.key}}",
+            route = NavigationScreens.AnimeDetails.createRoute(),
             arguments = listOf(navArgument(NavigationScreens.AnimeDetails.key) {
                 type = NavType.IntType
             })
@@ -57,7 +53,7 @@ internal fun MainScreenNavigationConfig(
             AnimeDetailsScreen(
                 navigateUp = navController::navigateUp,
                 openDetails = { animeId ->
-                    navController.navigate(route = "${NavigationScreens.AnimeDetails.route}/$animeId")
+                    navController.navigate(route = NavigationScreens.AnimeDetails.createRoute(animeId))
                 }
             )
         }
