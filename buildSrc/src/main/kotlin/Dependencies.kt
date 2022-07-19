@@ -16,19 +16,19 @@ object Dependencies {
     }
 
     object AndroidX {
-        const val ANDROID_COMPOSE_VERSION = "1.1.0"
-        private const val ANDROID_LIFECYCLE_VERSION = "2.4.0"
+        const val ANDROID_COMPOSE_VERSION = "1.1.1"
+        private const val ANDROID_LIFECYCLE_VERSION = "2.5.0"
 
-        const val APP_COMPAT = "androidx.appcompat:appcompat:1.4.1"
-        const val CORE_KTX = "androidx.core:core-ktx:1.7.0"
+        const val APP_COMPAT = "androidx.appcompat:appcompat:1.4.2"
+        const val CORE_KTX = "androidx.core:core-ktx:1.8.0"
         const val RUNTIME_KTX = "androidx.lifecycle:lifecycle-runtime-ktx:$ANDROID_LIFECYCLE_VERSION"
-        const val COMPOSE_ACTIVITY = "androidx.activity:activity-compose:1.4.0"
-        const val COMPOSE_NAVIGATION = "androidx.navigation:navigation-compose:2.4.0"
-        const val COMPOSE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
+        const val COMPOSE_ACTIVITY = "androidx.activity:activity-compose:1.5.0"
+        const val COMPOSE_NAVIGATION = "androidx.navigation:navigation-compose:2.5.0"
+        const val COMPOSE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-compose:$ANDROID_LIFECYCLE_VERSION"
         const val COMPOSE_UI = "androidx.compose.ui:ui:$ANDROID_COMPOSE_VERSION"
         const val COMPOSE_MATERIAL = "androidx.compose.material:material:$ANDROID_COMPOSE_VERSION"
         const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling:$ANDROID_COMPOSE_VERSION"
-        const val COMPOSE_CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout-compose:1.0.0"
+        const val COMPOSE_CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
     }
 
     object Dagger {
@@ -52,7 +52,7 @@ object Dependencies {
     }
 
     object Apollo {
-        private const val VERSION = "3.1.0"
+        private const val VERSION = "3.3.2"
 
         const val GRADLE = "com.apollographql.apollo3:apollo-gradle-plugin:$VERSION"
         const val RUNTIME = "com.apollographql.apollo3:apollo-runtime:$VERSION"
