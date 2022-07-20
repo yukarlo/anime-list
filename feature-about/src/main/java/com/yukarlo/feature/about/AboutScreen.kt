@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +27,7 @@ fun AccountScreen(onBack: () -> Unit) {
             Row(modifier = Modifier.padding(bottom = 36.dp)) {
                 Text(
                     text = "About this app",
-                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier
                         .weight(weight = 1f)
                         .wrapContentWidth(align = Alignment.Start)
@@ -43,17 +43,17 @@ fun AccountScreen(onBack: () -> Unit) {
             }
             Text(
                 text = "This app is created by Karlo Yu",
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
             Text(
                 text = "This is an attempt to create an app with some of the latest tech stack and using purely of jetpack compose. Discover popular and trending anime.",
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
             Text(
                 text = "API Source: AniList",
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
         }

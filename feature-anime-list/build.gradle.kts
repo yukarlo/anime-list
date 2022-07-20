@@ -27,7 +27,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.coil.kt.compose)
     implementation(libs.coroutines.core)
-    implementation(libs.android.material3)
 
     implementation(libs.hilt.android.core)
     implementation(libs.hilt.lifecycle.viewmodel)

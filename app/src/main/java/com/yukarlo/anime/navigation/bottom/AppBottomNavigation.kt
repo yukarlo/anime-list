@@ -1,9 +1,6 @@
 package com.yukarlo.anime.navigation.bottom
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,19 +18,16 @@ internal fun AppBottomNavigation(
         BottomNavigationScreens.About
     )
 
-    BottomNavigation(
-        modifier = Modifier.navigationBarsHeight(additional = 56.dp)
+    NavigationBar(
+        modifier = Modifier.navigationBarsHeight(additional = 72.dp)
     ) {
         bottomNavigationItems.forEach { screen ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 modifier = Modifier.navigationBarsPadding(),
-                icon = { Icon(imageVector = screen.icon, contentDescription = "") },
+                icon = { Icon(imageVector = screen.icon, contentDescription = screen.label) },
                 label = { Text(text = screen.label) },
                 selected = currentSelectedScreen == screen,
-                alwaysShowLabel = false,
-                onClick = {
-                    newScreen(screen)
-                }
+                onClick = { newScreen(screen) }
             )
         }
     }

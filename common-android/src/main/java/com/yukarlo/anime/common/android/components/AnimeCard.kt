@@ -3,9 +3,7 @@ package com.yukarlo.anime.common.android.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,7 +25,13 @@ fun AnimeCard(
             }
     ) {
         Card(
-            elevation = 0.dp,
+            elevation = CardDefaults.cardElevation(
+                0.dp,
+                0.dp,
+                0.dp,
+                0.dp,
+                0.dp
+            ),
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.padding(horizontal = 4.dp)
         ) {
@@ -50,8 +54,8 @@ fun AnimeCard(
             text = anime.title.userPreferred,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            color = MaterialTheme.colors.onSurface,
-            style = MaterialTheme.typography.body1,
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(start = 4.dp, end = 4.dp, bottom = 2.dp)
                 .wrapContentHeight()
@@ -59,8 +63,8 @@ fun AnimeCard(
         Text(
             maxLines = 1,
             text = anime.title.native,
-            color = MaterialTheme.colors.onSurface,
-            style = MaterialTheme.typography.overline,
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.labelMedium,
             modifier = Modifier
                 .padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
                 .wrapContentHeight()
@@ -68,8 +72,8 @@ fun AnimeCard(
         Text(
             maxLines = 1,
             text = "${anime.format} • ${anime.startDate?.year}",
-            color = MaterialTheme.colors.onSurface,
-            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.labelLarge,
             modifier = Modifier
                 .padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
                 .fillMaxHeight()

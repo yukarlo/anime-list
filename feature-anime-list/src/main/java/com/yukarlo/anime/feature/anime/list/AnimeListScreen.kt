@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,7 +31,6 @@ fun AnimeListScreen(
         retry = { viewModel.retry() }
     ) {
         Scaffold(
-            modifier = Modifier.statusBarsPadding(),
             topBar = {
                 if (animeScreenState.toolbarTitle.isNotBlank()) {
                     ToolBar(
@@ -40,8 +39,10 @@ fun AnimeListScreen(
                     )
                 }
             }
-        ) {
+        ) { innerPadding ->
+            val modifier = Modifier.padding(innerPadding)
             AnimeList(
+                modifier = modifier,
                 animeList = animeScreenState.animeList,
                 onAnimeClick = navigateToDetails
             ) { isOnLastIndex ->
@@ -56,11 +57,13 @@ fun AnimeListScreen(
 
 @Composable
 private fun AnimeList(
+    modifier: Modifier,
     animeList: List<Anime>,
     onAnimeClick: (Int?) -> Unit,
     hasReachedLastIndex: @Composable (Boolean) -> Unit
 ) {
     VerticalGrid(
+        modifier = modifier,
         items = animeList,
     ) { item: Anime, index: Int ->
         hasReachedLastIndex(index == animeList.lastIndex)

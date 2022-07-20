@@ -11,14 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.Icon
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,12 +32,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.core.text.HtmlCompat
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.systemBarsPadding
-import com.yukarlo.anime.common.android.components.AnimeCard
-import com.yukarlo.anime.common.android.components.AnimeWithTextOverlay
-import com.yukarlo.anime.common.android.components.CharacterCard
-import com.yukarlo.anime.common.android.components.Chip
-import com.yukarlo.anime.common.android.components.ListHeaderTitle
-import com.yukarlo.anime.common.android.components.scrim
+import com.yukarlo.anime.common.android.components.*
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.Character
@@ -60,21 +51,9 @@ fun HeaderSection(
             textAlign = TextAlign.Start,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
-        TopAppBar(
-            backgroundColor = Color.Transparent,
-            elevation = 0.dp,
-            contentColor = Color.White,
-            modifier = Modifier.systemBarsPadding()
-        ) {
-            IconButton(onClick = {
-                onUp()
-            }) {
-                Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = "back"
-                )
-            }
-        }
+        ToolBar(
+            colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Transparent)
+        ) { onUp() }
     }
 }
 
@@ -131,7 +110,8 @@ fun DescriptionSection(description: String) {
             maxLines = 6,
             lineHeight = 24.sp,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.h6
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }
@@ -177,7 +157,7 @@ fun TrailerSection(
             modifier = Modifier
                 .padding(horizontal = 12.dp),
             text = "No trailer available",
-            style = MaterialTheme.typography.h6
+            style = MaterialTheme.typography.titleMedium
         )
     }
 }
@@ -273,7 +253,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
             Text(
                 text = "More Information",
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .layoutId("moreInformationLabel")
                     .padding(bottom = 12.dp)
@@ -286,7 +266,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .padding(
                         bottom = 8.dp
                     ),
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
@@ -307,7 +287,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .padding(
                         bottom = 8.dp
                     ),
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
@@ -328,7 +308,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .padding(
                         bottom = 8.dp
                     ),
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
@@ -347,7 +327,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .padding(
                         bottom = 8.dp
                     ),
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
@@ -370,7 +350,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .padding(
                         bottom = 8.dp
                     ),
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
@@ -393,7 +373,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .padding(
                         bottom = 8.dp
                     ),
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
@@ -421,7 +401,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                         .padding(
                             bottom = 8.dp
                         ),
-                    color = MaterialTheme.colors.onSurface
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(

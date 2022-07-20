@@ -44,7 +44,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.android.material3)
     implementation(libs.graphql.apollo3.runtime)
 
     implementation(libs.hilt.android.core)
@@ -58,7 +57,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit4)
 }

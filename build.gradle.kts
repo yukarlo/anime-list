@@ -33,7 +33,8 @@ subprojects {
                 "-Xopt-in=kotlin.RequiresOptIn",
                 "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                "-Xopt-in=coil.annotation.ExperimentalCoilApi"
+                "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                "-Xopt-in=coil.annotation.ExperimentalCoilApi",
             )
         }
     }
@@ -62,11 +63,11 @@ fun AppExtension.applyAppCommons() = apply { applyBaseCommons() }
 fun LibraryExtension.applyLibraryCommons() = apply { applyBaseCommons() }
 
 fun BaseExtension.applyBaseCommons() = apply {
-    compileSdkVersion(31)
+    compileSdkVersion(32)
 
     defaultConfig.apply {
         minSdk = 23
-        targetSdk = 31
+        targetSdk = 32
     }
 
     buildFeatures.viewBinding = true

@@ -3,11 +3,7 @@ package com.yukarlo.feature.anime.home
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,11 +11,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.systemBarsPadding
 import com.yukarlo.anime.common.android.components.*
 import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.core.model.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
@@ -76,19 +70,9 @@ private fun AnimeList(
                         .padding(horizontal = 16.dp)
                 )
             }
-            TopAppBar(
-                backgroundColor = Color.Transparent,
-                elevation = 0.dp,
-                contentColor = Color.White,
-                modifier = Modifier.systemBarsPadding()
-            ) {
-                IconButton(onClick = { }) {
-                    Icon(
-                        imageVector = Icons.Rounded.ArrowBack,
-                        contentDescription = "back"
-                    )
-                }
-            }
+            ToolBar(
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Transparent)
+            ) { }
         }
 
         if (trending.isNotEmpty()) {
@@ -106,7 +90,11 @@ private fun AnimeList(
         }
 
         if (popularThisSeason.isNotEmpty()) {
-            AnimeRowCategory(AnimeSortTypes.PopularThisSeason.title, popularThisSeason, onAnimeClick) {
+            AnimeRowCategory(
+                AnimeSortTypes.PopularThisSeason.title,
+                popularThisSeason,
+                onAnimeClick
+            ) {
                 viewAll(AnimeSortTypes.PopularThisSeason)
             }
 

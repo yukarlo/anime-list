@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,7 +55,7 @@ fun AnimeWithTextOverlay(
                 .fillMaxWidth()
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, MaterialTheme.colors.background),
+                        colors = listOf(Color.Transparent, MaterialTheme.colorScheme.background),
                         startY = 0F,
                         endY = 600F
                     )
@@ -71,17 +71,16 @@ fun AnimeWithTextOverlay(
                 text = anime.title.userPreferred,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colors.onSurface,
-                style = MaterialTheme.typography.h3,
-                modifier = modifier
-                    .fillMaxWidth(),
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = modifier.fillMaxWidth(),
                 textAlign = textAlign
             )
             Text(
                 text = anime.genres.orEmpty(),
                 maxLines = 1,
-                color = MaterialTheme.colors.onSurface,
-                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = modifier
                     .padding(bottom = 4.dp)
                     .fillMaxWidth(),
