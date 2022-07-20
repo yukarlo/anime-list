@@ -9,7 +9,8 @@ android {
     buildFeatures.compose = true
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
+        val libs = project.extensions.getByType<VersionCatalogsExtension>().named("libs")
+        kotlinCompilerExtensionVersion = libs.findVersion("androidxCompose").get().requiredVersion
         useLiveLiterals = true
     }
 }
@@ -17,11 +18,19 @@ android {
 dependencies {
     implementation(project(":core-model"))
 
-    implementation(Dependencies.Kotlin.STDLIB)
-    implementation(Dependencies.AndroidX.CORE_KTX)
-    implementation(Dependencies.AndroidX.APP_COMPAT)
-    implementation(Dependencies.Coil.COIL_COMPOSE)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.coil.kt.compose)
 
-    addComposeDependencies()
-    addDaggerDependencies()
+    implementation(libs.hilt.android.core)
+    implementation(libs.hilt.lifecycle.viewmodel)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
+
+    implementation(libs.androidx.compose.ui.core)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.navigation.compose)
 }

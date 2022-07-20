@@ -5,5 +5,5 @@ plugins {
 }
 
 dependencies {
-    implementation(Dependencies.Kotlin.STDLIB)
+    implementation(libs.kotlin.stdlib)
 }

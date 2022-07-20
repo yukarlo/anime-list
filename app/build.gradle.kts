@@ -24,7 +24,8 @@ android {
     buildFeatures.compose = true
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
+        val libs = project.extensions.getByType<VersionCatalogsExtension>().named("libs")
+        kotlinCompilerExtensionVersion = libs.findVersion("androidxCompose").get().requiredVersion
         useLiveLiterals = true
     }
 }
@@ -39,18 +40,25 @@ dependencies {
     implementation(project(":common-android"))
     implementation(project(":remote"))
 
-    implementation(Dependencies.AndroidX.CORE_KTX)
-    implementation(Dependencies.AndroidX.APP_COMPAT)
-    implementation(Dependencies.Google.MATERIAL)
-    implementation(Dependencies.AndroidX.RUNTIME_KTX)
-    implementation(Dependencies.Apollo.RUNTIME)
+    implementation(libs.accompanist.insets)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.android.material3)
+    implementation(libs.graphql.apollo3.runtime)
 
-    addComposeDependencies()
-    implementation(Dependencies.AndroidX.COMPOSE_ACTIVITY)
-    implementation(Dependencies.AndroidX.COMPOSE_NAVIGATION)
-    implementation(Dependencies.Accompanist.ACCOMPANIST_INSETS)
+    implementation(libs.hilt.android.core)
+    implementation(libs.hilt.lifecycle.viewmodel)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
 
-    addDaggerDependencies()
+    implementation(libs.androidx.compose.ui.core)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
 
-    testImplementation(Dependencies.JUnit.JUNIT)
+    testImplementation(libs.junit4)
 }

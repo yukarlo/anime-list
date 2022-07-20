@@ -11,10 +11,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(dependencyNotation = "com.android.tools.build:gradle:7.2.1")
-        classpath(dependencyNotation = Dependencies.Dagger.DAGGER_HILT_ANDROID_GRADLE_PLUGIN)
-        classpath(dependencyNotation = Dependencies.Apollo.GRADLE)
-        classpath(kotlin(module = "gradle-plugin", version = Dependencies.Kotlin.VERSION))
+        classpath(dependencyNotation = libs.android.gradlePlugin)
+        classpath(dependencyNotation = libs.hilt.gradlePlugin)
+        classpath(dependencyNotation = libs.graphql.apollo3.gradle)
+        classpath(dependencyNotation = libs.kotlin.gradlePlugin)
     }
 }
 
@@ -62,11 +62,11 @@ fun AppExtension.applyAppCommons() = apply { applyBaseCommons() }
 fun LibraryExtension.applyLibraryCommons() = apply { applyBaseCommons() }
 
 fun BaseExtension.applyBaseCommons() = apply {
-    compileSdkVersion(Android.Sdk.COMPILE)
+    compileSdkVersion(31)
 
     defaultConfig.apply {
-        minSdk = Android.Sdk.MIN
-        targetSdk = Android.Sdk.TARGET
+        minSdk = 23
+        targetSdk = 31
     }
 
     buildFeatures.viewBinding = true

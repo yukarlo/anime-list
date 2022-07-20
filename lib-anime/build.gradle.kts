@@ -9,11 +9,15 @@ dependencies {
     implementation(project(":core-model"))
     implementation(project(":remote"))
 
-    implementation(Dependencies.Kotlin.STDLIB)
-    implementation(Dependencies.Coroutines.CORE)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.coroutines.core)
 
-    testImplementation(Dependencies.JUnit.JUNIT)
-    testImplementation(Dependencies.Mockito.MOCKITO_KOTLIN)
+    testImplementation(libs.junit4)
+    testImplementation(libs.mockito)
 
-    addDaggerDependencies()
+    implementation(libs.hilt.android.core)
+    implementation(libs.hilt.lifecycle.viewmodel)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
 }

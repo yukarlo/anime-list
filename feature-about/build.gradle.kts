@@ -9,7 +9,8 @@ android {
     buildFeatures.compose = true
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Dependencies.AndroidX.ANDROID_COMPOSE_VERSION
+        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+        kotlinCompilerExtensionVersion = libs.findVersion("androidxCompose").get().requiredVersion
         useLiveLiterals = true
     }
 }
@@ -19,16 +20,24 @@ dependencies {
     implementation(project(":core-model"))
     implementation(project(":lib-anime"))
 
-    implementation(Dependencies.AndroidX.APP_COMPAT)
-    implementation(Dependencies.AndroidX.CORE_KTX)
-    implementation(Dependencies.AndroidX.RUNTIME_KTX)
-    implementation(Dependencies.Coil.COIL_COMPOSE)
-    implementation(Dependencies.AndroidX.COMPOSE_VIEWMODEL)
-    implementation(Dependencies.Coroutines.CORE)
-    implementation(Dependencies.Accompanist.ACCOMPANIST_INSETS)
+    implementation(libs.accompanist.insets)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.coil.kt.compose)
+    implementation(libs.coroutines.core)
 
-    addDaggerDependencies()
-    addComposeDependencies()
+    implementation(libs.hilt.android.core)
+    implementation(libs.hilt.lifecycle.viewmodel)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
 
-    testImplementation(Dependencies.JUnit.JUNIT)
+    implementation(libs.androidx.compose.ui.core)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.navigation.compose)
+
+    testImplementation(libs.junit4)
 }

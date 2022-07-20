@@ -13,11 +13,15 @@ apollo {
 dependencies {
     implementation(project(":core-model"))
 
-    implementation(Dependencies.Kotlin.STDLIB)
-    implementation(Dependencies.Apollo.RUNTIME)
-    implementation(Dependencies.Coroutines.CORE)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.graphql.apollo3.runtime)
+    implementation(libs.coroutines.core)
 
-    addDaggerDependencies()
+    implementation(libs.hilt.android.core)
+    implementation(libs.hilt.lifecycle.viewmodel)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
 
-    testImplementation(Dependencies.JUnit.JUNIT)
+    testImplementation(libs.junit4)
 }
