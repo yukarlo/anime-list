@@ -1,18 +1,6 @@
 plugins {
-    id("com.android.library")
+    id("yukarlo.android.library.compose")
     id("dagger.hilt.android.plugin")
-    kotlin(module = "android")
-    kotlin(module = "kapt")
-}
-
-android {
-    buildFeatures.compose = true
-
-    composeOptions {
-        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-        kotlinCompilerExtensionVersion = libs.findVersion("androidxCompose").get().requiredVersion
-        useLiveLiterals = true
-    }
 }
 
 dependencies {

@@ -1,6 +1,5 @@
 plugins {
-    id("com.android.library")
-    kotlin(module = "android")
+    id("yukarlo.android.library")
     id("kotlin-parcelize")
 }
 

@@ -1,8 +1,6 @@
 plugins {
-    id("com.android.library")
+    id("yukarlo.android.library")
     id("dagger.hilt.android.plugin")
-    kotlin(module = "android")
-    kotlin(module = "kapt")
 }
 
 dependencies {

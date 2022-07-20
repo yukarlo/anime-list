@@ -1,18 +1,6 @@
 plugins {
-    id("com.android.library")
-    kotlin(module = "android")
-    kotlin(module = "kapt")
+    id("yukarlo.android.library.compose")
     id("kotlin-parcelize")
-}
-
-android {
-    buildFeatures.compose = true
-
-    composeOptions {
-        val libs = project.extensions.getByType<VersionCatalogsExtension>().named("libs")
-        kotlinCompilerExtensionVersion = libs.findVersion("androidxCompose").get().requiredVersion
-        useLiveLiterals = true
-    }
 }
 
 dependencies {
