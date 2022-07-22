@@ -24,17 +24,7 @@ fun AnimeCard(
                 onClick(anime.id)
             }
     ) {
-        Card(
-            elevation = CardDefaults.cardElevation(
-                0.dp,
-                0.dp,
-                0.dp,
-                0.dp,
-                0.dp
-            ),
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier.padding(horizontal = 4.dp)
-        ) {
+        Card(modifier = Modifier.padding(horizontal = 4.dp)) {
             Image(
                 modifier = Modifier
                     .aspectRatio(ratio = 3 / 4F)
@@ -54,7 +44,6 @@ fun AnimeCard(
             text = anime.title.userPreferred,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(start = 4.dp, end = 4.dp, bottom = 2.dp)
@@ -63,7 +52,6 @@ fun AnimeCard(
         Text(
             maxLines = 1,
             text = anime.title.native,
-            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier
                 .padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
@@ -72,7 +60,6 @@ fun AnimeCard(
         Text(
             maxLines = 1,
             text = "${anime.format} • ${anime.startDate?.year}",
-            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier
                 .padding(start = 4.dp, end = 4.dp, bottom = 4.dp)

@@ -71,7 +71,6 @@ fun AnimeWithTextOverlay(
                 text = anime.title.userPreferred,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = modifier.fillMaxWidth(),
                 textAlign = textAlign
@@ -79,7 +78,6 @@ fun AnimeWithTextOverlay(
             Text(
                 text = anime.genres.orEmpty(),
                 maxLines = 1,
-                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = modifier
                     .padding(bottom = 4.dp)

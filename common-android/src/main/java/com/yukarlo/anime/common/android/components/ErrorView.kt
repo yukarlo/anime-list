@@ -19,17 +19,15 @@ fun ErrorView(
 ) {
     Scaffold() {
         Column(
-            modifier = Modifier.fillMaxSize().padding(it),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = message, color = MaterialTheme.colorScheme.error)
-            Button(onClick = {
-                retry()
-            }) {
-                Text(
-                    text = "Retry"
-                )
+            Button(onClick = { retry() }) {
+                Text(text = "Retry")
             }
         }
     }

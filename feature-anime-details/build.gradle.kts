@@ -9,6 +9,7 @@ dependencies {
     implementation(project(":lib-anime"))
 
     implementation(libs.accompanist.insets)
+    implementation(libs.accompanist.flowlayout)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

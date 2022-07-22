@@ -1,15 +1,14 @@
 package com.yukarlo.anime.common.android.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
@@ -37,8 +36,8 @@ fun ListHeaderTitle(
             style = MaterialTheme.typography.bodyMedium
         )
         if (showViewAll) {
-            Text(
-                text = "view all",
+            TextButton(
+                onClick = { viewAll() },
                 modifier = Modifier
                     .align(alignment = Alignment.CenterEnd)
                     .padding(
@@ -46,12 +45,9 @@ fun ListHeaderTitle(
                         end = 12.dp,
                         top = 4.dp
                     )
-                    .clickable {
-                        viewAll()
-                    },
-                textAlign = TextAlign.End,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            ) {
+                Text(text = "view all")
+            }
         }
     }
 }

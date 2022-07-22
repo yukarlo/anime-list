@@ -2,19 +2,13 @@ package com.yukarlo.anime.feature.anime.details.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.Icon
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,14 +25,14 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.text.HtmlCompat
 import coil.compose.rememberImagePainter
-import com.google.accompanist.insets.systemBarsPadding
+import com.google.accompanist.flowlayout.FlowRow
 import com.yukarlo.anime.common.android.components.*
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.Character
 import com.yukarlo.anime.core.model.Trailer
 import com.yukarlo.anime.feature.anime.details.R
-import java.util.Locale
+import java.util.*
 
 @Composable
 fun HeaderSection(
@@ -59,38 +53,26 @@ fun HeaderSection(
 
 @Composable
 fun SmallInformationSection(animeDetails: AnimeDetails) {
-    Row {
-        Chip(
+    FlowRow(
+        modifier = Modifier.padding(horizontal = 12.dp),
+        mainAxisSpacing = 8.dp,
+        crossAxisSpacing = 8.dp
+    ) {
+        SmallInfoCard(
             label = "Studio: ${animeDetails.studio}",
             modifier = Modifier
-                .padding(
-                    start = 12.dp,
-                    end = 4.dp
-                )
         )
-        Chip(
+        SmallInfoCard(
             label = animeDetails.basicInfo.startDate?.year.orEmpty(),
             modifier = Modifier
-                .padding(
-                    start = 4.dp,
-                    end = 4.dp
-                )
         )
-        Chip(
+        SmallInfoCard(
             label = "${animeDetails.episodes} episodes",
             modifier = Modifier
-                .padding(
-                    start = 4.dp,
-                    end = 4.dp
-                )
         )
-        Chip(
+        SmallInfoCard(
             label = "${animeDetails.duration} mins",
             modifier = Modifier
-                .padding(
-                    start = 4.dp,
-                    end = 12.dp
-                )
         )
     }
 }
@@ -102,16 +84,12 @@ fun DescriptionSection(description: String) {
             text = HtmlCompat.fromHtml(description, 0).toString(),
             modifier = Modifier
                 .wrapContentHeight()
-                .padding(
-                    start = 12.dp,
-                    end = 12.dp
-                ),
+                .padding(horizontal = 12.dp),
             textAlign = TextAlign.Start,
             maxLines = 6,
             lineHeight = 24.sp,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface
+            style = MaterialTheme.typography.titleMedium
         )
     }
 }
@@ -265,8 +243,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .layoutId("titleEnglishLabel")
                     .padding(
                         bottom = 8.dp
-                    ),
-                color = MaterialTheme.colorScheme.onSurface
+                    )
             )
 
             Text(
@@ -286,8 +263,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .layoutId("titleNativeLabel")
                     .padding(
                         bottom = 8.dp
-                    ),
-                color = MaterialTheme.colorScheme.onSurface
+                    )
             )
 
             Text(
@@ -307,8 +283,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .layoutId("avgScoreLabel")
                     .padding(
                         bottom = 8.dp
-                    ),
-                color = MaterialTheme.colorScheme.onSurface
+                    )
             )
 
             Text(
@@ -326,8 +301,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .layoutId("premierLabel")
                     .padding(
                         bottom = 8.dp
-                    ),
-                color = MaterialTheme.colorScheme.onSurface
+                    )
             )
 
             Text(
@@ -349,8 +323,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .layoutId("endDateLabel")
                     .padding(
                         bottom = 8.dp
-                    ),
-                color = MaterialTheme.colorScheme.onSurface
+                    )
             )
 
             Text(
@@ -372,8 +345,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                     .layoutId("statusLabel")
                     .padding(
                         bottom = 8.dp
-                    ),
-                color = MaterialTheme.colorScheme.onSurface
+                    )
             )
 
             Text(
@@ -400,8 +372,7 @@ fun MoreInformationSection(animeDetails: AnimeDetails) {
                         .layoutId("nextAiringScheduleLabel")
                         .padding(
                             bottom = 8.dp
-                        ),
-                    color = MaterialTheme.colorScheme.onSurface
+                        )
                 )
 
                 Text(

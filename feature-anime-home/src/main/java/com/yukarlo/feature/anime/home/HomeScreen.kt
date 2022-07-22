@@ -66,8 +66,7 @@ private fun AnimeList(
                 AnimeWithTextOverlay(
                     anime = topTen.random(),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 )
             }
             ToolBar(
