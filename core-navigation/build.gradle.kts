@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.androidx.compose.ui.core)
     testImplementation(libs.junit4)
 }

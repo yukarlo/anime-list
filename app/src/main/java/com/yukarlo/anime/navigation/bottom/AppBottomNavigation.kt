@@ -6,16 +6,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.navigationBarsPadding
+import com.yukarlo.anime.core.navigation.BottomNavigationScreen
+import com.yukarlo.feature.about.AboutNavigation
+import com.yukarlo.feature.anime.home.HomeNavigation
+import com.yukarlo.feature.anime.search.SearchNavigation
 
 @Composable
 internal fun AppBottomNavigation(
-    currentSelectedScreen: BottomNavigationScreens,
-    newScreen: (BottomNavigationScreens) -> Unit
+    currentSelectedScreen: BottomNavigationScreen,
+    newScreen: (BottomNavigationScreen) -> Unit
 ) {
     val bottomNavigationItems = listOf(
-        BottomNavigationScreens.Home,
-        BottomNavigationScreens.Search,
-        BottomNavigationScreens.About
+        HomeNavigation,
+        SearchNavigation,
+        AboutNavigation
     )
 
     NavigationBar(

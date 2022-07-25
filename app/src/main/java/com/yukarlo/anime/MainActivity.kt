@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.yukarlo.anime.common.android.navigation.LocalBackDispatcher
 import com.yukarlo.anime.common.android.ui.theme.AnimeTheme
-import com.yukarlo.anime.navigation.main.MainScreenNavigationConfig
+import com.yukarlo.anime.navigation.TopLevelNavigationConfig
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +34,6 @@ internal class MainActivity : AppCompatActivity() {
 @Composable
 fun MainApp(backDispatcher: OnBackPressedDispatcher) {
     CompositionLocalProvider(LocalBackDispatcher provides backDispatcher) {
-        MainScreenNavigationConfig(navController = rememberNavController())
+        TopLevelNavigationConfig(navController = rememberNavController())
     }
 }
