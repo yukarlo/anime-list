@@ -1,9 +1,9 @@
-package com.yukarlo.remote.di
+package com.yukarlo.anime.core.remote.di
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient
-import com.yukarlo.remote.RemoteClient
-import com.yukarlo.remote.RemoteClientImpl
+import com.yukarlo.anime.core.remote.RemoteClient
+import com.yukarlo.anime.core.remote.RemoteClientImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

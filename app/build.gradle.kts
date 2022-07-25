@@ -38,7 +38,7 @@ dependencies {
     implementation(project(":feature-about"))
     implementation(project(":lib-anime"))
     implementation(project(":common-android"))
-    implementation(project(":remote"))
+    implementation(project(":core-remote"))
 
     implementation(libs.accompanist.insets)
     implementation(libs.androidx.appcompat)

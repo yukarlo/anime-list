@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":core-model"))
-    implementation(project(":remote"))
+    implementation(project(":core-remote"))
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.coroutines.core)

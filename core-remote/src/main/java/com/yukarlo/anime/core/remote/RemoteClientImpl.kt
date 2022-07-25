@@ -1,4 +1,4 @@
-package com.yukarlo.remote
+package com.yukarlo.anime.core.remote
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional

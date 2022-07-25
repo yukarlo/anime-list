@@ -1,4 +1,4 @@
-package com.yukarlo.remote
+package com.yukarlo.anime.core.remote
 
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeDetails

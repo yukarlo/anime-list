@@ -17,7 +17,7 @@ include(
     ":app",
     ":common-android",
     ":feature-anime-home",
-    ":remote",
+    ":core-remote",
     ":core-model",
     ":lib-anime",
     ":feature-anime-list",

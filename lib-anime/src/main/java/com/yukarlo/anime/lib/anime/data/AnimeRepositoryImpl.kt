@@ -7,7 +7,7 @@ import com.yukarlo.anime.core.model.MultipleAnimeSort
 import com.yukarlo.anime.lib.anime.domain.AnimeRepository
 import com.yukarlo.anime.lib.anime.mapper.SeasonMapper
 import com.yukarlo.anime.lib.anime.mapper.SortMapper
-import com.yukarlo.remote.RemoteClient
+import com.yukarlo.anime.core.remote.RemoteClient
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
