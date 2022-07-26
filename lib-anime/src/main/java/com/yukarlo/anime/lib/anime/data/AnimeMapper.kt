@@ -1,4 +1,4 @@
-package com.yukarlo.anime.core.remote
+package com.yukarlo.anime.lib.anime.data
 
 import com.yukarlo.anime.core.model.*
 import com.yukarlo.fragment.AnimeMedia
@@ -28,18 +28,18 @@ internal class AnimeMapper @Inject constructor() {
             mapAnime(animeMedia = it?.animeMedia)
         }
 
-    fun mapMultipleAnimeToDomain(data: MultipleAnimeSortQuery.Data): MultipleAnimeSort =
+    fun mapMultipleAnimeToDomain(data: MultipleAnimeSortQuery.Data?): MultipleAnimeSort =
         MultipleAnimeSort(
-            top10 = data.top10?.media?.map {
+            top10 = data?.top10?.media?.map {
                 mapAnime(animeMedia = it?.animeMedia)
             } ?: emptyList(),
-            popularThisSeason = data.popularThisSeason?.media?.map {
+            popularThisSeason = data?.popularThisSeason?.media?.map {
                 mapAnime(animeMedia = it?.animeMedia)
             } ?: emptyList(),
-            trendingNow = data.trendingNow?.media?.map {
+            trendingNow = data?.trendingNow?.media?.map {
                 mapAnime(animeMedia = it?.animeMedia)
             } ?: emptyList(),
-            allTimePopular = data.allTimePopular?.media?.map {
+            allTimePopular = data?.allTimePopular?.media?.map {
                 mapAnime(animeMedia = it?.animeMedia)
             } ?: emptyList()
         )
@@ -77,7 +77,7 @@ internal class AnimeMapper @Inject constructor() {
             },
             nextAiringSchedule = result?.nextAiringEpisode?.timeUntilAiring?.let {
                 AiringSchedule(
-                    episodeNumber = result.nextAiringEpisode.episode,
+                    episodeNumber = result.nextAiringEpisode?.episode ?: 0,
                     date = calculateToDaysHoursMinutesRemaining(totalSeconds = it)
                 )
             }
@@ -98,7 +98,7 @@ internal class AnimeMapper @Inject constructor() {
             status = animeMedia?.status?.name.orEmpty(),
             genres = animeMedia?.genres.orEmpty().joinToString(separator = " • "),
             startDate = if (animeMedia?.startDate?.month != null) {
-                animeMedia.startDate.let {
+                animeMedia.startDate?.let {
                     Date(
                         month = it.month.toString(),
                         day = it.day.toString(),
@@ -109,7 +109,7 @@ internal class AnimeMapper @Inject constructor() {
                 null
             },
             endDate = if (animeMedia?.endDate?.month != null) {
-                animeMedia.endDate.let {
+                animeMedia.endDate?.let {
                     Date(
                         month = it.month.toString(),
                         day = it.day.toString(),
