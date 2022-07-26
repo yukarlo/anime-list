@@ -1,4 +1,4 @@
-package com.yukarlo.anime.lib.anime.domain
+package com.yukarlo.feature.domain
 
 import com.yukarlo.anime.core.model.Anime
 import com.yukarlo.anime.core.model.AnimeDetails

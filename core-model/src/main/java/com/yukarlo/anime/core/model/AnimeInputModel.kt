@@ -1,4 +1,4 @@
-package com.yukarlo.anime.common.android.navigation
+package com.yukarlo.anime.core.model
 
 import android.os.Parcelable
 import com.yukarlo.anime.core.model.AnimeSeason

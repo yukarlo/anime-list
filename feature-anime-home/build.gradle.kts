@@ -7,7 +7,7 @@ dependencies {
     implementation(project(":common-android"))
     implementation(project(":core-model"))
     implementation(project(":core-navigation"))
-    implementation(project(":lib-anime"))
+    implementation(project(":feature-anime-domain"))
 
     implementation(libs.accompanist.insets)
     implementation(libs.androidx.appcompat)

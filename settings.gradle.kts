@@ -21,6 +21,7 @@ include(
     ":core-remote",
     ":core-model",
     ":lib-anime",
+    ":feature-anime-domain",
     ":feature-anime-list",
     ":feature-anime-details",
     ":feature-anime-search",

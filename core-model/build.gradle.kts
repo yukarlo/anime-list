@@ -3,6 +3,4 @@ plugins {
     id("kotlin-parcelize")
 }
 
-dependencies {
-    implementation(libs.kotlin.stdlib)
-}
+dependencies {}

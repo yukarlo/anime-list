@@ -5,9 +5,10 @@ import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.core.model.AnimeParam
 import com.yukarlo.anime.core.model.MultipleAnimeSort
 import com.yukarlo.anime.core.remote.RemoteClient
-import com.yukarlo.anime.lib.anime.domain.AnimeRepository
+import com.yukarlo.anime.lib.anime.mapper.AnimeMapper
 import com.yukarlo.anime.lib.anime.mapper.SeasonMapper
 import com.yukarlo.anime.lib.anime.mapper.SortMapper
+import com.yukarlo.feature.domain.AnimeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -26,8 +27,8 @@ internal class AnimeRepositoryImpl @Inject constructor(
             page = param.page,
             itemsPerPage = param.itemsPerPage,
             year = param.year,
-            season = seasonMapper.mapSeason(animeSeason = param.season),
-            sort = sortMapper.mapSort(animeSort = param.sort)
+            season = seasonMapper.mapSeasonToData(animeSeason = param.season),
+            sort = sortMapper.mapSortToData(animeSort = param.sort)
         )
             .mapNotNull { animeMapper.mapAnimeToDomain(it.data?.animePage?.media) }
             .flowOn(Dispatchers.IO)
@@ -35,7 +36,7 @@ internal class AnimeRepositoryImpl @Inject constructor(
     override fun fetchMultipleAnimeSort(param: AnimeParam): Flow<MultipleAnimeSort> =
         remoteClient.getMultipleAnimeSortFlow(
             year = param.year,
-            season = seasonMapper.mapSeason(animeSeason = param.season)
+            season = seasonMapper.mapSeasonToData(animeSeason = param.season)
         )
             .mapNotNull { animeMapper.mapMultipleAnimeToDomain(it.data) }
             .flowOn(Dispatchers.IO)

@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class SeasonMapper @Inject constructor() {
 
-    fun mapSeason(animeSeason: AnimeSeason?): MediaSeason? =
+    fun mapSeasonToData(animeSeason: AnimeSeason?): MediaSeason? =
         when (animeSeason) {
             AnimeSeason.WINTER -> {
                 MediaSeason.WINTER

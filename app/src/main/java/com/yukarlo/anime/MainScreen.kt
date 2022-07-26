@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.yukarlo.anime.common.android.navigation.AnimeInputModel
+import com.yukarlo.anime.core.model.AnimeInputModel
 import com.yukarlo.anime.navigation.bottom.AppBottomNavigation
 import com.yukarlo.feature.about.AboutNavigation
 import com.yukarlo.feature.about.AccountScreen

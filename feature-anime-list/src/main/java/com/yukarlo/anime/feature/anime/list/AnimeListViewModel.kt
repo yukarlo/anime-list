@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result
-import com.yukarlo.anime.common.android.navigation.AnimeInputModel
+import com.yukarlo.anime.core.model.AnimeInputModel
 import com.yukarlo.anime.core.model.AnimeParam
-import com.yukarlo.anime.lib.anime.domain.GetAnimeUseCase
+import com.yukarlo.anime.feature.anime.list.domain.GetAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

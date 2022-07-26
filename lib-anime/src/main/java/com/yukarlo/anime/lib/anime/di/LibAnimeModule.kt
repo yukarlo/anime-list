@@ -1,7 +1,7 @@
 package com.yukarlo.anime.lib.anime.di
 
 import com.yukarlo.anime.lib.anime.data.AnimeRepositoryImpl
-import com.yukarlo.anime.lib.anime.domain.AnimeRepository
+import com.yukarlo.feature.domain.AnimeRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

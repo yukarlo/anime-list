@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yukarlo.anime.common.android.base.Result.ERROR
 import com.yukarlo.anime.common.android.base.Result.SUCCESS
-import com.yukarlo.anime.common.android.navigation.AnimeInputModel
 import com.yukarlo.anime.common.android.utils.SeasonUtil
+import com.yukarlo.anime.core.model.AnimeInputModel
 import com.yukarlo.anime.core.model.AnimeParam
 import com.yukarlo.anime.core.model.AnimeSortTypes
-import com.yukarlo.anime.lib.anime.domain.GetMultipleAnimeSortUseCase
+import com.yukarlo.feature.anime.home.domain.GetMultipleAnimeSortUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

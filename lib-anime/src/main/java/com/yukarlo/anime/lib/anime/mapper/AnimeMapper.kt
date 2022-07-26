@@ -1,4 +1,4 @@
-package com.yukarlo.anime.lib.anime.data
+package com.yukarlo.anime.lib.anime.mapper
 
 import com.yukarlo.anime.core.model.*
 import com.yukarlo.fragment.AnimeMedia

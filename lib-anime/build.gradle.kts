@@ -6,6 +6,7 @@ plugins {
 dependencies {
     implementation(project(":core-model"))
     implementation(project(":core-remote"))
+    implementation(project(":feature-anime-domain"))
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.coroutines.core)

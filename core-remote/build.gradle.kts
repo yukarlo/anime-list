@@ -9,9 +9,6 @@ apollo {
 }
 
 dependencies {
-    implementation(project(":core-model"))
-
-    implementation(libs.kotlin.stdlib)
     api(libs.graphql.apollo3.runtime)
     implementation(libs.coroutines.core)
 

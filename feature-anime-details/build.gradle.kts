@@ -7,12 +7,9 @@ dependencies {
     implementation(project(":common-android"))
     implementation(project(":core-model"))
     implementation(project(":core-navigation"))
-    implementation(project(":lib-anime"))
+    implementation(project(":feature-anime-domain"))
 
-    implementation(libs.accompanist.insets)
     implementation(libs.accompanist.flowlayout)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.coil.kt.compose)

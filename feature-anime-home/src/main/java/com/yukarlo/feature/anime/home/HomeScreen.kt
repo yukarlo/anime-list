@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yukarlo.anime.common.android.components.*
-import com.yukarlo.anime.common.android.navigation.AnimeInputModel
+import com.yukarlo.anime.core.model.AnimeInputModel
 import com.yukarlo.anime.core.model.*
 import kotlinx.coroutines.launch
 

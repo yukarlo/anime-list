@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class SortMapper @Inject constructor() {
 
-    fun mapSort(animeSort: List<AnimeSort>?): List<MediaSort>? =
+    fun mapSortToData(animeSort: List<AnimeSort>?): List<MediaSort>? =
         animeSort?.map { sort ->
             when (sort) {
                 AnimeSort.SCORE_DESC -> {

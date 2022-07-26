@@ -6,9 +6,6 @@ plugins {
 dependencies {
     implementation(project(":core-model"))
 
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.palette)
     implementation(libs.coil.kt.compose)
 
@@ -21,6 +18,4 @@ dependencies {
     implementation(libs.androidx.compose.ui.core)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling)
-    implementation(libs.androidx.navigation.compose)
-
 }
