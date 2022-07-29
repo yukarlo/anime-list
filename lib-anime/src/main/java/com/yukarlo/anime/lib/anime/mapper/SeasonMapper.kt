@@ -4,7 +4,7 @@ import com.yukarlo.anime.core.model.AnimeSeason
 import com.yukarlo.type.MediaSeason
 import javax.inject.Inject
 
-class SeasonMapper @Inject constructor() {
+internal class SeasonMapper @Inject constructor() {
 
     fun mapSeasonToData(animeSeason: AnimeSeason?): MediaSeason? =
         when (animeSeason) {

@@ -8,6 +8,7 @@ dependencies {
     implementation(project(":core-model"))
     implementation(project(":core-navigation"))
     implementation(project(":feature-anime-domain"))
+    implementation(project(":feature-anime-details-api"))
 
     implementation(libs.accompanist.flowlayout)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -8,6 +8,9 @@ dependencies {
     implementation(project(":core-model"))
     implementation(project(":core-navigation"))
     implementation(project(":feature-anime-domain"))
+    implementation(project(":feature-anime-home-api"))
+    implementation(project(":feature-anime-details-api"))
+    implementation(project(":feature-anime-list-api"))
 
     implementation(libs.accompanist.insets)
     implementation(libs.androidx.appcompat)

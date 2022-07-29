@@ -32,11 +32,17 @@ android {
 
 dependencies {
     implementation(project(":feature-anime-home"))
+    implementation(project(":feature-anime-home-api"))
     implementation(project(":feature-anime-list"))
+    implementation(project(":feature-anime-list-api"))
     implementation(project(":feature-anime-details"))
+    implementation(project(":feature-anime-details-api"))
     implementation(project(":feature-anime-domain"))
     implementation(project(":feature-anime-search"))
+    implementation(project(":feature-anime-search-api"))
     implementation(project(":feature-about"))
+    implementation(project(":feature-about-api"))
+    implementation(project(":feature-main"))
     implementation(project(":lib-anime"))
     implementation(project(":common-android"))
     implementation(project(":core-remote"))

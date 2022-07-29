@@ -4,7 +4,7 @@ import com.yukarlo.anime.core.model.AnimeSort
 import com.yukarlo.type.MediaSort
 import javax.inject.Inject
 
-class SortMapper @Inject constructor() {
+internal class SortMapper @Inject constructor() {
 
     fun mapSortToData(animeSort: List<AnimeSort>?): List<MediaSort>? =
         animeSort?.map { sort ->

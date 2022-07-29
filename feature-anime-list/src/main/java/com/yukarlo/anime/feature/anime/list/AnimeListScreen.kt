@@ -1,5 +1,6 @@
 package com.yukarlo.anime.feature.anime.list
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -10,7 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.yukarlo.anime.common.android.components.AnimeCard
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.common.android.components.ToolBar
@@ -18,13 +19,17 @@ import com.yukarlo.anime.common.android.components.VerticalGrid
 import com.yukarlo.anime.core.model.Anime
 
 @Composable
-fun AnimeListScreen(
-    navigateUp: () -> Unit,
-    navigateToDetails: (Int?) -> Unit,
+internal fun AnimeListScreen(
+    viewModel: AnimeListViewModel,
+    navController: NavHostController,
+    navigateToDetails: (Int?) -> Unit
 ) {
-    val viewModel: AnimeListViewModel = hiltViewModel()
-
     val animeScreenState by viewModel.onUpdateAnimeList.collectAsState()
+
+    BackHandler {
+        navController.popBackStack()
+    }
+
     ScreenState(
         result = animeScreenState.result,
         retry = { viewModel.retry() }
@@ -34,7 +39,7 @@ fun AnimeListScreen(
                 if (animeScreenState.toolbarTitle.isNotBlank()) {
                     ToolBar(
                         title = animeScreenState.toolbarTitle,
-                        onUp = navigateUp
+                        onUp = { navController.popBackStack() }
                     )
                 }
             }

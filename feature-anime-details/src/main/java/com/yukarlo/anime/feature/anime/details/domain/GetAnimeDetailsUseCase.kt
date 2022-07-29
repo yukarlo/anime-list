@@ -5,7 +5,7 @@ import com.yukarlo.feature.domain.AnimeRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAnimeDetailsUseCase @Inject constructor(
+internal class GetAnimeDetailsUseCase @Inject constructor(
     private val animeRepository: AnimeRepository
 ) {
     fun execute(param: Int): Flow<AnimeDetails> = animeRepository.fetchAnimeDetails(id = param)

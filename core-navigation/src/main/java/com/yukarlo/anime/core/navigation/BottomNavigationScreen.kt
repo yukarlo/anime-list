@@ -6,4 +6,6 @@ interface BottomNavigationScreen {
     val route: String
     val label: String
     val icon: ImageVector
+
+    fun createRoute(): String = route
 }

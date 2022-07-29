@@ -6,7 +6,7 @@ import com.yukarlo.feature.domain.AnimeRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetMultipleAnimeSortUseCase @Inject constructor(
+internal class GetMultipleAnimeSortUseCase @Inject constructor(
     private val animeRepository: AnimeRepository
 ) {
     fun execute(param: AnimeParam): Flow<MultipleAnimeSort> =

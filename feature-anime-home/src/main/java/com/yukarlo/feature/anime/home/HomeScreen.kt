@@ -17,12 +17,11 @@ import com.yukarlo.anime.core.model.*
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     viewAll: (AnimeInputModel) -> Unit,
-    navigateToDetails: (Int?) -> Unit
+    navigateToDetails: (Int?) -> Unit,
+    viewModel: HomeViewModel
 ) {
-    val viewModel: HomeViewModel = hiltViewModel()
-
     val scope = rememberCoroutineScope()
     DisposableEffect(Unit) {
         scope.launch {

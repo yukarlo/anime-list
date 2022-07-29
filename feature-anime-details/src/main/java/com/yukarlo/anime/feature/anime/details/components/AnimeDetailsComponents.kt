@@ -35,7 +35,7 @@ import com.yukarlo.anime.feature.anime.details.R
 import java.util.*
 
 @Composable
-fun HeaderSection(
+internal fun HeaderSection(
     anime: Anime,
     onUp: () -> Unit
 ) {
@@ -52,7 +52,7 @@ fun HeaderSection(
 }
 
 @Composable
-fun SmallInformationSection(animeDetails: AnimeDetails) {
+internal fun SmallInformationSection(animeDetails: AnimeDetails) {
     FlowRow(
         modifier = Modifier.padding(horizontal = 12.dp),
         mainAxisSpacing = 8.dp,
@@ -78,7 +78,7 @@ fun SmallInformationSection(animeDetails: AnimeDetails) {
 }
 
 @Composable
-fun DescriptionSection(description: String) {
+internal fun DescriptionSection(description: String) {
     if (description.isNotEmpty()) {
         Text(
             text = HtmlCompat.fromHtml(description, 0).toString(),
@@ -95,7 +95,7 @@ fun DescriptionSection(description: String) {
 }
 
 @Composable
-fun TrailerSection(
+internal fun TrailerSection(
     trailer: Trailer,
     playTrailer: (String) -> Unit
 ) {
@@ -141,7 +141,7 @@ fun TrailerSection(
 }
 
 @Composable
-fun CharactersRowSection(characters: List<Character>) {
+internal fun CharactersRowSection(characters: List<Character>) {
     if (characters.isNotEmpty()) {
         ListHeaderTitle(
             title = "Characters",
@@ -173,7 +173,7 @@ fun CharactersRowSection(characters: List<Character>) {
 }
 
 @Composable
-fun RecommendationGridSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) {
+internal fun RecommendationGridSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) {
     if (anime.isNotEmpty()) {
         Row(
             modifier = Modifier
@@ -209,7 +209,7 @@ fun RecommendationGridSection(anime: List<Anime>, onAnimeClick: (Int?) -> Unit) 
 }
 
 @Composable
-fun MoreInformationSection(animeDetails: AnimeDetails) {
+internal fun MoreInformationSection(animeDetails: AnimeDetails) {
     Surface(
         modifier = Modifier
             .wrapContentHeight()

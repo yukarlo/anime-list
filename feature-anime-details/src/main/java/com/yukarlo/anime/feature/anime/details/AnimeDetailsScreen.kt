@@ -2,6 +2,7 @@ package com.yukarlo.anime.feature.anime.details
 
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.yukarlo.anime.common.android.components.ListHeaderTitle
 import com.yukarlo.anime.common.android.components.ScreenState
 import com.yukarlo.anime.common.android.ui.theme.DynamicThemePrimaryColorsFromImage
@@ -28,18 +29,22 @@ import com.yukarlo.anime.core.model.AnimeDetails
 import com.yukarlo.anime.feature.anime.details.components.*
 
 @Composable
-fun AnimeDetailsScreen(
-    navigateUp: () -> Unit,
+internal fun AnimeDetailsScreen(
+    viewModel: AnimeDetailsViewModel,
+    navController: NavHostController,
     openDetails: (Int) -> Unit
 ) {
-    val viewModel: AnimeDetailsViewModel = hiltViewModel()
-
     val animeDetailsScreenState by viewModel.onAnimeDetails.collectAsState()
+
+    BackHandler {
+        navController.popBackStack()
+    }
+
     ScreenState(result = animeDetailsScreenState.result,
         renderView = {
             AnimeDetails(
                 animeDetails = animeDetailsScreenState.animeDetails,
-                onUp = navigateUp,
+                navController = navController,
                 onAnimeClick = openDetails
             )
         },
@@ -50,8 +55,8 @@ fun AnimeDetailsScreen(
 @Composable
 private fun AnimeDetails(
     animeDetails: AnimeDetails,
-    onAnimeClick: (Int) -> Unit,
-    onUp: () -> Unit
+    navController: NavHostController,
+    onAnimeClick: (Int) -> Unit
 ) {
     val surfaceColor = MaterialTheme.colorScheme.surface
     val dominantColorState = rememberDominantColorState { color ->
@@ -70,7 +75,7 @@ private fun AnimeDetails(
         Scaffold { innerPadding ->
             LazyColumn(modifier = Modifier.fillMaxWidth().padding(innerPadding)) {
                 item {
-                    HeaderSection(anime = animeDetails.basicInfo, onUp = { onUp() })
+                    HeaderSection(anime = animeDetails.basicInfo, onUp = { navController.popBackStack() })
 
                     SmallInformationSection(animeDetails = animeDetails)
 
