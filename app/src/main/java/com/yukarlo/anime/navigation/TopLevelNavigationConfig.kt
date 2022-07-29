@@ -3,6 +3,7 @@ package com.yukarlo.anime.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.yukarlo.anime.feature.anime.details.AnimeDetailsNavigation
 import com.yukarlo.anime.feature.anime.details.animeDetailsGraph
 import com.yukarlo.anime.feature.anime.list.animeListGraph
 import com.yukarlo.anime.navigation.toplevel.MainScreenNavigation
@@ -17,7 +18,9 @@ internal fun TopLevelNavigationConfig(
         startDestination = MainScreenNavigation.createRoute()
     ) {
         mainScreenGraph(navController)
-        animeListGraph(navController)
+        animeListGraph(navController) { animeId ->
+            navController.navigate(route = AnimeDetailsNavigation.createRouteWithId(animeId))
+        }
         animeDetailsGraph(navController)
     }
 }

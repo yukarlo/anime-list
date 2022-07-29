@@ -12,13 +12,11 @@ object AnimeListNavigation : NavigationScreen {
     override val label = "All Anime"
 }
 
-fun NavGraphBuilder.animeListGraph(navController: NavController) {
+fun NavGraphBuilder.animeListGraph(navController: NavController, navigateTo: (Int?) -> Unit) {
     composable(route = AnimeListNavigation.createRoute()) {
         AnimeListScreen(
             navigateUp = navController::navigateUp,
-            navigateToDetails = { animeId ->
-                navController.navigate(route = AnimeListNavigation.createRouteWithId(animeId))
-            }
+            navigateToDetails = { animeId -> navigateTo(animeId) }
         )
     }
 }
